@@ -1,8 +1,6 @@
 # Autocrop Utility
 
-### Author: Kevin Koffroth
-
-## What is this for?
+## What is it?
     
 The Autocrop utility is a simple CLI tool to automatically crop our images of 'plants' for use in generating/utilizing our Tensorflow model.
 
