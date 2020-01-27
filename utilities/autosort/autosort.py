@@ -1,13 +1,13 @@
 #!/usr/bin/python3
-
-import os
 import sys
-import time
-from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QPushButton, QLineEdit, QLabel, QMainWindow, QAction
-from PyQt5 import QtGui
-from PyQt5.QtCore import pyqtSlot
+import os
+from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLabel, QMainWindow, QAction, QFileDialog
+from PyQt5.Qt import Qt
+from PyQt5.QtGui import QPixmap
 
-class InputWindow(QMainWindow):
+# Declaring Global Variables
+
+class Window(QMainWindow):
 
     def __init__(self):
         
@@ -25,75 +25,59 @@ class InputWindow(QMainWindow):
         self.setWindowTitle('Auto Sort')
         self.resize(640, 480)
 
-        # Setting up sort button and fields
-        self.sort = QPushButton('Sort!', self)
-        self.sort.resize(80, 40)
-        self.sort.move(280, 420)
-        self.sort.clicked.connect(self.on_click)
+        # Input Directory Dialog
+        self.inputPath = str(QFileDialog.getExistingDirectory(self, "Select Input Directory"))
+        # Green Directory Dialog
+        self.greenPath = str(QFileDialog.getExistingDirectory(self, "Select Green Output Directory"))
+        # Yellow Directory Dialog
+        self.yellowPath = str(QFileDialog.getExistingDirectory(self, "Select Yellow Output Directory"))
+        # Open Directory Dialog
+        self.openPath = str(QFileDialog.getExistingDirectory(self, "Select Open Output Directory"))
+        
+        # Initializing a list to hold all of the image file names
+        images = []
 
-        # Input Path Field
-        self.InputPathBox = QLineEdit(self)
-        self.InputPathBox.move(55, 60)
-        self.InputPathBox.resize(530, 25)
+        # Creating an iterator for our list
+        imageIter = iter(images)
 
-        self.InputLabel = QLabel(self)
-        self.InputLabel.setText('Input Directory:')
-        self.InputLabel.move(55, 42)
+        # Retriving all of the file names and appending them to the list
+        for f_name in os.listdir(self.inputPath):
+            if f_name.endswith('.jpg'):
+                images.append(f_name)
 
-        # Green Path Field
-        self.GreenPathBox = QLineEdit(self)
-        self.GreenPathBox.move(55, 120)
-        self.GreenPathBox.resize(530, 25)
+        # Creating a label and pixmap object to use to display our images and initializing the first image
+        label = QLabel(self)
+        pixmap = QPixmap(self.inputPath + "/" + next(imageIter))
+        label.setPixmap(pixmap)
 
-        self.GreenLabel = QLabel(self)
-        self.GreenLabel.setText('Green Plant Directory:')
-        self.GreenLabel.move(55, 102)
 
-        # Yellow Path Field
-        self.YellowPathBox = QLineEdit(self)
-        self.YellowPathBox.move(55, 180)
-        self.YellowPathBox.resize(530, 25)
+    def keyPressEvent(self, event):
 
-        self.YellowLabel = QLabel(self)
-        self.YellowLabel.setText('Yellow Plant Directory:')
-        self.YellowLabel.move(55, 162)
+        if event.key() == Qt.Key_Left:
+            self.leftHandler()
+        elif event.key() == Qt.Key_Right:
+            self.rightHandler()
+        elif event.key() == Qt.Key_Up:
+            self.upHandler()
 
-        # Open Path Field
-        self.OpenPathBox = QLineEdit(self)
-        self.OpenPathBox.move(55, 240)
-        self.OpenPathBox.resize(530, 25)
-
-        self.OpenLabel = QLabel(self)
-        self.OpenLabel.setText('No Plant Directory:')
-        self.OpenLabel.move(55, 222)
-
-        # Showing our window
-        self.show()
-
-    # Button Click Event Handler
-    @pyqtSlot()
-    def on_click(self):
-        self.InputPath = self.InputPathBox.text()
-        self.GreenPath = self.GreenPathBox.text()
-        self.YellowPath = self.YellowPathBox.text()
-        self.OpenPath = self.OpenPathBox.text()
+    
+    def leftHandler(self):
+        print("Left\n")
+    
+    def rightHandler(self):
+        print("Right\n")
+    
+    def upHandler(self):
+        print("Up\n")
 
 if __name__ == '__main__':
     
     # GUI Setup
     app = QApplication(sys.argv)
 
+    # Open Window
+    w = Window()
+    w.show()
+
     # System Exit on window close
     sys.exit(app.exec_())
-
-    # Open Input Window
-    InputWindow = InputWindow()
-
-    # Do File Searching/Collection
-
-    # Open Picture Sorting Window
-
-
-    
-
-
