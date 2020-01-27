@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import sys
 import os
+from shutil import copyfile
 from PyQt5.QtWidgets import QApplication, QWidget, QDesktopWidget, QLabel, QMainWindow, QAction, QFileDialog
 from PyQt5.Qt import Qt
 from PyQt5.QtGui import QPixmap
@@ -38,7 +39,7 @@ class Window(QMainWindow):
         images = []
 
         # Creating an iterator for our list
-        imageIter = iter(images)
+        self.imageIter = iter(images)
 
         # Retriving all of the file names and appending them to the list
         for f_name in os.listdir(self.inputPath):
@@ -46,9 +47,12 @@ class Window(QMainWindow):
                 images.append(f_name)
 
         # Creating a label and pixmap object to use to display our images and initializing the first image
-        label = QLabel(self)
-        pixmap = QPixmap(self.inputPath + "/" + next(imageIter))
-        label.setPixmap(pixmap)
+        self.label = QLabel(self)
+        self.currentImage = next(self.imageIter)
+        self.pixmap = QPixmap(self.inputPath + "/" + self.currentImage)
+        self.label.setPixmap(self.pixmap)
+        self.label.adjustSize()
+        self.label.move(160, 0)
 
 
     def keyPressEvent(self, event):
@@ -60,15 +64,47 @@ class Window(QMainWindow):
         elif event.key() == Qt.Key_Up:
             self.upHandler()
 
-    
+    # The Picture is Green
     def leftHandler(self):
-        print("Left\n")
+
+        # Copying the file to the correct directory
+        copyfile(self.inputPath + "/" + self.currentImage, self.greenPath + "/" + self.currentImage)
+
+        # Iterating the image list and setting the new picture
+        try:
+            self.currentImage = next(self.imageIter)
+            self.pixmap = QPixmap(self.inputPath + "/" + self.currentImage)
+            self.label.setPixmap(self.pixmap)
+        except StopIteration:
+            print("Done!")
     
+    # The Picture is Yellow
     def rightHandler(self):
-        print("Right\n")
+
+        # Copying the file to the correct directory
+        copyfile(self.inputPath + "/" + self.currentImage, self.yellowPath + "/" + self.currentImage)
+
+        # Iterating the image list and setting the new picture
+        try:
+            self.currentImage = next(self.imageIter)
+            self.pixmap = QPixmap(self.inputPath + "/" + self.currentImage)
+            self.label.setPixmap(self.pixmap)
+        except StopIteration:
+            print("Done!")
     
+    # The Picture is an Open
     def upHandler(self):
-        print("Up\n")
+
+        # Copying the file to the correct directory
+        copyfile(self.inputPath + "/" + self.currentImage, self.openPath + "/" + self.currentImage)
+
+        # Iterating the image list and setting the new picture
+        try:
+            self.currentImage = next(self.imageIter)
+            self.pixmap = QPixmap(self.inputPath + "/" + self.currentImage)
+            self.label.setPixmap(self.pixmap)
+        except StopIteration:
+            print("Done!")
 
 if __name__ == '__main__':
     
