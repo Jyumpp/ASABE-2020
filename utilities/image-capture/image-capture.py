@@ -28,7 +28,7 @@ class Window(QMainWindow):
 
         # Setting the window title
         self.setWindowTitle('Image-Capture')
-        self.resize(1280, 720)
+        self.resize(1920, 1080)
 
         # Setting up the camera object and getting available cameras
         self.available_cameras = QCameraInfo.availableCameras()

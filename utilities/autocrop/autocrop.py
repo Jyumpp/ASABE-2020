@@ -19,14 +19,14 @@ for image in images:
     # Opening each image
     im_open = Image.open(inputPath + "/" + image,mode='r')
     
-    # Getting the width/height of each
+    # Getting the width/height of each image
     width, height = im_open.size
 
     # Defining the crop points
-    left = 180
+    left = 680
     top = 0
-    right = 500
-    bottom = height
+    right = 1300
+    bottom = 650
 
     # Cropping the image
     im_crop = im_open.crop((left, top, right, bottom))
