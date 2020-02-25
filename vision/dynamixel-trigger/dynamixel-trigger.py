@@ -7,8 +7,11 @@ from dynio import *
 
 class DynaTrigger(self):
 
+    # global static variable as a thread signaller
+    triggered = False
+
     # init
-    def __init__(self, queue, torque):
+    def __init__(self, torqueIn):
 
         # Dynamixel motor setup
         self.dxl_io = dxl.DynamixelIO('/dev/ttyUSB0', 1000000)
@@ -16,11 +19,7 @@ class DynaTrigger(self):
         self.ax_12_1.torque_enable()
         self.ax_12_1.set_angle(0)
         self.ax_12_1.set_velocity(1023)
-        self.torque = torque
-
-        # Setting up queue system
-        self.out_q = queue
-        self.triggered = False
+        self.torque = torqueIn
 
         # Setting up Threading
         
@@ -37,20 +36,21 @@ class DynaTrigger(self):
             while True:
                 
                 # If a specific torque is reached, trigger
-                if self.ax_12_1.get_current() > 25:
+                if self.ax_12_1.get_current() > self.torque:
                     
                     # Set motor angles
                     self.ax_12_1.set_angle(170)
 
                     # Send picture capture signal
                     self.triggered = True
-                    out_q.put(self.triggered)
+                    time.sleep 
                     break
-
-            # reset picture capture signal
+        
             self.triggered = False
-            out_q.put(self.triggered)
 
             # wait for the motor to get into place
             time.sleep(0.25)
 
+    def getTriggered(self):
+
+        return self.triggered
