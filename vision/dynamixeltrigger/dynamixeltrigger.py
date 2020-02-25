@@ -2,10 +2,9 @@
 
 import time
 import threading
-import Queue
 from dynio import *
 
-class DynaTrigger(self):
+class DynaTrigger:
 
     # global static variable as a thread signaller
     triggered = False
@@ -14,7 +13,7 @@ class DynaTrigger(self):
     def __init__(self, torqueIn):
 
         # Dynamixel motor setup
-        self.dxl_io = dxl.DynamixelIO('/dev/ttyUSB0', 1000000)
+        dxl_io = dxl.DynamixelIO('/dev/ttyUSB0', 1000000)
         self.ax_12_1 = dxl_io.new_ax12_1(7)
         self.ax_12_1.torque_enable()
         self.ax_12_1.set_angle(0)
@@ -22,7 +21,8 @@ class DynaTrigger(self):
         self.torque = torqueIn
 
         # Setting up Threading
-        
+        x = threading.Thread(target=self.Run)
+        x.start()
 
     # Thread function
     def Run(self):
