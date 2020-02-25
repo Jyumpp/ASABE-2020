@@ -10,7 +10,7 @@ class DynaTrigger:
     triggered = False
 
     # init
-    def __init__(self, torqueIn):
+    def __init__(self):
 
         # Dynamixel motor setup
         dxl_io = dxl.DynamixelIO('/dev/ttyUSB0', 1000000)
@@ -18,7 +18,6 @@ class DynaTrigger:
         self.ax_12_1.torque_enable()
         self.ax_12_1.set_angle(0)
         self.ax_12_1.set_velocity(1023)
-        self.torque = torqueIn
 
         # Setting up Threading
         x = threading.Thread(target=self.Run)
@@ -36,7 +35,7 @@ class DynaTrigger:
             while True:
                 
                 # If a specific torque is reached, trigger
-                if self.ax_12_1.get_current() > self.torque:
+                if self.ax_12_1.get_current() > 30:
                     
                     # Set motor angles
                     self.ax_12_1.set_angle(170)
@@ -45,11 +44,10 @@ class DynaTrigger:
                     self.triggered = True
                     time.sleep 
                     break
-        
-            self.triggered = False
 
             # wait for the motor to get into place
             time.sleep(0.25)
+            self.triggered = False
 
     def getTriggered(self):
 
