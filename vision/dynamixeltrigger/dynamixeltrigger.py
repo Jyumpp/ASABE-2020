@@ -16,8 +16,9 @@ class DynaTrigger:
         dxl_io = dxl.DynamixelIO('/dev/ttyUSB0', 1000000)
         self.ax_12_1 = dxl_io.new_ax12_1(7)
         self.ax_12_1.torque_enable()
-        self.ax_12_1.set_angle(0)
+        self.ax_12_1.set_angle(90)
         self.ax_12_1.set_velocity(1023)
+        self.triggerCount = 0
 
         # Setting up Threading
         x = threading.Thread(target=self.Run)
@@ -26,29 +27,43 @@ class DynaTrigger:
     # Thread function
     def Run(self):
         
-        while True:
+        while self.triggerCount < 16:
 
             self.ax_12_1.set_angle(90)
 
-            time.sleep(0.75)
+            # wait for the motor to get into place
+            while self.ax_12_1.read_control_table('Moving') == 1:
+                pass
 
+            time.sleep(0.65)
             while True:
+
+                print(self.ax_12_1.get_current())
                 
                 # If a specific torque is reached, trigger
-                if self.ax_12_1.get_current() > 30:
+                if self.ax_12_1.get_current() < -30:
                     
+                    # incrementing trigger count
+                    self.triggerCount += 1
+
                     # Set motor angles
-                    self.ax_12_1.set_angle(170)
+                    self.ax_12_1.set_angle(30)
 
                     # Send picture capture signal
                     self.triggered = True
-                    time.sleep 
                     break
 
             # wait for the motor to get into place
-            time.sleep(0.25)
+            while self.ax_12_1.read_control_table('Moving') == 1:
+                pass
+
+            time.sleep(0.65)
             self.triggered = False
 
     def getTriggered(self):
 
         return self.triggered
+
+    def getTriggerCount(self):
+
+        return self.triggerCount

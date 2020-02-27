@@ -2,7 +2,7 @@
 
 import time
 import threading
-from cv2 import *
+import cv2
 
 class ImageCapture:
 
