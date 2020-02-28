@@ -1,4 +1,4 @@
-from Motor import *
+from Robot.Motor import *
 import time
 import math
 
@@ -26,7 +26,7 @@ class Robot:
             for motor in self.motors:
                 motor.setVelocity(velocity)
             return None
-        except:
+        except Exception as e:
             print(e)
             self.center()
 

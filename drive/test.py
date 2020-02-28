@@ -1,4 +1,4 @@
-from lineTracing.lineTracing import *
+from LineTracing.lineTracing import *
 from LineCorrection.LineCorrection import *
 import multiprocessing as mp
 

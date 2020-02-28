@@ -1,4 +1,4 @@
-from lineTracing.lineTracing import lineTracing
+from LineTracing.lineTracing import lineTracing
 import multiprocessing as mp
 import time
 from Robot.Robot import *
@@ -8,7 +8,7 @@ class LineCorrection:
     error = 1
     centerDistacne = 0
     halt = True
-    robot = Robot("/dev/ttyUSB0")
+    robot = None
     pipeR = None
 
     # def checkAngle(self):
@@ -21,8 +21,7 @@ class LineCorrection:
         time.sleep(2)
         while True:
             try:
-                self.distance = pipeR.recv()[1]
-                print(self.angle)
+                self.centerDistance = self.pipeR.recv()[1]
                 if self.centerDistance > .5:
                     self.halt = True
                     self.robot.drive(0)
@@ -31,7 +30,8 @@ class LineCorrection:
                     self.halt = True
                     self.robot.drive(0)
                     self.robot.translate(90,abs(self.centerDistance)/2)
-                self.distance = pipeR.recv()[0]
+                self.distance = self.pipeR.recv()[0]
+                print(self.angle)
                 if self.angle < abs(self.error) and self.angle > -abs(self.error):
                     self.robot.drive(512)
                     self.halt = False
@@ -54,6 +54,7 @@ class LineCorrection:
 
     def __init__(self,commR):
         self.pipeR = commR
+        self.robot = Robot("/dev/ttyUSB0")
         # if __name__ == '__main__':
         #     pipeR,pipeW = mp.Pipe()
         #     l = lineTracing(pipeR,pipeW)
