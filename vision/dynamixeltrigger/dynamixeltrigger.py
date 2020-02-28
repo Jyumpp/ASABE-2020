@@ -37,8 +37,6 @@ class DynaTrigger:
 
             time.sleep(0.65)
             while True:
-
-                print(self.ax_12_1.get_current())
                 
                 # If a specific torque is reached, trigger
                 if self.ax_12_1.get_current() < -30:

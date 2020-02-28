@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+import time
 from dynamixeltrigger.dynamixeltrigger import DynaTrigger as dyn
 from imagecapture.imagecapture import ImageCapture as cap
 from imageclassifier.imageclassifier import ImgClassifier as classifier
@@ -13,5 +14,7 @@ while True:
         print("required trigger count reached")
         break
 
-#classify = classifier("/home/pi/ASABE/ASABE-2020/vision/imagecapture/output")
-#classify.print()
+time.sleep(1)
+
+classify = classifier("/home/pi/ASABE/ASABE-2020/vision/imagecapture/output/")
+classify.print()
