@@ -1,0 +1,44 @@
+import numpy as np
+from PIL import Image
+#import tensorflow as tf # TF2
+import tflite_runtime.interpreter as tflite
+import cv2
+#from sklearn.preprocessing import LabelEncoder
+import os  
+
+
+class ImgClassifier:
+
+    def __init__(self, dir):
+        interpreter = tflite.Interpreter("model_v2.tflite")
+        interpreter.allocate_tensors()
+
+        input_details = interpreter.get_input_details()
+        output_details = interpreter.get_output_details()
+
+        DIR = dir
+        IMG_SIZE = 150
+
+        def imgToArray(img):
+            path = DIR+img
+            img = cv2.imread(path, cv2.COLOR_BGR2RGB)
+            img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
+            input_data = np.array(img, dtype=np.float32)
+            input_data = np.expand_dims(input_data, 0)
+            input_data = input_data/255
+            return input_data
+        
+        print ("green\topen\tyellow")
+        for img in os.listdir(DIR):
+            input_data = imgToArray(img)
+            img_name = img
+            interpreter.set_tensor(input_details[0]["index"], input_data)
+            interpreter.invoke()
+            output_data = interpreter.get_tensor(output_details[0]['index'])
+            
+            #print ("green\topen\tyellow")
+            list = output_data.tolist()
+            for i in range(len(list)):
+                for j in list[i]:
+                    print (round((j * 100),), end =" " + "%\t")
+                    print (img_name)
