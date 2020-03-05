@@ -23,6 +23,7 @@ class Robot:
 
     def drive(self,velocity):
         try:
+            self.center()
             for motor in self.motors:
                 motor.setVelocity(velocity)
             return None
@@ -61,13 +62,16 @@ class Robot:
 
     def crabSteering(self,angle):
         try:
-            self.motors[1].setAngle(angle)
-            self.motors[2].setAngle(-angle)
-            self.motors[0].setAngle(-angle)
-            self.motors[3].setAngle(angle)
+            if angle == 0:
+                self.center()
+            else:
+                self.motors[1].setAngle(angle)
+                self.motors[2].setAngle(-angle)
+                self.motors[0].setAngle(-angle)
+                self.motors[3].setAngle(angle)
 
-            while self.motors[3].getAngle() - (150 - angle) > -.75 :
-                continue
+                while self.motors[3].getAngle() - (150 - angle) > -1 :
+                    continue
 
         except Exception as e:
             print(e)
@@ -120,7 +124,6 @@ class Robot:
 
             sleepTime = (abs(distance)/(56.832*math.pi)) * 60
 
-            self.center()
 
             self.crabSteering(angle)
 
@@ -170,6 +173,33 @@ class Robot:
             print(e)
             self.drive(0)
             self.center()
+
+
+    def expandyBoi(self):
+        try:
+            self.translate(0,-3)
+
+            sleepTime = (abs(29.5)/(28.416*math.pi)) * 60
+
+
+            self.crabSteering(90)
+
+            self.motors[0].setVelocity(1023)
+            self.motors[3].setVelocity(-230)
+            self.motors[1].setVelocity(-1023)
+            self.motors[2].setVelocity(230)
+
+            time.sleep(sleepTime)
+
+            self.drive(0)
+            self.center()
+
+            return None
+        except Exception as e:
+            print(e)
+            self.drive(0)
+            self.center()
+        self.center()
 
     def __init__(self,path):
         self.motors = []

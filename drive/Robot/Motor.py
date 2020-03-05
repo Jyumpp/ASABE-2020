@@ -10,7 +10,7 @@ class Motor:
             # Creates DynamixelIO object
             Motor.dyn = dxl.DynamixelIO(device_name=path)
         # creates the motor to control the wheel angle
-        self.angleMotor = dyn.new_ax12_1(Motor.count)
+        self.angleMotor = Motor.dyn.new_ax12_1(Motor.count)
         # sets the motor torque limit and position mode
         self.angleMotor.set_position_mode(goal_current=512)
         self.angleMotor.torque_enable()
@@ -18,7 +18,7 @@ class Motor:
         # increments the motor ID
         Motor.count = Motor.count + 1
         # creates the motor that controls wheel velocity
-        self.driveMotor = dyn.new_ax12_1(Motor.count)
+        self.driveMotor = Motor.dyn.new_ax12_1(Motor.count)
         self.driveMotor.set_velocity_mode()
         self.driveMotor.torque_enable()
         Motor.count = Motor.count + 1

@@ -10,8 +10,8 @@ class lineTracing:
     maximum = 0
     distance = 0
     isVertical = True
-    pipeWrite = None
-    pipeRead = None
+    pipeAngleWrite = None
+    pipeDistanceWrite = None
 
     def lineTracer(self):
         # global angle
@@ -86,7 +86,8 @@ class lineTracing:
                     self.angle = math.atan((toppy - centerY) / cX)
                     self.distance = ( centerY - cY) / scale
                 self.angle = math.degrees(self.angle)
-                self.pipeWrite.send([self.angle,self.distance])
+                self.pipeAngleWrite.send(self.angle)
+                self.pipeDistanceWrite.send(self.distance)
                 # cv2.imshow("frame", frame)
                 # cv2.waitKey(1)
                 #return angle, adjacent
@@ -121,5 +122,6 @@ class lineTracing:
 
     # def midPoint()
 
-    def __init__(self,commW):
-        self.pipeWrite = commW
+    def __init__(self,commAngleW,commDistanceW):
+        self.pipeAngleWrite = commAngleW
+        self.pipeDistanceWrite = commDistanceW
