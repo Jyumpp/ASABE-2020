@@ -1,16 +1,13 @@
 #!/usr/bin/python3
 
 import time
-import threading
+from multiprocessing import Pipe
 from dynio import *
 
 class DynaTrigger:
 
-    # global static variable as a thread signaller
-    triggered = False
-
     # init
-    def __init__(self):
+    def __init__(self, triggerPipe):
 
         # Dynamixel motor setup
         dxl_io = dxl.DynamixelIO('/dev/ttyUSB0', 1000000)
@@ -18,13 +15,12 @@ class DynaTrigger:
         self.ax_12_1.torque_enable()
         self.ax_12_1.set_angle(90)
         self.ax_12_1.set_velocity(1023)
+
+        # Signal/pipe setup
+        self.triggerPipe = triggerPipe
         self.triggerCount = 0
 
-        # Setting up Threading
-        x = threading.Thread(target=self.Run)
-        x.start()
-
-    # Thread function
+    # Process function
     def Run(self):
         
         while self.triggerCount < 16:
@@ -47,8 +43,8 @@ class DynaTrigger:
                     # Set motor angles
                     self.ax_12_1.set_angle(30)
 
-                    # Send picture capture signal
-                    self.triggered = True
+                    # Send picture capture signal over pipe
+                    self.triggerPipe.send(True)
                     break
 
             # wait for the motor to get into place
@@ -56,12 +52,5 @@ class DynaTrigger:
                 pass
 
             time.sleep(0.65)
-            self.triggered = False
-
-    def getTriggered(self):
-
-        return self.triggered
-
-    def getTriggerCount(self):
-
-        return self.triggerCount
+            self.triggerPipe.send(False)
+        
