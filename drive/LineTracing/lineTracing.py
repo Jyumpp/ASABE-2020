@@ -40,7 +40,7 @@ class lineTracing:
                     _,contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     c = max(contours, key=cv2.contourArea)
                     contours[0] = c
-                    # print(c)
+                    print(c)
 
                     #find angle and decide how to track top right corner
                     if self.isVertical:
@@ -50,12 +50,12 @@ class lineTracing:
                         #frame = cv2.resize(frame, (640, 480), interpolation = cv2.INTER_LINEAR)
 
                     contx, conty, contw, conth = cv2.boundingRect(c)
-                    # cv2.rectangle(frame, (contx, conty), (contx + contw, conty + conth), (0, 0, 255), 2)
+                    cv2.rectangle(frame, (contx, conty), (contx + contw, conty + conth), (0, 0, 255), 2)
                     list = []
                     try:
                         list = []
                         for var in c:
-                            if var.item(1) < 1:
+                            if var.item(1) < 15:
                                 list.append(var)
                         self.maximum = list[0].item(0)
                         for vat in list:
