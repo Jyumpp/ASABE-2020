@@ -92,7 +92,7 @@ class lineTracing:
                     cv2.imshow("frame", frame)
                     cv2.waitKey(1)
                     #return angle, adjacent
-                    cv2.destroyAllWindows()
+                    #cv2.destroyAllWindows()
                     # video.release()
                     #print(self.angle)
                 except Exception as e:
@@ -100,7 +100,7 @@ class lineTracing:
                     print(e)
                     cv2.waitKey(1)
                     # cv2.destroyAllWindows()
-                    continue
+                    #continue
                 # time.sleep(.0000001)
         except Exception as e:
             print("Nope")
