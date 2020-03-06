@@ -18,16 +18,19 @@ if __name__ == "__main__":
     mp.set_start_method('spawn')
     triggerProcess = Process(target=trigger.Run(), args=())
     captureProcess = Process(target=capture.Run(), args=())
+    print("Processes Ready!")
 
     # Run Processes
     triggerProcess.start()
     captureProcess.start()
+    print("Processes Started!")
 
     # Wait for the Processes to end
     triggerProcess.join()
-    captureProcess.join()   
+    captureProcess.join()
 
-# And then classify the images we took
-time.sleep(1)
-classify = classifier("/home/pi/ASABE/ASABE-2020/vision/imagecapture/output/")
-classify.print()
+    # And then classify the images we took
+    time.sleep(1)
+    classify = classifier("/home/pi/ASABE/ASABE-2020/vision/imagecapture/output/")
+    classify.print()
+
