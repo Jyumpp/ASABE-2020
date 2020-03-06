@@ -50,7 +50,7 @@ class lineTracing:
                         #frame = cv2.resize(frame, (640, 480), interpolation = cv2.INTER_LINEAR)
 
                     contx, conty, contw, conth = cv2.boundingRect(c)
-                    cv2.rectangle(frame, (contx, conty), (contx + contw, conty + conth), (0, 0, 255), 2)
+                    # cv2.rectangle(frame, (contx, conty), (contx + contw, conty + conth), (0, 0, 255), 2)
                     list = []
                     try:
                         list = []
@@ -66,9 +66,9 @@ class lineTracing:
                             if elem.item(0) < self.minimum:
                                 self.minimum = elem.item(0)
                     except Exception as e:
-                        cv2.imshow("frame", frame)
+                        # cv2.imshow("frame", frame)
                         print(e)
-                        cv2.waitKey(1)
+                        # cv2.waitKey(1)
                         continue
 
                     toppy = int(self.minimum + ((self.maximum - self.minimum) / 2))
@@ -87,25 +87,25 @@ class lineTracing:
                         self.angle = math.atan((toppy - centerY) / cX)
                         self.distance = ( centerY - cY) / scale
                     self.angle = math.degrees(self.angle)
-                    #self.pipeAngleWrite.send(self.angle)
-                    #self.pipeDistanceWrite.send(self.distance)
-                    cv2.imshow("frame", frame)
-                    cv2.waitKey(1)
+                    self.pipeAngleWrite.send(self.angle)
+                    self.pipeDistanceWrite.send(self.distance)
+                    # cv2.imshow("frame", frame)
+                    # cv2.waitKey(1)
                     #return angle, adjacent
                     #cv2.destroyAllWindows()
                     # video.release()
                     print(self.angle)
                 except Exception as e:
-                    cv2.imshow("frame", frame)
+                    # cv2.imshow("frame", frame)
                     print(e)
-                    cv2.waitKey(1)
+                    # cv2.waitKey(1)
                     # cv2.destroyAllWindows()
                     #continue
                 # time.sleep(.0000001)
         except Exception as e:
             print("Nope")
             print(e)
-            
+
     def test(self):
         video = cv2.VideoCapture(-1)
         while True:
@@ -126,7 +126,7 @@ class lineTracing:
 
     # def midPoint()
 
-    def __init__(self): #self,commAngleW,commDistanceW
+    def __init__(self,commAngleW,commDistanceW): #self,commAngleW,commDistanceW
         print()
         #self.pipeAngleWrite = commAngleW
         #self.pipeDistanceWrite = commDistanceW
