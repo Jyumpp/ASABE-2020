@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
 import time
-import threading
+from multiprocessing import Pipe
 import cv2
 
 class ImageCapture:
 
-    def __init__(self, motorIn, cameraIn, outputIn):
+    def __init__(self, triggerPipe, cameraIn, outputIn):
 
         # setting the output directory for our cropped images 
         self.outputDir = outputIn
@@ -23,28 +23,24 @@ class ImageCapture:
         self.x1 = 180
         self.x2 = 500
 
-        # setting up dynamixel motor
-        self.motor = motorIn
-
-        # Setting up Threading
-        x = threading.Thread(target=self.Run)
-        x.start()
+        # setting up read pipe
+        self.triggerPipe = triggerPipe
 
     # Thread function
     def Run(self):
 
         image_number = 0
 
-        while True:
+        while image_number < 16:
 
             # Get signal from motor class
-            triggered = self.motor.getTriggered()
-
-            # Capture and display the latest image
-            ret, img = self.cap.read()
+            triggered = self.triggerPipe.recv()
 
             # If the object in the queue evaluates to True, crop and save the current frame
             if triggered:
+
+                # Capture the latest image
+                ret, img = self.cap.read()
                 
                 # Crop and save the image in the output directory
                 cropped_img = img[self.y1:self.y2, self.x1:self.x2].copy()
@@ -52,7 +48,8 @@ class ImageCapture:
                 cv2.imwrite(fileStr, cropped_img)
 
                 # Wait until the triggered variable is back to false
-                while self.motor.getTriggered():
+                while triggered:
+                    triggered = self.triggerPipe.recv()
                     pass
 
                 image_number += 1
