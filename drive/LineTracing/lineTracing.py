@@ -34,9 +34,9 @@ class lineTracing:
                         Mat = cv2.getRotationMatrix2D(center, 270, 1.42)
                         frame = cv2.warpAffine(frame, Mat, (int(width), int(height)))
                         frame = cv2.resize(frame, (480, 640), interpolation = cv2.INTER_LINEAR)
-                    frame = frame[0:][30:640]
+                    #frame = frame[0:][30:640]
                     greyVideo = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                    mask = cv2.inRange(greyVideo, 0, 79)
+                    mask = cv2.inRange(greyVideo, 0, 150)
                     _,contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     c = max(contours, key=cv2.contourArea)
                     contours[0] = c
@@ -89,14 +89,14 @@ class lineTracing:
                     self.angle = math.degrees(self.angle)
                     self.pipeAngleWrite.send(self.angle)
                     self.pipeDistanceWrite.send(self.distance)
-                    # cv2.imshow("frame", frame)
-                    # cv2.waitKey(1)
+                    cv2.imshow("frame", frame)
+                    cv2.waitKey(1)
                     #return angle, adjacent
                     #cv2.destroyAllWindows()
                     # video.release()
-                    #print(self.angle)
+                    print(self.angle)
                 except Exception as e:
-                    # cv2.imshow("frame", frame)
+                    #cv2.imshow("frame", frame)
                     print(e)
                     # cv2.waitKey(1)
                     # cv2.destroyAllWindows()
@@ -127,6 +127,6 @@ class lineTracing:
     # def midPoint()
 
     def __init__(self,commAngleW,commDistanceW): #self,commAngleW,commDistanceW
-        print()
-        #self.pipeAngleWrite = commAngleW
-        #self.pipeDistanceWrite = commDistanceW
+        # print()
+        self.pipeAngleWrite = commAngleW
+        self.pipeDistanceWrite = commDistanceW
