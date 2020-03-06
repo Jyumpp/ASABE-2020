@@ -2,6 +2,7 @@ import cv2
 import math
 import numpy as np
 import sys
+import multiprocessing as mp
 
 #upload to github
 class lineTracing:
@@ -34,13 +35,13 @@ class lineTracing:
                         Mat = cv2.getRotationMatrix2D(center, 270, 1.42)
                         frame = cv2.warpAffine(frame, Mat, (int(width), int(height)))
                         frame = cv2.resize(frame, (480, 640), interpolation = cv2.INTER_LINEAR)
-                    frame = frame[0:][30:640]
+                    #frame = frame[0:][30:640]
                     greyVideo = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                    mask = cv2.inRange(greyVideo, 0, 79)
+                    mask = cv2.inRange(greyVideo, 0, 150)
                     _,contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     c = max(contours, key=cv2.contourArea)
                     contours[0] = c
-                    #print(c)
+                    # print(c)
 
                     #find angle and decide how to track top right corner
                     if self.isVertical:
@@ -50,7 +51,7 @@ class lineTracing:
                         #frame = cv2.resize(frame, (640, 480), interpolation = cv2.INTER_LINEAR)
 
                     contx, conty, contw, conth = cv2.boundingRect(c)
-                    # cv2.rectangle(frame, (contx, conty), (contx + contw, conty + conth), (0, 0, 255), 2)
+                    cv2.rectangle(frame, (contx, conty), (contx + contw, conty + conth), (0, 0, 255), 2)
                     list = []
                     try:
                         list = []
@@ -66,8 +67,8 @@ class lineTracing:
                             if elem.item(0) < self.minimum:
                                 self.minimum = elem.item(0)
                     except Exception as e:
-                        # cv2.imshow("frame", frame)
                         print(e)
+                        # cv2.imshow("frame", frame)
                         # cv2.waitKey(1)
                         continue
 
@@ -94,10 +95,11 @@ class lineTracing:
                     #return angle, adjacent
                     #cv2.destroyAllWindows()
                     # video.release()
-                    print(self.angle)
+                    # print(toppy - centerX)
+                    # print("line: " + str(self.angle))
                 except Exception as e:
-                    # cv2.imshow("frame", frame)
                     print(e)
+                    # cv2.imshow("frame", frame)
                     # cv2.waitKey(1)
                     # cv2.destroyAllWindows()
                     #continue
@@ -128,5 +130,5 @@ class lineTracing:
 
     def __init__(self,commAngleW,commDistanceW): #self,commAngleW,commDistanceW
         print()
-        #self.pipeAngleWrite = commAngleW
-        #self.pipeDistanceWrite = commDistanceW
+        self.pipeAngleWrite = commAngleW
+        self.pipeDistanceWrite = commDistanceW
