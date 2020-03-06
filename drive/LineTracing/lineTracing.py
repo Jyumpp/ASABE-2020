@@ -40,7 +40,7 @@ class lineTracing:
                     _,contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     c = max(contours, key=cv2.contourArea)
                     contours[0] = c
-                    print(c)
+                    #print(c)
 
                     #find angle and decide how to track top right corner
                     if self.isVertical:
@@ -94,7 +94,7 @@ class lineTracing:
                     #return angle, adjacent
                     #cv2.destroyAllWindows()
                     # video.release()
-                    #print(self.angle)
+                    print(self.angle)
                 except Exception as e:
                     cv2.imshow("frame", frame)
                     print(e)
