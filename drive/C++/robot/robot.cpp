@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Robot(String path){
+Robot(const Motor* motors){
   for(int i = 0; i < 4; i++){
     if(i < 2){
       motors[i] = Motor(true,path);
@@ -88,13 +88,25 @@ int crabSteering(angle){
   }
 }
 
-int turn(angle){
+int turn(double angle){
     try{
+        angle = math::degreeToRadians(angle)
+        double timeSleep =
+        double inside = (2*length*math::sin(angle))/(2*length*math::cos(angle)-math::sin(angle));
+        double outside = (2*length*math::sin(angle))/(2*length*math::cos(angle)+math::sin(angle));
+        if(angle > 0){
+            motor[1].setAngle(inside);
+            motor[2].setAngle(outside);
+        } else{
+            motor[1].setAngle(outside);
+            motor[2].setAngle(inside);
+        }
+        // while(motor[3].getAngle() - (150 - angle) <  ..5){
+        // 	continue;
+        // }
 
-    while(motor[3].getAngle() - (150 - angle) <  ..5){
-      continue;
-    }
-    return EXIT_SUCCESS;
+
+        return EXIT_SUCCESS;
   } catch (int e) {
     drive(0);
     center();
@@ -136,7 +148,7 @@ int translate(angle, distance){
 
 int centerAxisTurn(angle){
   try{
-    double sleepTime = (degreeToRadians(angle)/(M_PI)) *74*1000;
+    double sleepTime = (math::degreeToRadians(angle)/(M_PI)) *74*1000;
 
     center()
     diff()

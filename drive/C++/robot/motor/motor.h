@@ -1,7 +1,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-class motor{
+class Motor{
   static int count = 1;
   static dynIO* dyn = NULL;
   static double homeAngle = 150;
@@ -9,7 +9,7 @@ class motor{
   dynIO* driveMotor = NULL;
 
   public:
-    motor();
+    Motor();
 
     dobule getAngle();
 

@@ -10,7 +10,7 @@ class LineCorrection{
   static int pipeDistanceRead;
   Robot robot;
 
-  LineCorrection();
+  LineCorrection(int,int,Robot);
 
   void checkAngle();
 

@@ -8,13 +8,14 @@
 #define _USE_MATH_DEFINES
 
 using namespace std;
-
+static doulbe length;
+static double width;
 class Robot{
-  motor motors[4];
+  Motor* motors;
 
   public:
 
-    Robot(String);                      // Constructor for the Robot class
+    Robot(const Motor*);                // Constructor for the Robot class
 
     double degreeToRadians(double);     // Converts degrees to radians
 
