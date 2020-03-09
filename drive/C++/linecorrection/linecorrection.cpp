@@ -1,4 +1,4 @@
-#include "LineCorrection"
+#include "LineCorrection.h"
 
 angle = 0;
 centerDistance = 0;
@@ -7,13 +7,13 @@ LineCorrection(int pipeAngleR, int pipeDistanceR, Robot bot){
     Robot robot = bot;
     pipeAngleRead = pipeAngleR;
     pipeDistanceRead = pipeDistanceR;
-    // make and start checkAngle thread
+    std::thread thread_object(checkAngle());
 }
 
 void checkAngle(){
     // what is the last paramenter
-    read[pipeAngleRead,angle];
-    read[pipeDistanceRead,centerDistance];
+    read[pipeAngleRead,angle,8];
+    read[pipeDistanceRead,centerDistance,8];
 }
 
 void whatMove() const{
