@@ -1,18 +1,6 @@
-#incldue "robot.h"
+#include "robot.h"
 
 using namespace std;
-
-Robot(const Motor* motors){
-  for(int i = 0; i < 4; i++){
-    if(i < 2){
-      motors[i] = Motor(true,path);
-    } else {
-      motors[i] = Motors(false,path);
-    }
-  }
-  drive(0);
-  center();
-}
 
 double degreeToRadians(double angle){
   return (angle*M_PI)/180;
@@ -176,4 +164,17 @@ int centerAxisTurn(angle){
       cout << "An Exception Occured: #" << e << endl;
       return EXIT_FAILURE;
     }
+}
+
+Robot::Robot(Motor*) {
+    for (int i = 0; i < 4; i++) {
+        if (i < 2) {
+            motors[i] = Motor(true, path);
+        }
+        else {
+            motors[i] = Motors(false, path);
+        }
+    }
+    drive(0);
+    center();
 }

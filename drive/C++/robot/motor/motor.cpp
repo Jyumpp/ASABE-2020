@@ -1,11 +1,6 @@
-#define PY_SSIZE_T_CLEAN
-#include <Python.h>
 #include "motor.h"
 
+count = 1;
+homeAngle = 150;
 
-Motor(){
-  if(dyn == NULL){
-    // make dyn object
-  }
-  angleMotor = dyn.newAX12
-}
+
