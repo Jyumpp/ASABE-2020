@@ -1,11 +1,15 @@
+#include <iostream>
+#include <string>
 
+using namespace std;
 
 class Motor{
+
   static int count;
   static double homeAngle;
 
   public:
-    Motor();
+    Motor(bool,string);
 
     double getAngle();
 

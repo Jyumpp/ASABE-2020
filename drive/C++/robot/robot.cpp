@@ -2,15 +2,27 @@
 
 using namespace std;
 
-double degreeToRadians(double angle){
+Robot::Robot(string path) {
+    for (int i = 0; i < 4; i++) {
+        if (i < 2) {
+            *motors[i] = Motor(true, path);
+        } else {
+            *motors[i] = Motor(false, path);
+        }
+    }
+    drive(0);
+    center();
+}
+
+double Robot::degreeToRadians(double angle){
   return (angle*M_PI)/180;
 }
 
-int drive(double velocity){
+int Robot::drive(double velocity){
   try{
     center();
     for(int i = 0; i < 4; i++){
-      motors[i].setVelocity(velocity);
+      motors[i]->setVelocity(velocity);
     }
     return EXIT_SUCCESS;
   } catch (int e){
@@ -20,10 +32,10 @@ int drive(double velocity){
   }
 }
 
-int center(){
+int Robot::center(){
   try{
     for(int i = 0; i < 4; i++){
-      motors[i].center();
+      motors[i]->center();
     }
     return EXIT_SUCCESS;
   } catch (int e) {
@@ -34,14 +46,14 @@ int center(){
   }
 }
 
-int diff(){
+int Robot::diff(){
   try{
-    motor[0].setAngle(13.101);
-    motor[1].setAngle(-13.101);
-    motor[2].setAngle(-13.101);
-    motor[4].setAngle(13.101);
+      motors[0]->setAngle(13.101);
+      motors[1]->setAngle(-13.101);
+      motors[2]->setAngle(-13.101);
+      motors[4]->setAngle(13.101);
 
-    while(motor[3].getAngle() - (150 - 13.101) <  ..5){
+    while(motors[3]->getAngle() - (150 - 13.101) < .5){
       continue;
     }
     return EXIT_SUCCESS;
@@ -53,43 +65,44 @@ int diff(){
   }
 }
 
-int crabSteering(angle){
-  try{
+int Robot::crabSteering(double angle){
+  try {
     if(angle == 0){
-      self.center()
+        center();
+        return EXIT_SUCCESS;
     } else{
-      motor[0].setAngle(angle);
-      motor[1].setAngle(-angle);
-      motor[2].setAngle(-angle);
-      motor[3].setAngle(angle);
+        motors[0]->setAngle(angle);
+        motors[1]->setAngle(-angle);
+        motors[2]->setAngle(-angle);
+        motors[3]->setAngle(angle);
 
-      while(motor[3].getAngle() - (150 - angle) <  ..5){
-        continue;
-      }
-      return EXIT_SUCCESS;
+        while(motors[3]->getAngle() - (150 - angle) < .5){
+            continue;
+        }
+        return EXIT_SUCCESS;
     }
   } catch (int e) {
-    drive(0);
-    center();
-    cout << "An Exception Occured: #" << e << endl;
-    return EXIT_FAILURE;
+        drive(0);
+        center();
+        cout << "An Exception Occured: #" << e << endl;
+        return EXIT_FAILURE;
   }
 }
 
-int turn(double angle){
+int Robot::turn(double angle){
     try{
-        angle = math::degreeToRadians(angle)
-        double timeSleep =
-        double inside = (2*length*math::sin(angle))/(2*length*math::cos(angle)-math::sin(angle));
-        double outside = (2*length*math::sin(angle))/(2*length*math::cos(angle)+math::sin(angle));
+        angle = degreeToRadians(angle);
+        //double timeSleep = ;
+        double inside = (2*length*sin(angle))/(2*length*cos(angle)-sin(angle));
+        double outside = (2*length*sin(angle))/(2*length*cos(angle)+sin(angle));
         if(angle > 0){
-            motor[1].setAngle(inside);
-            motor[2].setAngle(outside);
+            motors[1]->setAngle(inside);
+            motors[2]->setAngle(outside);
         } else{
-            motor[1].setAngle(outside);
-            motor[2].setAngle(inside);
+            motors[1]->setAngle(outside);
+            motors[2]->setAngle(inside);
         }
-        // while(motor[3].getAngle() - (150 - angle) <  ..5){
+        // while(motors[3]->getAngle() - (150 - angle) <  ..5){
         // 	continue;
         // }
 
@@ -103,28 +116,28 @@ int turn(double angle){
   }
 }
 
-int translate(angle, distance){
+int Robot::translate(double angle, double distance){
   try{
     int inverse = 0;
     if(distance > 0){
-      inverse = 1
+        inverse = 1;
     } else {
       inverse = -1;
     }
-    double sleepTime = (fabs(distance)/(56.832*M_PI)) *120*1000;
+    long long sleepTime = (fabs(distance)/(56.832*M_PI)) *120*1000000000;
 
     crabSteering(angle);
 
-    motor[0].setVelocity(inverse*256);
-    motor[1].setVelocity(-inverse*256);
-    motor[2].setVelocity(-inverse*256);
-    motor[3].setVelocity(inverse*256);
+    motors[0]->setVelocity(inverse*256);
+    motors[1]->setVelocity(-inverse*256);
+    motors[2]->setVelocity(-inverse*256);
+    motors[3]->setVelocity(inverse*256);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+    this_thread::sleep_for(chrono::nanoseconds(sleepTime));
 
-    drive(0)
+    drive(0);
 
-    center()
+        center();
     return EXIT_SUCCESS;
   } catch (int e) {
     drive(0);
@@ -134,26 +147,26 @@ int translate(angle, distance){
   }
 }
 
-int centerAxisTurn(angle){
+int Robot::centerAxisTurn(double angle){
   try{
-    double sleepTime = (math::degreeToRadians(angle)/(M_PI)) *74*1000;
+    long long sleepTime = (degreeToRadians(angle)/(M_PI)) *74*1000000000;
 
-    center()
-    diff()
+    center();
+    diff();
 
     if(angle > 0){
-      motor[0].setVelocity(-128);
-      motor[1].setVelocity(128);
-      motor[2].setVelocity(-128);
-      motor[3].setVelocity(128);
+      motors[0]->setVelocity(-128);
+      motors[1]->setVelocity(128);
+      motors[2]->setVelocity(-128);
+      motors[3]->setVelocity(128);
     } else{
-      motor[0].setVelocity(128);
-      motor[1].setVelocity(-128);
-      motor[2].setVelocity(128);
-      motor[3].setVelocity(-128);
+      motors[0]->setVelocity(128);
+      motors[1]->setVelocity(-128);
+      motors[2]->setVelocity(128);
+      motors[3]->setVelocity(-128);
     }
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
+    this_thread::sleep_for(chrono::nanoseconds(sleepTime));
 
     drive(0);
     center();
@@ -166,15 +179,30 @@ int centerAxisTurn(angle){
     }
 }
 
-Robot::Robot(Motor*) {
-    for (int i = 0; i < 4; i++) {
-        if (i < 2) {
-            motors[i] = Motor(true, path);
-        }
-        else {
-            motors[i] = Motors(false, path);
-        }
+int Robot::expandyBoi() {
+    try {
+        translate(0, -3);
+
+        long long sleepTime = ((22.5) / (28.416 * M_PI)) * 60 *1000000000;
+
+        crabSteering(90);
+
+        motors[0]->setVelocity(1023);
+        motors[1]->setVelocity(-230);
+        motors[2]->setVelocity(-1023);
+        motors[3]->setVelocity(230);
+
+        this_thread::sleep_for(chrono::nanoseconds(sleepTime));
+
+        drive(0);
+        center();
+
+        return EXIT_SUCCESS;
     }
-    drive(0);
-    center();
+    catch (int e) {
+        drive(0);
+        center();
+        cout << "An Exception Occured: #" << e << endl;
+        return EXIT_FAILURE;
+    }
 }
