@@ -35,8 +35,8 @@ class Robot:
         try:
             for motor in self.motors:
                 motor.center()
-            print(self.motors[3].getAngle() - 150)
-            while self.motors[3].getAngle() - 150 < -.75:
+            # print(self.motors[3].getAngle() - 150)
+            while self.motors[3].getAngle() - 150 < -1:
                 continue
 
             return None
@@ -52,7 +52,7 @@ class Robot:
             self.motors[0].setAngle(-13.101)
             self.motors[3].setAngle(13.101)
 
-            while self.motors[3].getAngle() - (150 - 13.101) < -.75:
+            while self.motors[3].getAngle() - (150 - 13.101) < -.5:
                 continue
 
         except Exception as e:
@@ -70,7 +70,7 @@ class Robot:
                 self.motors[0].setAngle(-angle)
                 self.motors[3].setAngle(angle)
 
-                while self.motors[3].getAngle() - (150 - angle) > -1 :
+                while self.motors[3].getAngle() - (150 - angle) > -.5 :
                     continue
 
         except Exception as e:
@@ -81,15 +81,16 @@ class Robot:
     def turnLeft(self,angle):
         # timeSleep = (math.radians(angle)*5.5)/(4*((math.cos(math.radians(45))*28)/60))
 
-        self.diff()
+        self.motor[1].setAngle(math.arctan(L/(R+(T/2))))
+        self.motor[2].setAngle(math.arctan(L/(R-(T/2))))
 
 
         self.motors[1].toggleAngle()
         self.motors[2].toggleAngle()
-        self.motors[0].setVelocity(512)
-        self.motors[3].setVelocity(512)
+        self.motors[0].setVelocity(256)
+        self.motors[3].setVelocity(256)
 
-        # self.motors[2].drive(512)
+        # self.motors[2].drive(256)
 
         time.sleep(1)
 
@@ -105,11 +106,11 @@ class Robot:
 
         time.sleep(1.6)
 
-        self.motors[0].drive(-int(512.0*.43715))
+        self.motors[0].drive(-int(256.0*.43715))
 
-        self.motors[3].drive(int(512.0*.43715))
+        self.motors[3].drive(int(256.0*.43715))
 
-        self.motors[1].drive(512)
+        self.motors[1].drive(256)
 
         self.motors[2].drive(-512)
 
@@ -122,15 +123,15 @@ class Robot:
             else:
                 inverse = -1
 
-            sleepTime = (abs(distance)/(56.832*math.pi)) * 60
+            sleepTime = (abs(distance)/(56.832*math.pi)) * 120
 
 
             self.crabSteering(angle)
 
-            self.motors[0].setVelocity(inverse*512)
-            self.motors[3].setVelocity(-inverse*512)
-            self.motors[1].setVelocity(-inverse*512)
-            self.motors[2].setVelocity(inverse*512)
+            self.motors[0].setVelocity(inverse*256)
+            self.motors[3].setVelocity(-inverse*256)
+            self.motors[1].setVelocity(-inverse*256)
+            self.motors[2].setVelocity(inverse*256)
 
             time.sleep(sleepTime)
 
@@ -146,22 +147,22 @@ class Robot:
 
     def centerAxis(self,angle):
         try:
-            sleepTime = ((math.radians(abs(angle)))/(math.pi))*19.75
+            sleepTime = ((math.radians(abs(angle)))/(math.pi))*74
 
             self.center()
 
             self.diff()
 
             if angle > 0:
-                self.motors[0].setVelocity(-512)
-                self.motors[3].setVelocity(512)
-                self.motors[1].setVelocity(-512)
-                self.motors[2].setVelocity(512)
+                self.motors[0].setVelocity(-128)
+                self.motors[3].setVelocity(128)
+                self.motors[1].setVelocity(-128)
+                self.motors[2].setVelocity(128)
             else:
-                self.motors[0].setVelocity(512)
-                self.motors[3].setVelocity(-512)
-                self.motors[1].setVelocity(512)
-                self.motors[2].setVelocity(-512)
+                self.motors[0].setVelocity(128)
+                self.motors[3].setVelocity(-128)
+                self.motors[1].setVelocity(128)
+                self.motors[2].setVelocity(-128)
 
             time.sleep(sleepTime)
 
@@ -179,7 +180,7 @@ class Robot:
         try:
             self.translate(0,-3)
 
-            sleepTime = (abs(29.5)/(28.416*math.pi)) * 60
+            sleepTime = (abs(22.5)/(28.416*math.pi)) * 60
 
 
             self.crabSteering(90)
