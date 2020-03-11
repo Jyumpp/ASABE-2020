@@ -7,7 +7,6 @@
 #include <array>
 #include "motor/motor.h"
 #define _USE_MATH_DEFINES
-#define _GLIBCXX_USE_NANOSLEEP
 
 using namespace std;
 

@@ -15,8 +15,6 @@ class Motor{
 
     void setAngle(double);
 
-    void center();
-
     void setVelocity(double);
 
     double getVelocity();

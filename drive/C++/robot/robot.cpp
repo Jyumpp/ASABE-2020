@@ -35,7 +35,7 @@ int Robot::drive(double velocity){
 int Robot::center(){
   try{
     for(int i = 0; i < 4; i++){
-      motors[i]->center();
+      motors[i]->setAngle(150);
     }
     return EXIT_SUCCESS;
   } catch (int e) {
@@ -76,9 +76,9 @@ int Robot::crabSteering(double angle){
         motors[2]->setAngle(-angle);
         motors[3]->setAngle(angle);
 
-        while(motors[3]->getAngle() - (150 - angle) < .5){
-            continue;
-        }
+        // while(motors[3]->getAngle() - (150 - angle) < .5){
+        //     continue;
+        // }
         return EXIT_SUCCESS;
     }
   } catch (int e) {
