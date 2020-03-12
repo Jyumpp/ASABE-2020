@@ -9,14 +9,19 @@ class Motor{
   static double homeAngle;
 
   public:
+    Motor();
     Motor(bool,string);
+    Motor(const Motor&);
+    ~Motor();
 
     double getAngle();
 
-    void setAngle(double);
+    int setAngle(double);
 
-    void setVelocity(double);
+    int setVelocity(double);
 
     double getVelocity();
+
+    void operator=(const Motor&); // Copy Constructor for Motor
 
 };

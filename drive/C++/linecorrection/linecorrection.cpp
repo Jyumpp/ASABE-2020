@@ -1,5 +1,6 @@
-#include "LineCorrection.h"
+#include "linecorrection.h"
 #include <thread>
+#include <functional>
 #include <iostream>
 
 using namespace std;
@@ -16,7 +17,7 @@ LineCorrection::LineCorrection(int pipeAngleR, int pipeDistanceR){
     robot = new Robot("test");
     pipeAngleRead = pipeAngleR;
     pipeDistanceRead = pipeDistanceR;
-    thread angleCheck(checkAngle());
+    thread angleCheck(&LineCorrection::checkAngle,this);
 }
 
 void LineCorrection::checkAngle(){

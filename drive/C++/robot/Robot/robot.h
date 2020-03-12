@@ -4,17 +4,21 @@
 #include <chrono>
 #include <thread>
 #include <math.h>
-#include <array>
-#include "motor/motor.h"
+#include <map>
+#include <cstdarg>
+#include <python3.7m/Python.h>
+#include <pybind11/pybind11.h>
+#include "../motor/motor.h"
 #define _USE_MATH_DEFINES
 
 using namespace std;
 
 class Robot{
-    static double length;
-    static double width;
-    array<Motor*, 4> motors = {nullptr,nullptr,nullptr,nullptr };
+
+    Motor* motors;
+
     public:
+
         Robot(string);                      // Constructor for the Robot class
 
         double degreeToRadians(double);     // Converts degrees to radians
@@ -34,4 +38,5 @@ class Robot{
         int centerAxisTurn(double);          // Turns the Robot on it's center axis
 
         int expandyBoi();                   // Expanding routine for startup
+
 };
