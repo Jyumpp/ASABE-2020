@@ -1,5 +1,5 @@
 
-#include "motor.h"
+#include "Motor.h"
 
 using namespace std;
 

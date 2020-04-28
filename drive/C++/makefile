@@ -1,8 +1,8 @@
-test: linecorrection.o linetracking.o
-    g++ -o test linecorrection.o linetracking.o robot.o motor.o
-linecorrection.o: robot.o linetracking.o linecorrection.cpp
-    g++ -c LineCorrection.cpp
-robot.o: motor.o robot.cpp
-    g++ -c robot.cpp
-motor.o: motor.cpp
-    g++ -c motor.cpp
+test: LineCorrection.o Linetracking.o Robot.o Motor.o
+	g++ -o test LineCorrection/LineCorrection.o LineTracking/LineTracking.o Movement/Robot/Robot.o Moveemnt/Motor/Motor.o
+LineCorrection.o: Robot.o Linetracking.o Linecorrection.cpp
+	g++ -c LineCorrection/LineCorrection.cpp
+Robot.o: Motor.o Movement/Robot/Robot.cpp
+	g++ -c Movement/Robot/Robot.cpp
+Motor.o: Movement/Motor/Motor.cpp
+	g++ -c Movement/Motor/Motor.cpp
