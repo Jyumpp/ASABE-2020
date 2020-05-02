@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "/home/michael/Documents/RobotClub/dynamixel-controller/dynio.h"
+#include "../../dynamixel-controller/dynio.h"
 
 typedef std::unique_ptr<dynio::DynamixelMotor> dyn_ptr;
 
