@@ -25,8 +25,6 @@ Motor::Motor(bool right, string path){
 
 //Motor destructor
 Motor::~Motor(){
-    delete angleMotor;
-    delete driveMotor;
     delete dynio;
 }
 

@@ -14,7 +14,7 @@ class Motor{
   dyn_ptr angleMotor;
   dyn_ptr driveMotor;
   bool right;
-
+  double homeAngle;
 
 
   public:
