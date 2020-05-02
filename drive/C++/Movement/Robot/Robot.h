@@ -6,9 +6,9 @@
 #include <math.h>
 #include <map>
 #include <cstdarg>
-#include <python3.7m/Python.h>
-#include <pybind11/pybind11.h>
-#include "../motor/motor.h"
+#include <python3.6/Python.h>
+#include "../../cget/include/pybind11/pybind11.h"
+#include "../Motor/Motor.h"
 #define _USE_MATH_DEFINES
 
 using namespace std;
