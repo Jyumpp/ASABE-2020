@@ -1,18 +1,6 @@
-#include "linecorrection.h"
-#include <thread>
-#include <functional>
-#include <iostream>
+#include "LineCorrection.h"
 
-using namespace std;
-
-static double* angle;
-static double* centerDistance;
-static double errorAngle = .25;
-static double errorDistance = .25;
-static int pipeAngleRead;
-static int pipeDistanceRead;
-Robot* robot;
-
+//Constructor for the LineCorrection object takes pipes for data transfer
 LineCorrection::LineCorrection(int pipeAngleR, int pipeDistanceR){
     robot = new Robot("test");
     pipeAngleRead = pipeAngleR;
@@ -20,6 +8,7 @@ LineCorrection::LineCorrection(int pipeAngleR, int pipeDistanceR){
     thread angleCheck(&LineCorrection::checkAngle,this);
 }
 
+//Gets the current anlge of the Robot from LineTacking
 void LineCorrection::checkAngle(){
     while (true) {
         // what is the last paramenter
@@ -28,6 +17,7 @@ void LineCorrection::checkAngle(){
     }
 }
 
+//Decides what action to preform next
 void LineCorrection::whatMove(){
     while (true) {
         try{

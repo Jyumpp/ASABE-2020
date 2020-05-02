@@ -7,8 +7,9 @@ using namespace std;
 static double length = 8;
 static double width = 36;
 
-map<int,Motor> motors;
+map<int,Motor> motors; // Array of custion Motor Objects
 
+//Robot Contructor takes path to Dynamixel port
 Robot::Robot(string path) {
   for(int i = 0; i < 4; i++){
     if(i < 2){
@@ -20,11 +21,13 @@ Robot::Robot(string path) {
   drive(0);
   center();
 }
-
+//Helper method for converting degrees to radians (This is probably already a thing)
 double Robot::degreeToRadians(double angle){
   return (angle*M_PI)/180;
 }
 
+
+//Causes the Robot to move either forward of backaward; takes a velocity value
 int Robot::drive(double velocity){
   try{
     for(int i = 0; i < 4; i++){
@@ -38,6 +41,8 @@ int Robot::drive(double velocity){
   }
 }
 
+
+//Turns the motors to home angle(150)
 int Robot::center(){
   try{
     for(int i = 0; i < 4; i++){
@@ -51,25 +56,7 @@ int Robot::center(){
   }
 }
 
-int Robot::diff(){
-  try{
-      motors[0].setAngle(13.101);
-      motors[1].setAngle(-13.101);
-      motors[2].setAngle(-13.101);
-      motors[4].setAngle(13.101);
-
-    while(motors[3].getAngle() - (150 - 13.101) < .5){
-      continue;
-    }
-    return EXIT_SUCCESS;
-  } catch (int e) {
-    drive(0);
-    center();
-    cout << "An Exception Occured: #" << e << endl;
-    return EXIT_FAILURE;
-  }
-}
-
+//Turns the wheels to be at angle
 int Robot::crabSteering(double angle){
   try {
     if(angle == 0){
@@ -94,6 +81,7 @@ int Robot::crabSteering(double angle){
   }
 }
 
+//Turns the robot angle from current position
 int Robot::turn(double angle){
     try{
         angle = degreeToRadians(angle);
@@ -121,6 +109,8 @@ int Robot::turn(double angle){
   }
 }
 
+
+//Translates the robot at angle distance form current position
 int Robot::translate(double angle, double distance){
   try{
     int inverse = 0;
@@ -152,12 +142,14 @@ int Robot::translate(double angle, double distance){
   }
 }
 
+
+//Turns the robot angle from current position on the center axis
 int Robot::centerAxisTurn(double angle){
   try{
     long long sleepTime = (degreeToRadians(angle)/(M_PI)) *74*1000000000;
 
     center();
-    diff();
+    crabSteering(NORMALANGLE);
 
     if(angle > 0){
       motors[0].setVelocity(-128);
@@ -184,6 +176,8 @@ int Robot::centerAxisTurn(double angle){
     }
 }
 
+
+//Expands the robot and positions it on the center row to being sensing
 int Robot::expandyBoi() {
     try {
         translate(0, -3);
@@ -212,12 +206,12 @@ int Robot::expandyBoi() {
     }
 }
 
+//Wrapper for python, magic that I do not understand(FRAGILE)
 PYBIND11_MODULE(robot, m) {
   py::class_<Robot>(m, "Robot")
       .def(py::init<string>())
       .def("drive",&Robot::drive)
       .def("center", &Robot::center)
-      .def("diff",&Robot::diff)
       .def("crabSteering",&Robot::crabSteering)
       .def("turn",&Robot::turn)
       .def("translate",&Robot::translate)

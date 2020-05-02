@@ -17,26 +17,29 @@ class Robot{
 
     Motor* motors;
 
+    double degreeToRadians(double);      // Converts degrees to radians
+
+    const double NORMALANGLE = 13.101;
+    const double homeAngle = 150;
+
     public:
 
-        Robot(string);                      // Constructor for the Robot class
+        Robot(string);                       // Constructor for the Robot class
 
-        double degreeToRadians(double);     // Converts degrees to radians
+        int drive(double);                   // Moves the Robot forward and backwards
 
-        int drive(double);                  // Moves the Robot forward and backwards
+        int center();                        // Centers the Robot wheels
 
-        int center();                       // Centers the Robot wheels
-
-        int diff();                         // Turns the wheels to be normal to center axis of rotation
+        int diff();                          // Turns the wheels to be normal to center axis of rotation
 
         int crabSteering(double);            // Turn all wheels normal to home position
 
         int turn(double);                    // Turns the front wheels only (Ackermann Steering)
 
-        int translate(double, double);     // Translates the Robot horizontally distance
+        int translate(double, double);     	 // Translates the Robot horizontally distance
 
         int centerAxisTurn(double);          // Turns the Robot on it's center axis
 
-        int expandyBoi();                   // Expanding routine for startup
+        int expandyBoi();                    // Expanding routine for startup
 
 };

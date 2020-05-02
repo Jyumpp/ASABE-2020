@@ -10,30 +10,27 @@ using DynamixelIO = dynio::DynamixelIO;
 class Motor{
 
   static int count;
-  static double homeAngle;
   DynamixelIO* dynio = nullptr;
   dyn_ptr angleMotor;
   dyn_ptr driveMotor;
   bool right;
 
 
+
   public:
-    Motor();
 
-    Motor(bool,string);
+    Motor(bool,string); //Motor Constructor takes the math to Dynamixel port and position of the motor
 
-    Motor(const Motor&);
+    ~Motor(); //Destructor for Motor object
 
-    ~Motor();
+    double getAngle(); //Gets the current angle of the motor
 
-    double getAngle();
+    int setAngle(double); //Sets the angle for the motor
 
-    int setAngle(double);
+    int setVelocity(double); //Sets velocity of the motor
 
-    int setVelocity(double);
+    double getVelocity();	//gets the velocity of the motor
 
-    double getVelocity();
-
-    void operator=(const Motor& m);
+    void operator=(const Motor& m); //I do not know why I have this. Will look into
 
 };
