@@ -2,15 +2,11 @@
 
 namespace py = pybind11;
 
-using namespace std;
-
 static double length = 8;
 static double width = 36;
 
-map<int,Motor> motors; // Array of custion Motor Objects
-
 //Robot Contructor takes path to Dynamixel port
-Robot::Robot(string path) {
+Robot::Robot(std::string path) {
   for(int i = 0; i < 4; i++){
     if(i < 2){
       motors[i] = Motor(true,path);
@@ -36,7 +32,7 @@ int Robot::drive(double velocity){
     return EXIT_SUCCESS;
   } catch (int e){
     center();
-    cout << "An Exception Occured: #" << e << endl;
+    std::cout << "An Exception Occured: #" << e << std::endl;
     return EXIT_FAILURE;
   }
 }
@@ -46,12 +42,12 @@ int Robot::drive(double velocity){
 int Robot::center(){
   try{
     for(int i = 0; i < 4; i++){
-      (motors+1)->setAngle(150);
+      motors[i].setAngle(150);
     }
     return EXIT_SUCCESS;
   } catch (int e) {
     drive(0);
-    // cout << "An Exception Occured: #" << e << endl;
+    // std::cout << "An Exception Occured: #" << e << std::endl;
     return EXIT_FAILURE;
   }
 }
@@ -76,7 +72,7 @@ int Robot::crabSteering(double angle){
   } catch (int e) {
         drive(0);
         center();
-        cout << "An Exception Occured: #" << e << endl;
+        std::cout << "An Exception Occured: #" << e << std::endl;
         return EXIT_FAILURE;
   }
 }
@@ -95,16 +91,16 @@ int Robot::turn(double angle){
             motors[1].setAngle(outside);
             motors[2].setAngle(inside);
         }
-        // while(motors[3].getAngle() - (150 - angle) <  .5){
-        // 	continue;
-        // }
+        while(motors[3].getAngle() - (150 - angle) <  .5){
+        	continue;
+        }
 
 
         return EXIT_SUCCESS;
   } catch (int e) {
     drive(0);
     center();
-    cout << "An Exception Occured: #" << e << endl;
+    std::cout << "An Exception Occured: #" << e << std::endl;
     return EXIT_FAILURE;
   }
 }
@@ -137,7 +133,7 @@ int Robot::translate(double angle, double distance){
   } catch (int e) {
     drive(0);
     center();
-    cout << "An Exception Occured: #" << e << endl;
+    std::cout << "An Exception Occured: #" << e << std::endl;
     return EXIT_FAILURE;
   }
 }
@@ -171,7 +167,7 @@ int Robot::centerAxisTurn(double angle){
   } catch (int e) {
       drive(0);
       center();
-      cout << "An Exception Occured: #" << e << endl;
+      std::cout << "An Exception Occured: #" << e << std::endl;
       return EXIT_FAILURE;
     }
 }
@@ -201,7 +197,7 @@ int Robot::expandyBoi() {
     catch (int e) {
         drive(0);
         center();
-        cout << "An Exception Occured: #" << e << endl;
+        std::cout << "An Exception Occured: #" << e << std::endl;
         return EXIT_FAILURE;
     }
 }
@@ -209,7 +205,7 @@ int Robot::expandyBoi() {
 //Wrapper for python, magic that I do not understand(FRAGILE)
 PYBIND11_MODULE(robot, m) {
   py::class_<Robot>(m, "Robot")
-      .def(py::init<string>())
+      .def(py::init<std::string>())
       .def("drive",&Robot::drive)
       .def("center", &Robot::center)
       .def("crabSteering",&Robot::crabSteering)

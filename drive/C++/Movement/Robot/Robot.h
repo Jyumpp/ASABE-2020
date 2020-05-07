@@ -6,6 +6,7 @@
 #include <math.h>
 #include <map>
 #include <cstdarg>
+#include <vector>
 #include <python3.6/Python.h>
 #include "../../cget/include/pybind11/pybind11.h"
 #include "../Motor/Motor.h"
@@ -15,7 +16,7 @@ using namespace std;
 
 class Robot{
 
-    Motor* motors;
+    Motor motors[4]; // Array of custom Motor Objects
 
     double degreeToRadians(double);      // Converts degrees to radians
 
@@ -24,7 +25,7 @@ class Robot{
 
     public:
 
-        Robot(string);                       // Constructor for the Robot class
+        Robot(std::string);                       // Constructor for the Robot class
 
         int drive(double);                   // Moves the Robot forward and backwards
 

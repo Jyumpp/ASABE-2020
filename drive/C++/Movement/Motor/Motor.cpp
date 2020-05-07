@@ -2,11 +2,16 @@
 
 static int count = 1;
 
+typedef std::shared_ptr<dynio::DynamixelMotor> dyn_ptr;
 
-Motor::Motor(bool right, string path){
+Motor::Motor(){
+
+}
+
+Motor::Motor(bool side, std::string path){
     if(dynio == nullptr){
         //Check Baudrate
-        auto dynio = new DynamixelIO(path);
+        dynio = new DynamixelIO(path);
     }
     // Motor def
     // cout << "Motor Constructor" << endl;
@@ -18,8 +23,15 @@ Motor::Motor(bool right, string path){
     driveMotor->setVelocityMode();
     driveMotor->torqueEnable();
     count = count + 1;
-    this->right = right;
     homeAngle = 150;
+    right = side;
+}
+
+Motor::Motor(const Motor& m){
+  driveMotor = m.getDriveMotor();
+  angleMotor = m.getAngleMotor();
+  this->setSide(m.getSide());
+  homeAngle = 150;
 }
 
 //Motor destructor
@@ -55,6 +67,22 @@ int Motor::setVelocity(double velocity){
 
 }
 
+const bool Motor::getSide() const{
+  return right;
+}
+
+void Motor::setSide(bool side){
+  right = side;
+}
+
+const dyn_ptr Motor::getAngleMotor()const{
+  return angleMotor;
+}
+
+const dyn_ptr Motor::getDriveMotor()const{
+  return driveMotor;
+}
+
 //Reads the motor velocity from the motor control table
 double Motor::getVelocity(){
     // gets the current velocity of the driveMotor
@@ -62,7 +90,9 @@ double Motor::getVelocity(){
     return driveMotor->readControlTable("Present_Speed");
 }
 
-//Not sure why this is here (Do not delete)
-void Motor::operator=(const Motor& m){
-    // cout << "overload" << endl;
+void Motor::operator=(const Motor& m) {
+  driveMotor = m.getDriveMotor();
+  angleMotor = m.getAngleMotor();
+  this->setSide(m.getSide());
+  homeAngle = 150;
 }

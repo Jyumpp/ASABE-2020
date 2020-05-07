@@ -2,15 +2,14 @@
 #include <string>
 #include "../../cget/include/dynamixel-controller/dynio.h"
 
-typedef std::unique_ptr<dynio::DynamixelMotor> dyn_ptr;
+typedef std::shared_ptr<dynio::DynamixelMotor> dyn_ptr;
 
-using string=std::string;
 using DynamixelIO = dynio::DynamixelIO;
 
 class Motor{
 
   static int count;
-  DynamixelIO* dynio = nullptr;
+  static DynamixelIO* dynio;
   dyn_ptr angleMotor;
   dyn_ptr driveMotor;
   bool right;
@@ -19,7 +18,9 @@ class Motor{
 
   public:
 
-    Motor(bool,string); //Motor Constructor takes the math to Dynamixel port and position of the motor
+    Motor(); //Motor default constructor
+    Motor(bool,std::string); //Motor Constructor takes the path to Dynamixel port and position of the motor
+    Motor(const Motor&); //Copy Constructor
 
     ~Motor(); //Destructor for Motor object
 
@@ -31,6 +32,15 @@ class Motor{
 
     double getVelocity();	//gets the velocity of the motor
 
-    void operator=(const Motor& m); //I do not know why I have this. Will look into
+    const bool getSide() const;
+
+    void setSide(bool); //Setter for motor side
+
+    const dyn_ptr getAngleMotor() const;
+
+    const dyn_ptr getDriveMotor()const;
+
+    void operator=(const Motor&); //I do not know why I have this. Will look
+
 
 };
