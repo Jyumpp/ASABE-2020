@@ -16,7 +16,7 @@ using namespace std;
 
 class Robot{
 
-    Motor motors[4]; // Array of custom Motor Objects
+    vector<Motor> motors; // Array of custom Motor Objects
 
     double degreeToRadians(double);      // Converts degrees to radians
 

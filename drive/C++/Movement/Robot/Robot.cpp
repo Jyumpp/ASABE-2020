@@ -9,9 +9,9 @@ static double width = 36;
 Robot::Robot(std::string path) {
   for(int i = 0; i < 4; i++){
     if(i < 2){
-      motors[i] = Motor(true,path);
+      motors.insert(0,Motor(true,path));
     } else{
-      motors[i] = Motor(false,path);
+      motors.insert(0,Motor(false,path));
     }
   }
   drive(0);
@@ -92,7 +92,7 @@ int Robot::turn(double angle){
             motors[2].setAngle(inside);
         }
         while(motors[3].getAngle() - (150 - angle) <  .5){
-        	continue;
+            continue;
         }
 
 
