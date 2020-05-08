@@ -21,7 +21,7 @@
 
 #include <iostream>
 #include <fstream>
-#include "../cget/include/nlohmann/json.hpp"
+#include "../nlohmann/json.hpp"
 #include "DynamixelSDK/src/DynamixelSDK.h"
 
 typedef const int &c_int;
@@ -32,7 +32,7 @@ using json=nlohmann::json;
 namespace dynio {
 	class DynamixelMotor;
 
-	typedef std::shared_ptr<DynamixelMotor> dyn_ptr;
+	typedef std::unique_ptr<DynamixelMotor> dyn_ptr;
 
 	class DynamixelIO {
 	public:
@@ -55,6 +55,16 @@ namespace dynio {
 		dyn_ptr newMX64(c_int dxlID, c_int protocol = 1, c_int controlTableProtocol = -1);
 
 		dyn_ptr newMX106(c_int dxlID, c_int protocol = 1, c_int controlTableProtocol = -1);
+
+		DynamixelMotor* newAX12Raw(c_int dxlID);
+
+		DynamixelMotor* newMX12Raw(c_int dxlID);
+
+		DynamixelMotor* newMX28Raw(c_int dxlID, c_int protocol = 1, c_int controlTableProtocol = -1);
+
+		DynamixelMotor* newMX64Raw(c_int dxlID, c_int protocol = 1, c_int controlTableProtocol = -1);
+
+		DynamixelMotor* newMX106Raw(c_int dxlID, c_int protocol = 1, c_int controlTableProtocol = -1);
 
 	private:
 		dynamixel::PortHandler *portHandler;

@@ -12,11 +12,11 @@
 #include "../Motor/Motor.h"
 #define _USE_MATH_DEFINES
 
-using namespace std;
+using DynamixelIO = dynio::DynamixelIO;
 
 class Robot{
 
-    vector<Motor> motors; // Array of custom Motor Objects
+    std::vector<Motor> motors; // Array of custom Motor Objects
 
     double degreeToRadians(double);      // Converts degrees to radians
 

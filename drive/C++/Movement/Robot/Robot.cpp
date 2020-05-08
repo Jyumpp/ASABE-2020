@@ -7,11 +7,12 @@ static double width = 36;
 
 //Robot Contructor takes path to Dynamixel port
 Robot::Robot(std::string path) {
+  DynamixelIO dxlObject = DynamixelIO(path);
   for(int i = 0; i < 4; i++){
     if(i < 2){
-      motors.insert(0,Motor(true,path));
+      motors.assign(i,Motor(true,dxlObject));
     } else{
-      motors.insert(0,Motor(false,path));
+      motors.assign(i,Motor(false,dxlObject));
     }
   }
   drive(0);
@@ -124,7 +125,7 @@ int Robot::translate(double angle, double distance){
     motors[2].setVelocity(-inverse*256);
     motors[3].setVelocity(inverse*256);
 
-    this_thread::sleep_for(chrono::nanoseconds(sleepTime));
+    std::this_thread::sleep_for(std::chrono::nanoseconds(sleepTime));
 
     drive(0);
 
@@ -159,7 +160,7 @@ int Robot::centerAxisTurn(double angle){
       motors[3].setVelocity(-128);
     }
 
-    this_thread::sleep_for(chrono::nanoseconds(sleepTime));
+    std::this_thread::sleep_for(std::chrono::nanoseconds(sleepTime));
 
     drive(0);
     center();
@@ -187,7 +188,7 @@ int Robot::expandyBoi() {
         motors[2].setVelocity(-1023);
         motors[3].setVelocity(230);
 
-        this_thread::sleep_for(chrono::nanoseconds(sleepTime));
+        std::this_thread::sleep_for(std::chrono::nanoseconds(sleepTime));
 
         drive(0);
         center();

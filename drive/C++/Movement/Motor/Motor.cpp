@@ -2,24 +2,19 @@
 
 static int count = 1;
 
-typedef std::shared_ptr<dynio::DynamixelMotor> dyn_ptr;
 
 Motor::Motor(){
 
 }
 
-Motor::Motor(bool side, std::string path){
-    if(dynio == nullptr){
-        //Check Baudrate
-        dynio = new DynamixelIO(path);
-    }
+Motor::Motor(bool side, DynamixelIO& dxlIO){
     // Motor def
     // cout << "Motor Constructor" << endl;
-    angleMotor = dynio->newAX12(count);
+    angleMotor = dxlIO.newAX12Raw(count);
     angleMotor->setPositionMode(512);
     angleMotor->torqueEnable();
     count = count + 1;
-    driveMotor=dynio->newAX12(count);
+    driveMotor = dxlIO.newAX12Raw(count);
     driveMotor->setVelocityMode();
     driveMotor->torqueEnable();
     count = count + 1;
@@ -27,16 +22,17 @@ Motor::Motor(bool side, std::string path){
     right = side;
 }
 
-Motor::Motor(const Motor& m){
-  driveMotor = m.getDriveMotor();
-  angleMotor = m.getAngleMotor();
-  this->setSide(m.getSide());
-  homeAngle = 150;
-}
+// Motor::Motor(const Motor& m){
+//   driveMotor = m.getDriveMotor();
+//   angleMotor = m.getAngleMotor();
+//   this->setSide(m.getSide());
+//   homeAngle = 150;
+// }
 
 //Motor destructor
 Motor::~Motor(){
-    delete dynio;
+  delete angleMotor;
+  delete driveMotor;
 }
 
 //Gets the motor angle
@@ -75,11 +71,11 @@ void Motor::setSide(bool side){
   right = side;
 }
 
-const dyn_ptr Motor::getAngleMotor()const{
+dynMotor* Motor::getAngleMotor()const{
   return angleMotor;
 }
 
-const dyn_ptr Motor::getDriveMotor()const{
+dynMotor* Motor::getDriveMotor()const{
   return driveMotor;
 }
 
@@ -91,8 +87,8 @@ double Motor::getVelocity(){
 }
 
 void Motor::operator=(const Motor& m) {
-  driveMotor = m.getDriveMotor();
-  angleMotor = m.getAngleMotor();
+  this->driveMotor = m.getDriveMotor();
+  this->angleMotor = m.getAngleMotor();
   this->setSide(m.getSide());
   homeAngle = 150;
 }

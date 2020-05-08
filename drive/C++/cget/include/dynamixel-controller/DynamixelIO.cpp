@@ -90,37 +90,57 @@ namespace dynio {
 		return retVal;
 	}
 
-	std::shared_ptr<DynamixelMotor> DynamixelIO::newMotor(c_int dxlID, const string &jsonFile, int protocol,
+	std::unique_ptr<DynamixelMotor> DynamixelIO::newMotor(c_int dxlID, const string &jsonFile, int protocol,
 	                                                      c_int controlTableProtocol) {
-		return std::shared_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
+		return std::unique_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
 		                                                          jsonFile, protocol, controlTableProtocol));
 	}
 
 	dyn_ptr DynamixelIO::newAX12(const int &dxlID) {
-		return std::shared_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
+		return std::unique_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
 		                                                          "DynamixelJSON/AX12.json"));
 	}
 
 	dyn_ptr DynamixelIO::newMX12(const int &dxlID) {
-		return std::shared_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
+		return std::unique_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
 		                                                          "DynamixelJSON/MX12.json"));
 	}
 
 	dyn_ptr DynamixelIO::newMX28(const int &dxlID, const int &protocol, const int &controlTableProtocol) {
-		return std::shared_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
+		return std::unique_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
 		                                                          "DynamixelJSON/MX28.json", protocol,
 		                                                          controlTableProtocol));
 	}
 
 	dyn_ptr DynamixelIO::newMX64(const int &dxlID, const int &protocol, const int &controlTableProtocol) {
-		return std::shared_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
+		return std::unique_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
 		                                                          "DynamixelJSON/MX64.json", protocol,
 		                                                          controlTableProtocol));
 	}
 
 	dyn_ptr DynamixelIO::newMX106(const int &dxlID, const int &protocol, const int &controlTableProtocol) {
-		return std::shared_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
+		return std::unique_ptr<DynamixelMotor>(new DynamixelMotor(dxlID, this,
 		                                                          "DynamixelJSON/MX106.json", protocol,
 		                                                          controlTableProtocol));
+	}
+
+	DynamixelMotor *DynamixelIO::newAX12Raw(const int &dxlID) {
+		return new DynamixelMotor(dxlID, this, "DynamixelJSON/AX12.json");
+	}
+
+	DynamixelMotor *DynamixelIO::newMX12Raw(const int &dxlID) {
+		return new DynamixelMotor(dxlID, this, "DynamixelJSON/MX12.json");
+	}
+
+	DynamixelMotor *DynamixelIO::newMX28Raw(const int &dxlID, const int &protocol, const int &controlTableProtocol) {
+		return new DynamixelMotor(dxlID, this, "DynamixelJSON/MX28.json", protocol, controlTableProtocol);
+	}
+
+	DynamixelMotor *DynamixelIO::newMX64Raw(const int &dxlID, const int &protocol, const int &controlTableProtocol) {
+		return new DynamixelMotor(dxlID, this, "DynamixelJSON/MX64.json", protocol, controlTableProtocol);
+	}
+
+	DynamixelMotor *DynamixelIO::newMX106Raw(const int &dxlID, const int &protocol, const int &controlTableProtocol) {
+		return new DynamixelMotor(dxlID, this, "DynamixelJSON/MX106.json", protocol, controlTableProtocol);
 	}
 }
