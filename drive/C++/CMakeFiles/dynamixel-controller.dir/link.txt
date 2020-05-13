@@ -1,0 +1,2 @@
+/usr/bin/ar qc libdynamixel-controller.a  CMakeFiles/dynamixel-controller.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.o CMakeFiles/dynamixel-controller.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.o
+/usr/bin/ranlib libdynamixel-controller.a

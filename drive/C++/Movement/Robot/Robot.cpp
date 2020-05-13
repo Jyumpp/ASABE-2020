@@ -1,6 +1,7 @@
 #include "Robot.h"
 
 namespace py = pybind11;
+using DynamixelIO = dynio::DynamixelIO;
 
 static double length = 8;
 static double width = 36;
@@ -17,7 +18,9 @@ Robot::Robot(std::string path) {
   }
   drive(0);
   center();
+  // std::cout << path << std::endl;
 }
+
 //Helper method for converting degrees to radians (This is probably already a thing)
 double Robot::degreeToRadians(double angle){
   return (angle*M_PI)/180;
@@ -203,8 +206,8 @@ int Robot::expandyBoi() {
     }
 }
 
-//Wrapper for python, magic that I do not understand(FRAGILE)
-PYBIND11_MODULE(robot, m) {
+//Wrapper for Python, magic that I do not understand (FRAGILE)
+PYBIND11_MODULE(Robot, m) {
   py::class_<Robot>(m, "Robot")
       .def(py::init<std::string>())
       .def("drive",&Robot::drive)

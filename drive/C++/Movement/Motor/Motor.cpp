@@ -1,7 +1,9 @@
 #include "Motor.h"
 
-static int count = 1;
+int Motor::count = 0;
 
+using DynamixelIO = dynio::DynamixelIO;
+using dynMotor = dynio::DynamixelMotor;
 
 Motor::Motor(){
 
@@ -9,25 +11,23 @@ Motor::Motor(){
 
 Motor::Motor(bool side, DynamixelIO& dxlIO){
     // Motor def
-    // cout << "Motor Constructor" << endl;
-    angleMotor = dxlIO.newAX12Raw(count);
+    // std::cout << "Motor Constructor" << std::endl;
+    angleMotor = dxlIO.newAX12Raw(count++);
     angleMotor->setPositionMode(512);
     angleMotor->torqueEnable();
-    count = count + 1;
-    driveMotor = dxlIO.newAX12Raw(count);
+    driveMotor = dxlIO.newAX12Raw(count++);
     driveMotor->setVelocityMode();
     driveMotor->torqueEnable();
-    count = count + 1;
     homeAngle = 150;
     right = side;
 }
 
-// Motor::Motor(const Motor& m){
-//   driveMotor = m.getDriveMotor();
-//   angleMotor = m.getAngleMotor();
-//   this->setSide(m.getSide());
-//   homeAngle = 150;
-// }
+Motor::Motor(const Motor& m){
+  driveMotor = m.getDriveMotor();
+  angleMotor = m.getAngleMotor();
+  this->setSide(m.getSide());
+  homeAngle = 150;
+}
 
 //Motor destructor
 Motor::~Motor(){

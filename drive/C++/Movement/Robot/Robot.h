@@ -8,7 +8,7 @@
 #include <cstdarg>
 #include <vector>
 #include <python3.6/Python.h>
-#include "../../cget/include/pybind11/pybind11.h"
+#include <pybind11/pybind11.h>
 #include "../Motor/Motor.h"
 #define _USE_MATH_DEFINES
 
@@ -25,7 +25,7 @@ class Robot{
 
     public:
 
-        Robot(std::string);                       // Constructor for the Robot class
+        Robot(std::string);                  // Constructor for the Robot class
 
         int drive(double);                   // Moves the Robot forward and backwards
 

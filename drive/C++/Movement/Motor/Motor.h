@@ -18,7 +18,7 @@ class Motor{
 
     Motor(); //Motor default constructor
     Motor(bool,DynamixelIO&); //Motor Constructor takes the path to Dynamixel port and position of the motor
-    // Motor(const Motor&); //Copy Constructor
+    Motor(const Motor&); //Copy Constructor
 
     ~Motor(); //Destructor for Motor object
 
