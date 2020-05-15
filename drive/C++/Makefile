@@ -111,17 +111,43 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Robot
+# Target rules for targets named RobotWrapper
 
 # Build rule for target.
-Robot: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 Robot
-.PHONY : Robot
+RobotWrapper: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 RobotWrapper
+.PHONY : RobotWrapper
 
 # fast build rule for target.
-Robot/fast:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/build
-.PHONY : Robot/fast
+RobotWrapper/fast:
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/build
+.PHONY : RobotWrapper/fast
+
+#=============================================================================
+# Target rules for targets named dynamixel-controller
+
+# Build rule for target.
+dynamixel-controller: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 dynamixel-controller
+.PHONY : dynamixel-controller
+
+# fast build rule for target.
+dynamixel-controller/fast:
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/build
+.PHONY : dynamixel-controller/fast
+
+#=============================================================================
+# Target rules for targets named CorrectionTest
+
+# Build rule for target.
+CorrectionTest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 CorrectionTest
+.PHONY : CorrectionTest
+
+# fast build rule for target.
+CorrectionTest/fast:
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/build
+.PHONY : CorrectionTest/fast
 
 DynamixelSDK/src/dynamixel_sdk/group_bulk_read.o: DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.o
 
@@ -129,7 +155,9 @@ DynamixelSDK/src/dynamixel_sdk/group_bulk_read.o: DynamixelSDK/src/dynamixel_sdk
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/group_bulk_read.i: DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.i
@@ -138,7 +166,9 @@ DynamixelSDK/src/dynamixel_sdk/group_bulk_read.i: DynamixelSDK/src/dynamixel_sdk
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/group_bulk_read.s: DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.s
@@ -147,7 +177,9 @@ DynamixelSDK/src/dynamixel_sdk/group_bulk_read.s: DynamixelSDK/src/dynamixel_sdk
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_bulk_read.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/group_bulk_write.o: DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.o
@@ -156,7 +188,9 @@ DynamixelSDK/src/dynamixel_sdk/group_bulk_write.o: DynamixelSDK/src/dynamixel_sd
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/group_bulk_write.i: DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.i
@@ -165,7 +199,9 @@ DynamixelSDK/src/dynamixel_sdk/group_bulk_write.i: DynamixelSDK/src/dynamixel_sd
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/group_bulk_write.s: DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.s
@@ -174,7 +210,9 @@ DynamixelSDK/src/dynamixel_sdk/group_bulk_write.s: DynamixelSDK/src/dynamixel_sd
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_bulk_write.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/group_sync_read.o: DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.o
@@ -183,7 +221,9 @@ DynamixelSDK/src/dynamixel_sdk/group_sync_read.o: DynamixelSDK/src/dynamixel_sdk
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/group_sync_read.i: DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.i
@@ -192,7 +232,9 @@ DynamixelSDK/src/dynamixel_sdk/group_sync_read.i: DynamixelSDK/src/dynamixel_sdk
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/group_sync_read.s: DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.s
@@ -201,7 +243,9 @@ DynamixelSDK/src/dynamixel_sdk/group_sync_read.s: DynamixelSDK/src/dynamixel_sdk
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_sync_read.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/group_sync_write.o: DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.o
@@ -210,7 +254,9 @@ DynamixelSDK/src/dynamixel_sdk/group_sync_write.o: DynamixelSDK/src/dynamixel_sd
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/group_sync_write.i: DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.i
@@ -219,7 +265,9 @@ DynamixelSDK/src/dynamixel_sdk/group_sync_write.i: DynamixelSDK/src/dynamixel_sd
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/group_sync_write.s: DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.s
@@ -228,7 +276,9 @@ DynamixelSDK/src/dynamixel_sdk/group_sync_write.s: DynamixelSDK/src/dynamixel_sd
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/group_sync_write.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/packet_handler.o: DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.o
@@ -237,7 +287,9 @@ DynamixelSDK/src/dynamixel_sdk/packet_handler.o: DynamixelSDK/src/dynamixel_sdk/
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/packet_handler.i: DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.i
@@ -246,7 +298,9 @@ DynamixelSDK/src/dynamixel_sdk/packet_handler.i: DynamixelSDK/src/dynamixel_sdk/
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/packet_handler.s: DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.s
@@ -255,7 +309,9 @@ DynamixelSDK/src/dynamixel_sdk/packet_handler.s: DynamixelSDK/src/dynamixel_sdk/
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/packet_handler.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/port_handler.o: DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.o
@@ -264,7 +320,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler.o: DynamixelSDK/src/dynamixel_sdk/po
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/port_handler.i: DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.i
@@ -273,7 +331,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler.i: DynamixelSDK/src/dynamixel_sdk/po
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/port_handler.s: DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.s
@@ -282,7 +342,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler.s: DynamixelSDK/src/dynamixel_sdk/po
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.o: DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.o
@@ -291,7 +353,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.o: DynamixelSDK/src/dynamixe
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.i: DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.i
@@ -300,7 +364,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.i: DynamixelSDK/src/dynamixe
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.s: DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.s
@@ -309,7 +375,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.s: DynamixelSDK/src/dynamixe
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_arduino.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_linux.o: DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.o
@@ -318,7 +386,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_linux.o: DynamixelSDK/src/dynamixel_
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_linux.i: DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.i
@@ -327,7 +397,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_linux.i: DynamixelSDK/src/dynamixel_
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_linux.s: DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.s
@@ -336,7 +408,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_linux.s: DynamixelSDK/src/dynamixel_
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_linux.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_mac.o: DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.o
@@ -345,7 +419,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_mac.o: DynamixelSDK/src/dynamixel_sd
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_mac.i: DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.i
@@ -354,7 +430,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_mac.i: DynamixelSDK/src/dynamixel_sd
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_mac.s: DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.s
@@ -363,7 +441,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_mac.s: DynamixelSDK/src/dynamixel_sd
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_mac.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_windows.o: DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.o
@@ -372,7 +452,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_windows.o: DynamixelSDK/src/dynamixe
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_windows.i: DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.i
@@ -381,7 +463,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_windows.i: DynamixelSDK/src/dynamixe
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/port_handler_windows.s: DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.s
@@ -390,7 +474,9 @@ DynamixelSDK/src/dynamixel_sdk/port_handler_windows.s: DynamixelSDK/src/dynamixe
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/port_handler_windows.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.o: DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.o
@@ -399,7 +485,9 @@ DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.o: DynamixelSDK/src/dyna
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.i: DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.i
@@ -408,7 +496,9 @@ DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.i: DynamixelSDK/src/dyna
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.s: DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.s
@@ -417,7 +507,9 @@ DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.s: DynamixelSDK/src/dyna
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/protocol1_packet_handler.cpp.s
 
 DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.o: DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.o
@@ -426,7 +518,9 @@ DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.o: DynamixelSDK/src/dyna
 
 # target to build an object file
 DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.o
 .PHONY : DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.o
 
 DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.i: DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.i
@@ -435,7 +529,9 @@ DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.i: DynamixelSDK/src/dyna
 
 # target to preprocess a source file
 DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.i
 .PHONY : DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.i
 
 DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.s: DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.s
@@ -444,8 +540,37 @@ DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.s: DynamixelSDK/src/dyna
 
 # target to generate assembly for a file
 DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.s
 .PHONY : DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.cpp.s
+
+LineCorrection/LineCorrection.o: LineCorrection/LineCorrection.cpp.o
+
+.PHONY : LineCorrection/LineCorrection.o
+
+# target to build an object file
+LineCorrection/LineCorrection.cpp.o:
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/LineCorrection/LineCorrection.cpp.o
+.PHONY : LineCorrection/LineCorrection.cpp.o
+
+LineCorrection/LineCorrection.i: LineCorrection/LineCorrection.cpp.i
+
+.PHONY : LineCorrection/LineCorrection.i
+
+# target to preprocess a source file
+LineCorrection/LineCorrection.cpp.i:
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/LineCorrection/LineCorrection.cpp.i
+.PHONY : LineCorrection/LineCorrection.cpp.i
+
+LineCorrection/LineCorrection.s: LineCorrection/LineCorrection.cpp.s
+
+.PHONY : LineCorrection/LineCorrection.s
+
+# target to generate assembly for a file
+LineCorrection/LineCorrection.cpp.s:
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/LineCorrection/LineCorrection.cpp.s
+.PHONY : LineCorrection/LineCorrection.cpp.s
 
 Movement/Motor/Motor.o: Movement/Motor/Motor.cpp.o
 
@@ -453,7 +578,8 @@ Movement/Motor/Motor.o: Movement/Motor/Motor.cpp.o
 
 # target to build an object file
 Movement/Motor/Motor.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/Movement/Motor/Motor.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/Movement/Motor/Motor.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/Movement/Motor/Motor.cpp.o
 .PHONY : Movement/Motor/Motor.cpp.o
 
 Movement/Motor/Motor.i: Movement/Motor/Motor.cpp.i
@@ -462,7 +588,8 @@ Movement/Motor/Motor.i: Movement/Motor/Motor.cpp.i
 
 # target to preprocess a source file
 Movement/Motor/Motor.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/Movement/Motor/Motor.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/Movement/Motor/Motor.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/Movement/Motor/Motor.cpp.i
 .PHONY : Movement/Motor/Motor.cpp.i
 
 Movement/Motor/Motor.s: Movement/Motor/Motor.cpp.s
@@ -471,7 +598,8 @@ Movement/Motor/Motor.s: Movement/Motor/Motor.cpp.s
 
 # target to generate assembly for a file
 Movement/Motor/Motor.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/Movement/Motor/Motor.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/Movement/Motor/Motor.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/Movement/Motor/Motor.cpp.s
 .PHONY : Movement/Motor/Motor.cpp.s
 
 Movement/Robot/Robot.o: Movement/Robot/Robot.cpp.o
@@ -480,7 +608,8 @@ Movement/Robot/Robot.o: Movement/Robot/Robot.cpp.o
 
 # target to build an object file
 Movement/Robot/Robot.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/Movement/Robot/Robot.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/Movement/Robot/Robot.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/Movement/Robot/Robot.cpp.o
 .PHONY : Movement/Robot/Robot.cpp.o
 
 Movement/Robot/Robot.i: Movement/Robot/Robot.cpp.i
@@ -489,7 +618,8 @@ Movement/Robot/Robot.i: Movement/Robot/Robot.cpp.i
 
 # target to preprocess a source file
 Movement/Robot/Robot.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/Movement/Robot/Robot.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/Movement/Robot/Robot.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/Movement/Robot/Robot.cpp.i
 .PHONY : Movement/Robot/Robot.cpp.i
 
 Movement/Robot/Robot.s: Movement/Robot/Robot.cpp.s
@@ -498,8 +628,36 @@ Movement/Robot/Robot.s: Movement/Robot/Robot.cpp.s
 
 # target to generate assembly for a file
 Movement/Robot/Robot.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/Movement/Robot/Robot.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/Movement/Robot/Robot.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/Movement/Robot/Robot.cpp.s
 .PHONY : Movement/Robot/Robot.cpp.s
+
+Movement/Robot/RobotWrapper.o: Movement/Robot/RobotWrapper.cpp.o
+
+.PHONY : Movement/Robot/RobotWrapper.o
+
+# target to build an object file
+Movement/Robot/RobotWrapper.cpp.o:
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/Movement/Robot/RobotWrapper.cpp.o
+.PHONY : Movement/Robot/RobotWrapper.cpp.o
+
+Movement/Robot/RobotWrapper.i: Movement/Robot/RobotWrapper.cpp.i
+
+.PHONY : Movement/Robot/RobotWrapper.i
+
+# target to preprocess a source file
+Movement/Robot/RobotWrapper.cpp.i:
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/Movement/Robot/RobotWrapper.cpp.i
+.PHONY : Movement/Robot/RobotWrapper.cpp.i
+
+Movement/Robot/RobotWrapper.s: Movement/Robot/RobotWrapper.cpp.s
+
+.PHONY : Movement/Robot/RobotWrapper.s
+
+# target to generate assembly for a file
+Movement/Robot/RobotWrapper.cpp.s:
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/Movement/Robot/RobotWrapper.cpp.s
+.PHONY : Movement/Robot/RobotWrapper.cpp.s
 
 cget/include/dynamixel-controller/DynamixelIO.o: cget/include/dynamixel-controller/DynamixelIO.cpp.o
 
@@ -507,7 +665,9 @@ cget/include/dynamixel-controller/DynamixelIO.o: cget/include/dynamixel-controll
 
 # target to build an object file
 cget/include/dynamixel-controller/DynamixelIO.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.o
 .PHONY : cget/include/dynamixel-controller/DynamixelIO.cpp.o
 
 cget/include/dynamixel-controller/DynamixelIO.i: cget/include/dynamixel-controller/DynamixelIO.cpp.i
@@ -516,7 +676,9 @@ cget/include/dynamixel-controller/DynamixelIO.i: cget/include/dynamixel-controll
 
 # target to preprocess a source file
 cget/include/dynamixel-controller/DynamixelIO.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.i
 .PHONY : cget/include/dynamixel-controller/DynamixelIO.cpp.i
 
 cget/include/dynamixel-controller/DynamixelIO.s: cget/include/dynamixel-controller/DynamixelIO.cpp.s
@@ -525,7 +687,9 @@ cget/include/dynamixel-controller/DynamixelIO.s: cget/include/dynamixel-controll
 
 # target to generate assembly for a file
 cget/include/dynamixel-controller/DynamixelIO.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.s
 .PHONY : cget/include/dynamixel-controller/DynamixelIO.cpp.s
 
 cget/include/dynamixel-controller/DynamixelMotor.o: cget/include/dynamixel-controller/DynamixelMotor.cpp.o
@@ -534,7 +698,9 @@ cget/include/dynamixel-controller/DynamixelMotor.o: cget/include/dynamixel-contr
 
 # target to build an object file
 cget/include/dynamixel-controller/DynamixelMotor.cpp.o:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.o
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.o
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.o
 .PHONY : cget/include/dynamixel-controller/DynamixelMotor.cpp.o
 
 cget/include/dynamixel-controller/DynamixelMotor.i: cget/include/dynamixel-controller/DynamixelMotor.cpp.i
@@ -543,7 +709,9 @@ cget/include/dynamixel-controller/DynamixelMotor.i: cget/include/dynamixel-contr
 
 # target to preprocess a source file
 cget/include/dynamixel-controller/DynamixelMotor.cpp.i:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.i
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.i
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.i
 .PHONY : cget/include/dynamixel-controller/DynamixelMotor.cpp.i
 
 cget/include/dynamixel-controller/DynamixelMotor.s: cget/include/dynamixel-controller/DynamixelMotor.cpp.s
@@ -552,8 +720,37 @@ cget/include/dynamixel-controller/DynamixelMotor.s: cget/include/dynamixel-contr
 
 # target to generate assembly for a file
 cget/include/dynamixel-controller/DynamixelMotor.cpp.s:
-	$(MAKE) -f CMakeFiles/Robot.dir/build.make CMakeFiles/Robot.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.s
+	$(MAKE) -f CMakeFiles/RobotWrapper.dir/build.make CMakeFiles/RobotWrapper.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.s
+	$(MAKE) -f CMakeFiles/dynamixel-controller.dir/build.make CMakeFiles/dynamixel-controller.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/cget/include/dynamixel-controller/DynamixelMotor.cpp.s
 .PHONY : cget/include/dynamixel-controller/DynamixelMotor.cpp.s
+
+test.o: test.cpp.o
+
+.PHONY : test.o
+
+# target to build an object file
+test.cpp.o:
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/test.cpp.o
+.PHONY : test.cpp.o
+
+test.i: test.cpp.i
+
+.PHONY : test.i
+
+# target to preprocess a source file
+test.cpp.i:
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/test.cpp.i
+.PHONY : test.cpp.i
+
+test.s: test.cpp.s
+
+.PHONY : test.s
+
+# target to generate assembly for a file
+test.cpp.s:
+	$(MAKE) -f CMakeFiles/CorrectionTest.dir/build.make CMakeFiles/CorrectionTest.dir/test.cpp.s
+.PHONY : test.cpp.s
 
 # Help Target
 help:
@@ -562,8 +759,10 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... Robot"
 	@echo "... edit_cache"
+	@echo "... RobotWrapper"
+	@echo "... dynamixel-controller"
+	@echo "... CorrectionTest"
 	@echo "... DynamixelSDK/src/dynamixel_sdk/group_bulk_read.o"
 	@echo "... DynamixelSDK/src/dynamixel_sdk/group_bulk_read.i"
 	@echo "... DynamixelSDK/src/dynamixel_sdk/group_bulk_read.s"
@@ -600,18 +799,27 @@ help:
 	@echo "... DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.o"
 	@echo "... DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.i"
 	@echo "... DynamixelSDK/src/dynamixel_sdk/protocol2_packet_handler.s"
+	@echo "... LineCorrection/LineCorrection.o"
+	@echo "... LineCorrection/LineCorrection.i"
+	@echo "... LineCorrection/LineCorrection.s"
 	@echo "... Movement/Motor/Motor.o"
 	@echo "... Movement/Motor/Motor.i"
 	@echo "... Movement/Motor/Motor.s"
 	@echo "... Movement/Robot/Robot.o"
 	@echo "... Movement/Robot/Robot.i"
 	@echo "... Movement/Robot/Robot.s"
+	@echo "... Movement/Robot/RobotWrapper.o"
+	@echo "... Movement/Robot/RobotWrapper.i"
+	@echo "... Movement/Robot/RobotWrapper.s"
 	@echo "... cget/include/dynamixel-controller/DynamixelIO.o"
 	@echo "... cget/include/dynamixel-controller/DynamixelIO.i"
 	@echo "... cget/include/dynamixel-controller/DynamixelIO.s"
 	@echo "... cget/include/dynamixel-controller/DynamixelMotor.o"
 	@echo "... cget/include/dynamixel-controller/DynamixelMotor.i"
 	@echo "... cget/include/dynamixel-controller/DynamixelMotor.s"
+	@echo "... test.o"
+	@echo "... test.i"
+	@echo "... test.s"
 .PHONY : help
 
 

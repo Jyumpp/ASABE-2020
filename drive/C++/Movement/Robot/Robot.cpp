@@ -1,10 +1,11 @@
 #include "Robot.h"
 
-namespace py = pybind11;
 using DynamixelIO = dynio::DynamixelIO;
 
 static double length = 8;
 static double width = 36;
+const double NORMALANGLE = 13.101;
+const double homeAngle = 150;
 
 //Robot Contructor takes path to Dynamixel port
 Robot::Robot(std::string path) {
@@ -204,18 +205,4 @@ int Robot::expandyBoi() {
         std::cout << "An Exception Occured: #" << e << std::endl;
         return EXIT_FAILURE;
     }
-}
-
-//Wrapper for Python, magic that I do not understand (FRAGILE)
-PYBIND11_MODULE(Robot, m) {
-  py::class_<Robot>(m, "Robot")
-      .def(py::init<std::string>())
-      .def("drive",&Robot::drive)
-      .def("center", &Robot::center)
-      .def("crabSteering",&Robot::crabSteering)
-      .def("turn",&Robot::turn)
-      .def("translate",&Robot::translate)
-      .def("centerAxisTurn",&Robot::centerAxisTurn)
-      .def("expandyBoi",&Robot::expandyBoi)
-      ;
 }

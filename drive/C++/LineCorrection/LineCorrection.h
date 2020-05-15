@@ -10,12 +10,12 @@ class LineCorrection{
     double* centerDistance;
     double errorAngle = .25;
     double errorDistance = .25;
-    static int pipeAngleRead;
-    static int pipeDistanceRead;
+    int pipeAngleRead;
+    int pipeDistanceRead;
     Robot* robot;
 
     public:
-      LineCorrection(int,int); //LineCorrection constuctor
+      LineCorrection(int,int,std::string); //LineCorrection constuctor
 
       void checkAngle(); //Gets the current anlge of the Robot from LineTacking
 

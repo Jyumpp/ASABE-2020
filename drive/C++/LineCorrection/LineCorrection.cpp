@@ -1,8 +1,8 @@
 #include "LineCorrection.h"
 
 //Constructor for the LineCorrection object takes pipes for data transfer
-LineCorrection::LineCorrection(int pipeAngleR, int pipeDistanceR){
-    robot = new Robot("test");
+LineCorrection::LineCorrection(int pipeAngleR, int pipeDistanceR, std::string path){
+    robot = new Robot(path);
     pipeAngleRead = pipeAngleR;
     pipeDistanceRead = pipeDistanceR;
     std::thread angleCheck(&LineCorrection::checkAngle,this);

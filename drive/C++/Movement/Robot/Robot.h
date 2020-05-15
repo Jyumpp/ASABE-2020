@@ -7,8 +7,6 @@
 #include <map>
 #include <cstdarg>
 #include <vector>
-#include <python3.6/Python.h>
-#include <pybind11/pybind11.h>
 #include "../Motor/Motor.h"
 #define _USE_MATH_DEFINES
 
@@ -19,9 +17,6 @@ class Robot{
     std::vector<Motor> motors; // Array of custom Motor Objects
 
     double degreeToRadians(double);      // Converts degrees to radians
-
-    const double NORMALANGLE = 13.101;
-    const double homeAngle = 150;
 
     public:
 

@@ -54,5 +54,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/Robot.dir/DependInfo.cmake"
+  "CMakeFiles/RobotWrapper.dir/DependInfo.cmake"
+  "CMakeFiles/dynamixel-controller.dir/DependInfo.cmake"
+  "CMakeFiles/CorrectionTest.dir/DependInfo.cmake"
   )

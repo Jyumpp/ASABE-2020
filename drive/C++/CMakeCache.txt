@@ -200,6 +200,9 @@ PYTHON_EXECUTABLE:FILEPATH=/usr/bin/python3.6
 PYTHON_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libpython3.6m.so
 
 //Dependencies for target
+RobotWrapper_LIB_DEPENDS:STATIC=
+
+//Dependencies for target
 Robot_LIB_DEPENDS:STATIC=
 
 //Dependencies for target

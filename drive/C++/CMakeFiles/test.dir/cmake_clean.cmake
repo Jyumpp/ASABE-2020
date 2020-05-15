@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/test.dir/test.cpp.o"
+  "CMakeFiles/test.dir/LineCorrection/LineCorrection.cpp.o"
   "CMakeFiles/test.dir/Movement/Motor/Motor.cpp.o"
   "CMakeFiles/test.dir/Movement/Robot/Robot.cpp.o"
   "CMakeFiles/test.dir/cget/include/dynamixel-controller/DynamixelIO.cpp.o"
