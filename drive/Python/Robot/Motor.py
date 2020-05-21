@@ -43,3 +43,6 @@ class Motor:
 
     def getVelocity(self):
         return driveMotor.read_control_table("Present_Speed")
+
+    def toggleAngleMode(self):
+        self.driveMotor.torque_disable()

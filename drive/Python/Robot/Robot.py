@@ -1,7 +1,6 @@
-from Robot.Motor import *
+from Motor import *
 import time
 import math
-
 class Robot:
     motors = []
     velocity = 0
@@ -79,40 +78,20 @@ class Robot:
             self.center()
 
     def turnLeft(self,angle):
-        # timeSleep = (math.radians(angle)*5.5)/(4*((math.cos(math.radians(45))*28)/60))
+        width = 34.125
+        length = 11.25
+        #timeSleep = (math.radians(angle)*5.5)/(4*((math.cos(math.radians(45))*28)/60))
+        radAngle = math.radians(angle)
 
-        self.motor[1].setAngle(math.arctan(L/(R+(T/2))))
-        self.motor[2].setAngle(math.arctan(L/(R-(T/2))))
+        self.motors[1].setAngle((2*length*math.sin(radAngle))/(2*length*math.cos(radAngle)+width*math.sin(radAngle)))
+        self.motors[2].setAngle((2*length*math.sin(radAngle))/(2*length*math.cos(radAngle)-width*math.sin(radAngle)))
 
 
-        self.motors[1].toggleAngle()
-        self.motors[2].toggleAngle()
-        self.motors[0].setVelocity(256)
-        self.motors[3].setVelocity(256)
+        # self.drive(512)
 
-        # self.motors[2].drive(256)
-
-        time.sleep(1)
+        time.sleep(5)
 
         self.drive(0)
-
-        return None
-
-    def turnRight(self,angle):
-        timeSleep = (math.radians(angle)*5.5)/(4*((math.cos(math.radians(45))*28)/60))
-
-        for motor in self.motors:
-            self.ackermann(-111.251)
-
-        time.sleep(1.6)
-
-        self.motors[0].drive(-int(256.0*.43715))
-
-        self.motors[3].drive(int(256.0*.43715))
-
-        self.motors[1].drive(256)
-
-        self.motors[2].drive(-512)
 
         return None
 
