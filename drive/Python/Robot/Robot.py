@@ -77,11 +77,19 @@ class Robot:
             self.drive(0)
             self.center()
 
-    def turnLeft(self,angle):
-        width = 34.125
+    def ackermannTurn(self,angle):
         length = 11.25
-        #timeSleep = (math.radians(angle)*5.5)/(4*((math.cos(math.radians(45))*28)/60))
-        radAngle = math.radians(angle)
+        width = 36.125
+        # timeSleep = (math.radians(angle)*5.5)/(4*((math.cos(math.radians(45))*28)/60))
+        angle = math.radians(angle)
+        numerator = 2*length *math.sin(angle)
+        if angle > 0:
+            self.motor[1].setAngle(math.arctan(numerator/(2*length*cos(angle)-width*sin(angle)))
+            self.motor[2].setAngle(math.arctan(numerator/(2*length*cos(angle)+width*sin(angle)))
+        else:
+            self.motor[1].setAngle(math.arctan(numerator/(2*length*cos(angle)+width*sin(angle)))
+            self.motor[2].setAngle(math.arctan(numerator/(2*length*cos(angle)-width*sin(angle)))
+
 
         self.motors[1].setAngle((2*length*math.sin(radAngle))/(2*length*math.cos(radAngle)+width*math.sin(radAngle)))
         self.motors[2].setAngle((2*length*math.sin(radAngle))/(2*length*math.cos(radAngle)-width*math.sin(radAngle)))
