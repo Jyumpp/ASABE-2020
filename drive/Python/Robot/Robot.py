@@ -78,11 +78,18 @@ class Robot:
             self.drive(0)
             self.center()
 
-    def turnLeft(self,angle):
+    def ackermannTurn(self,angle):
+        length = 11.25
+        width = 36.125
         # timeSleep = (math.radians(angle)*5.5)/(4*((math.cos(math.radians(45))*28)/60))
-
-        self.motor[1].setAngle(math.arctan(L/(R+(T/2))))
-        self.motor[2].setAngle(math.arctan(L/(R-(T/2))))
+        angle = math.radians(angle)
+        numerator = 2*length *math.sin(angle)
+        if angle > 0:
+            self.motor[1].setAngle(math.arctan(numerator/(2*length*cos(angle)-width*sin(angle)))
+            self.motor[2].setAngle(math.arctan(numerator/(2*length*cos(angle)+width*sin(angle)))
+        else:
+            self.motor[1].setAngle(math.arctan(numerator/(2*length*cos(angle)+width*sin(angle)))
+            self.motor[2].setAngle(math.arctan(numerator/(2*length*cos(angle)-width*sin(angle)))
 
 
         self.motors[1].toggleAngle()
@@ -98,23 +105,6 @@ class Robot:
 
         return None
 
-    def turnRight(self,angle):
-        timeSleep = (math.radians(angle)*5.5)/(4*((math.cos(math.radians(45))*28)/60))
-
-        for motor in self.motors:
-            self.ackermann(-111.251)
-
-        time.sleep(1.6)
-
-        self.motors[0].drive(-int(256.0*.43715))
-
-        self.motors[3].drive(int(256.0*.43715))
-
-        self.motors[1].drive(256)
-
-        self.motors[2].drive(-512)
-
-        return None
 
     def translate(self,angle,distance):
         try:
