@@ -5,21 +5,7 @@ class Robot:
     motors = []
     velocity = 0
 
-    def diffDrive(self):
-        while True:
-            time.sleep(1)
-            if motor[0].getVelocity() == 0 or None:
-                continue
-            i = 0
-            motorPosition = [0,0,0,0]
-            for motor in self.motors:
-                motorPosition[i] = motorPosition[i] + motor.getVelocity()
-                i = i + 1
-            max = motorPosition.max()
-            ratio = motor[0].getVelocity()/1023
-            for motor in self.motors:
-                motor.drive((motor.getVelocity() + (abs(max-motor.getVelocity()))/17.05))
-
+    #Sets Robot drive motors to velocity
     def drive(self,velocity):
         try:
             self.center()
@@ -30,12 +16,13 @@ class Robot:
             print(e)
             self.center()
 
+    #Sets the Robot angle motors to home angle(150)
     def center(self):
         try:
             for motor in self.motors:
                 motor.center()
             # print(self.motors[3].getAngle() - 150)
-            while self.motors[3].getAngle() - 150 < -1:
+            while math.fabs(self.motors[3].getAngle() - 150) < 1:
                 continue
 
             return None
@@ -44,6 +31,7 @@ class Robot:
             self.drive(0)
             self.center()
 
+    #Turns drive motors to be normal to center axis
     def diff(self):
         try:
             self.motors[1].setAngle(13.101)
@@ -131,7 +119,7 @@ class Robot:
             print(e)
             self.drive(0)
             self.center()
-
+            
     def centerAxis(self,angle):
         try:
             sleepTime = ((math.radians(abs(angle)))/(math.pi))*74

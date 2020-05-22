@@ -3,17 +3,28 @@ from LineCorrection.LineCorrection import *
 import multiprocessing as mp
 
 if __name__ == '__main__':
+    #Creates program pipes
     pipeAngleR,pipeAngleW = mp.Pipe()
     pipeDistanceR,pipeDistanceW = mp.Pipe()
-    l = lineTracing(pipeAngleW,pipeDistanceW)
-    c = LineCorrection(pipeAngleR,pipeDistanceR)
+
+    #Sets up lineTracing and LineCorrection classes
+    tracing = lineTracing(pipeAngleW,pipeDistanceW)
+    correction = LineCorrection(pipeAngleR,pipeDistanceR)
+
+    #Sets threading type to fork
     mp.set_start_method('fork')
-    threadTrace = mp.Process(target=l.lineTracer, args=())
+
+    #Makes and starts lineTracing
+    threadTrace = mp.Process(target=tracing.lineTracer, args=())
     threadTrace.start()
+
+    #Creates Robot object
     robot = Robot("/dev/ttyUSB0")
-    # robot.expandyBoi()
-    # robot.drive(512)
-    # time.sleep(.5)
-    # robot.drive(0)
-    threadCorrect = mp.Process(target=c.whatMove, args=(robot,))
+
+    #Starts the thread to check robot angle
+    threadCheckPipe = mp.Process(target=c.checkAngle,args=())
+    threadCheckPipe.start()
+
+    #Starts thread for Robot path correction
+    threadCorrect = mp.Process(target=correction.whatMove, args=(robot,))
     threadCorrect.start()

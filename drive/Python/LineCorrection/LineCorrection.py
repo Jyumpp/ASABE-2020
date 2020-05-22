@@ -1,6 +1,5 @@
 from LineTracing.lineTracing import lineTracing
 import multiprocessing as mp
-import threading
 import time
 from Robot.Robot import *
 
@@ -18,9 +17,6 @@ class LineCorrection:
 
 
     def whatMove(self,robot):
-        checkThread = threading.Thread(target=self.checkAngle)
-        checkThread.setdeamon = True
-        checkThread.start()
         time.sleep(5)
         while True:
             try:
