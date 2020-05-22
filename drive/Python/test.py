@@ -21,7 +21,7 @@ if __name__ == '__main__':
     #Creates Robot object
     robot = Robot("/dev/ttyUSB0")
 
-    #Starts the thread to check robot angle
+    #Starts the thread to check robot angle (Python Threads append data to pipes)
     threadCheckPipe = mp.Process(target=c.checkAngle,args=())
     threadCheckPipe.start()
 
