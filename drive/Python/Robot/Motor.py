@@ -1,4 +1,13 @@
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 from dynio import *
 
 
@@ -15,6 +24,18 @@ class Motor:
         self.angleMotor.set_position_mode(goal_current=512)
         self.angleMotor.torque_enable()
         self.torque = True
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+        self.angleMotor.set_debug()
+>>>>>>> Stashed changes
+=======
+        self.angleMotor.set_debug()
+>>>>>>> Stashed changes
+=======
+        self.angleMotor.set_debug()
+>>>>>>> Stashed changes
         # increments the motor ID
         Motor.count = Motor.count + 1
         # creates the motor that controls wheel velocity
@@ -44,6 +65,9 @@ class Motor:
 
     def getVelocity(self):
         return driveMotor.read_control_table("Present_Speed")
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 from dynio import *
 
@@ -94,3 +118,18 @@ class Motor:
     def toggleAngleMode(self):
         self.driveMotor.torque_disable()
 >>>>>>> fef2739b10a416a2d5ebcbc1996c36c8552f3629
+=======
+
+    def toggleAngleMode(self):
+        self.driveMotor.torque_disable()
+>>>>>>> Stashed changes
+=======
+
+    def toggleAngleMode(self):
+        self.driveMotor.torque_disable()
+>>>>>>> Stashed changes
+=======
+
+    def toggleAngleMode(self):
+        self.driveMotor.torque_disable()
+>>>>>>> Stashed changes
