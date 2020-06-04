@@ -10,6 +10,7 @@ class LineCorrection:
         while True:
             try:
                 #____________________________________Angle Correction______________________________#
+                # tan(angle)*18.0625
                 print(self.angle.value)
                 if self.angle.value > self.error:
                     robot.drive(0)
@@ -21,7 +22,7 @@ class LineCorrection:
                 #Detirmines if correction is needed
                 if abs(self.distance.value) > .5:
                     angle = math.atan(self.distance.value/2)
-                    distance = (self.distance.value**2 + 4) ** (1/2)
+                    distance = ((self.distance.value ** 2) + 4) ** (1/2)
                 else self.distance < -.5:
                     angle = 0
                 # Corrects path if needed otherwise continues forward

@@ -4,8 +4,9 @@ import math
 class Robot:
     motors = []
     velocity = 0
+    HOME_ANGLE = HOME_ANGLE
 
-    #Sets Robot drive motors to velocity
+    #  Sets Robot drive motors to velocity
     def drive(self,velocity):
         try:
             self.center()
@@ -16,13 +17,13 @@ class Robot:
             print(e)
             self.center()
 
-    #Sets the Robot angle motors to home angle(150)
+    # Sets the Robot angle motors to home angle(HOME_ANGLE)
     def center(self):
         try:
             for motor in self.motors:
                 motor.center()
-            # print(self.motors[3].getAngle() - 150)
-            while math.fabs(self.motors[3].getAngle() - 150) < 1:
+            # print(self.motors[3].getAngle() - HOME_ANGLE)
+            while math.fabs(self.motors[3].getAngle() - HOME_ANGLE) < 1:
                 continue
 
             return None
@@ -31,15 +32,16 @@ class Robot:
             self.drive(0)
             self.center()
 
-    #Turns drive motors to be normal to center axis
+    # Turns drive motors to be normal to center axis
     def diff(self):
         try:
-            self.motors[1].setAngle(13.101)
-            self.motors[2].setAngle(-13.101)
-            self.motors[0].setAngle(-13.101)
-            self.motors[3].setAngle(13.101)
+            NORMAL_ANGLE = 13.101
+            self.motors[1].setAngle(NORMAL_ANGLE)
+            self.motors[2].setAngle(-NORMAL_ANGLE)
+            self.motors[0].setAngle(-NORMAL_ANGLE)
+            self.motors[3].setAngle(NORMAL_ANGLE)
 
-            while self.motors[3].getAngle() - (150 - 13.101) < -.5:
+            while self.motors[3].getAngle() - (HOME_ANGLE - NORMAL_ANGLE) < -.5:
                 continue
 
         except Exception as e:
@@ -47,6 +49,7 @@ class Robot:
             self.drive(0)
             self.center()
 
+    # Four wheel steering
     def crabSteering(self,angle):
         try:
             if angle == 0:
@@ -57,7 +60,7 @@ class Robot:
                 self.motors[0].setAngle(-angle)
                 self.motors[3].setAngle(angle)
 
-                while self.motors[3].getAngle() - (150 - angle) > -.5 :
+                while self.motors[3].getAngle() - (HOME_ANGLE - angle) > -.5 :
                     continue
 
         except Exception as e:
@@ -65,6 +68,7 @@ class Robot:
             self.drive(0)
             self.center()
 
+    # No work
     def ackermannTurn(self,angle):
         length = 11.25
         width = 36.125
@@ -90,6 +94,7 @@ class Robot:
         self.drive(0)
 
         return None
+
 
     def translate(self,angle,distance):
         try:
@@ -119,7 +124,8 @@ class Robot:
             print(e)
             self.drive(0)
             self.center()
-            
+
+    # Turns all wheels normal to radius or robot to turn robot on axis
     def centerAxis(self,angle):
         try:
             sleepTime = ((math.radians(abs(angle)))/(math.pi))*74
@@ -150,12 +156,12 @@ class Robot:
             self.drive(0)
             self.center()
 
-
+    # Expands the robot
     def expandyBoi(self):
         try:
             self.translate(0,-3)
 
-            sleepTime = (abs(22.5)/(28.416*math.pi)) * 60
+            sleepTime = (22.5/(28.416*math.pi)) * 60
 
 
             self.crabSteering(90)
@@ -175,7 +181,6 @@ class Robot:
             print(e)
             self.drive(0)
             self.center()
-        self.center()
 
     def __init__(self,path):
         self.motors = []
