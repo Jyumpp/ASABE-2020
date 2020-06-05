@@ -18,14 +18,17 @@ class LineCorrection:
                 #____________________________________Angle Correction______________________________#
                 # tan(angle)*18.0625
                 #print(self.angle.value)
-                if self.angle.value > 0:
-                    correctionAngle = -self.angle.value - math.degrees(math.atan2(2,self.distance.value))
-                elif self.angle.value == 0 and self.distance.value == 0:
-                    correctionAngle = 0
-                else:
-                    correctionAngle = abs(self.angle.value) - math.degrees(math.atan2(self.distance.value))
-                print(correctionAngle)
-                self.robot.centerAxis(correctionAngle)
+                if abs(self.angle.value) > self.error or abs(self.distance.value) > self.error:
+                    if self.angle.value > 0:
+                        print("> 0" + str(self.distance.value))
+                        correctionAngle = -self.angle.value - math.degrees(math.atan(self.distance.value/2))
+                    elif self.angle == 0:
+                        correctionAngle = math.degrees(math.atan(self.distance.value/2))
+                    else:
+                        print("< 0" + str(self.distance.value))
+                        correctionAngle = abs(self.angle.value) - math.degrees(math.atan(self.distance.value/2))
+                    print(correctionAngle)
+                    self.robot.centerAxis(correctionAngle)
                 self.robot.drive(512)
                 # else:
                     # #___________________________________Offset Correction______________________________#

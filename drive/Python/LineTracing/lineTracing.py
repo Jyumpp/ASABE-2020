@@ -17,7 +17,7 @@ class lineTracing:
     def lineTracer(self):
         try:
             # global angle
-            video = cv2.VideoCapture(0)
+            video = cv2.VideoCapture(-1)
             width = video.get(3)
             height = video.get(4)
             cX = int(width / 2)
@@ -98,7 +98,8 @@ class lineTracing:
                     # print(self.angle)
                 except Exception as e:
                     pass
-                    #cv2.imshow("frame", frame)
+                    # cv2.imshow("frame", frame)
+                    # cv2.waitkey(1)
                     # print(toppy - centerX)
                     # print("line: " + str(self.angle))
                 # except Exception as e:
@@ -130,8 +131,7 @@ class lineTracing:
     def setOrientation(self, orient):
         self.isVertical = orient
 
-    # def midPoint()
     def __init__(self,commAngleW,commDistanceW):
-         #print()
-         self.pipeAngleWrite = commAngleW
-         self.pipeDistanceWrite = commDistanceW
+        #print()
+        self.pipeAngleWrite = commAngleW
+        self.pipeDistanceWrite = commDistanceW
