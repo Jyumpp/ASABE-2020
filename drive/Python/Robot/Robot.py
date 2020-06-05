@@ -24,7 +24,7 @@ class Robot:
         try:
             for motor in self.motors:
                 motor.setVelocity(velocity)
-            return None
+                
         except Exception as e:
             print(e)
             self.center()
@@ -33,11 +33,7 @@ class Robot:
         try:
             for motor in self.motors:
                 motor.center()
-            # print(self.motors[3].getAngle() - 150)
-            while self.motors[3].getAngle() - 150 < -1:
-                continue
 
-            return None
         except Exception as e:
             print(e)
             self.drive(0)
@@ -49,9 +45,6 @@ class Robot:
             self.motors[2].setAngle(-13.101)
             self.motors[0].setAngle(-13.101)
             self.motors[3].setAngle(13.101)
-
-            while self.motors[3].getAngle() - (150 - 13.101) < -.5:
-                continue
 
         except Exception as e:
             print(e)
@@ -163,7 +156,6 @@ class Robot:
 
             time.sleep(sleepTime)
 
-            self.drive(0)
             self.center()
 
             return None
