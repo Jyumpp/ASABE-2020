@@ -128,7 +128,7 @@ class Robot:
                 self.motors[1].setVelocity(-inverse*256)
                 self.motors[2].setVelocity(inverse*256)
             else:
-                self.drive(256)
+                self.drive(inverse*256)
 
             time.sleep(sleepTime)
 
@@ -191,7 +191,7 @@ class Robot:
 
             self.drive(0)
 
-            self.translate(90,16)
+            self.translate(90,5)
 
             self.center()
 

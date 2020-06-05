@@ -17,19 +17,7 @@ class lineTracing:
     def lineTracer(self):
         try:
             # global angle
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-            video = cv2.VideoCapture(-1)
-=======
             video = cv2.VideoCapture(0)
->>>>>>> Stashed changes
-=======
-            video = cv2.VideoCapture(0)
->>>>>>> Stashed changes
-=======
-            video = cv2.VideoCapture(0)
->>>>>>> Stashed changes
             width = video.get(3)
             height = video.get(4)
             cX = int(width / 2)
@@ -64,16 +52,6 @@ class lineTracing:
 
                     contx, conty, contw, conth = cv2.boundingRect(c)
                     cv2.rectangle(frame, (contx, conty), (contx + contw, conty + conth), (0, 0, 255), 2)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-                    list = []
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
                     try:
                         list = []
                         for var in c:
@@ -103,80 +81,33 @@ class lineTracing:
                     # calculating distances
                     #hypotenuse = math.sqrt((adjacent * adjacent) + (cY * cY))
                     if self.isVertical:
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
                         self.angle = math.atan((toppy - centerX) / cY)
-                        self.distance = (centerX - cX)/scale
-                    else:
-                        self.angle = math.atan((toppy - centerY) / cX)
-                        self.distance = ( centerY - cY) / scale
-                    self.angle = math.degrees(self.angle)
-                    self.pipeAngleWrite.send(self.angle)
-                    self.pipeDistanceWrite.send(self.distance)
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-                        self.angle = 90 - math.atan((toppy - centerX) / cY)
                         self.distance = (centerX - cX)/scale
                     else:
                         #figure how to make work maybe
                         self.angle = math.atan((toppy - centerY) / cX)
                         self.distance = (centerY - cY) / scale
                     self.angle = math.degrees(self.angle)
-                    # self.pipeAngleWrite.send(self.angle)
-                    # self.pipeDistanceWrite.send(self.distance)
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-                    cv2.imshow("frame", frame)
-                    cv2.waitKey(1)
+                    self.pipeAngleWrite.value = self.angle
+                    self.pipeDistanceWrite.value = self.distance
+                    # cv2.imshow("frame", frame)
+                    # cv2.waitKey(1)
                     #return angle, adjacent
                     #cv2.destroyAllWindows()
                     # video.release()
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< HEAD
-                    print(self.angle)
-                except Exception as e:
-                    #cv2.imshow("frame", frame)
-=======
-                    # print(toppy - centerX)
-                    # print("line: " + str(self.angle))
-                except Exception as e:
->>>>>>> 038fe753fe168dfa9082a2255e042327a5b3085e
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-                    print(self.angle)
+                    # print(self.angle)
                 except Exception as e:
                     pass
                     #cv2.imshow("frame", frame)
                     # print(toppy - centerX)
                     # print("line: " + str(self.angle))
-                except Exception as e:
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-                    print(e)
-                    # cv2.imshow("frame", frame)
-                    # cv2.waitKey(1)
-                    # cv2.destroyAllWindows()
-                    #continue
-                # time.sleep(.0000001)
+                # except Exception as e:
+                #     #print(e)
+                #     #cv2.imshow("frame", frame)
+                #     #cv2.waitKey(1)
+                #     # cv2.destroyAllWindows()
+                #     #continue
+                # # time.sleep(.0000001)
         except Exception as e:
             print("Nope")
             print(e)
@@ -200,35 +131,7 @@ class lineTracing:
         self.isVertical = orient
 
     # def midPoint()
-
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    def __init__(self,commAngleW,commDistanceW): #self,commAngleW,commDistanceW
-<<<<<<< HEAD
-        # print()
-=======
-        print()
->>>>>>> 038fe753fe168dfa9082a2255e042327a5b3085e
-        self.pipeAngleWrite = commAngleW
-        self.pipeDistanceWrite = commDistanceW
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-    def __init__(self):
-        print("Done")
-
-    # def __init__(self,commAngleW,commDistanceW): #self,commAngleW,commDistanceW
-    #     # print()
-    #     print()
-    #     self.pipeAngleWrite = commAngleW
-    #     self.pipeDistanceWrite = commDistanceW
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
+    def __init__(self,commAngleW,commDistanceW):
+         #print()
+         self.pipeAngleWrite = commAngleW
+         self.pipeDistanceWrite = commDistanceW
