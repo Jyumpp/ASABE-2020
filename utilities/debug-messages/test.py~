@@ -1,0 +1,15 @@
+#!/usr/bin/python3
+
+from debugmessages import DebugMessages
+
+# Set up test object
+testObj = None
+
+dbm = DebugMessages(testObj)
+
+dbm.info("Test INFO")
+dbm.debug("Test DEBUG")
+dbm.warn("Test WARN")
+dbm.error("Test ERROR")
+dbm.fatal("Test FATAL")
+
