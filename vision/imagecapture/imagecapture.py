@@ -26,6 +26,12 @@ class ImageCapture:
         # setting up read pipe
         self.triggerPipe = triggerPipe
 
+        # Whitebalance calibration
+        for i in range(1,25):
+
+            ret, img = self.cap.read()
+            
+
     # Thread function
     def Run(self):
 

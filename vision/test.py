@@ -12,7 +12,7 @@ if __name__ == "__main__":
     # Set up pipes and objects
     triggeredRead, triggeredWrite = Pipe()
     trigger = dyn(triggeredWrite)
-    capture = cap(triggeredRead, -1, "/home/pi/ASABE/ASABE-2020/vision/imagecapture/output")
+    capture = cap(triggeredRead, 1, "/home/mendel/ASABE-2020/vision/imagecapture/output")
 
     # Set up processes
     mp.set_start_method('spawn')
@@ -31,6 +31,6 @@ if __name__ == "__main__":
 
     # And then classify the images we took
     time.sleep(1)
-    classify = classifier("/home/pi/ASABE/ASABE-2020/vision/imagecapture/output/")
+    classify = classifier("/home/mendel/ASABE-2020/vision/imagecapture/output/")
     classify.print()
 
