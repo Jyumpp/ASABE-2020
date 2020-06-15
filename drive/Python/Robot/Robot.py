@@ -5,21 +5,6 @@ class Robot:
     motors = []
     velocity = 0
 
-    def diffDrive(self):
-        while True:
-            time.sleep(1)
-            if motor[0].getVelocity() == 0 or None:
-                continue
-            i = 0
-            motorPosition = [0,0,0,0]
-            for motor in self.motors:
-                motorPosition[i] = motorPosition[i] + motor.getVelocity()
-                i = i + 1
-            max = motorPosition.max()
-            ratio = motor[0].getVelocity()/1023
-            for motor in self.motors:
-                motor.drive((motor.getVelocity() + (abs(max-motor.getVelocity()))/17.05))
-
     def drive(self,velocity):
         try:
             for motor in self.motors:
@@ -80,37 +65,6 @@ class Robot:
             print(e)
             self.drive(0)
             self.center()
-
-    def ackermannTurn(self,angle):
-        length = 5.5
-        width = 35.125
-        # timeSleep = (math.radians(angle)*5.5)/(4*((math.cos(math.radians(45))*28)/60))
-        radAngle = math.radians(angle)
-        numerator = 2*length *math.sin(radAngle)
-        inner = (2*length*math.cos(angle)) - (width*math.sin(angle))
-        outer = (2*length*math.cos(angle)) + (width*math.sin(angle))
-
-        self.motors[1].toggleTorque()
-        self.motors[2].toggleTorque()
-
-        if angle > 0:
-            self.motors[1].setAngle(math.degrees(math.atan(numerator/inner)))
-            self.motors[2].setAngle(-math.degrees(math.atan(numerator/outer)))
-        else:
-            self.motors[1].setAngle(math.degrees(math.atan(numerator/outer)))
-            self.motors[2].setAngle(-math.degrees(math.atan(numerator/inner)))
-
-
-        # self.motors[0].setVelocity(256)
-        # self.motors[1].setVelocity(512)
-        # self.motors[2].setVelocity(512)
-        # self.motors[3].setVelocity(256)
-
-        # time.sleep(5)
-        #
-        # self.drive(0)
-
-        return None
 
     def translate(self,angle,distance):
         try:

@@ -44,6 +44,6 @@ class LineCorrection:
                 else:
                     self.robot.translate(correctAngle,correctDistance)
             except Exception as e:
-                print("Shits not working")
+                print("Error")
                 print(e)
             time.sleep(.25)
