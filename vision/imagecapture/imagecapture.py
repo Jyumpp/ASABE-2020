@@ -3,6 +3,7 @@
 import time
 from multiprocessing import Pipe
 import cv2
+from debugmessages.debugmessages import DebugMessages
 
 class ImageCapture:
 
@@ -30,7 +31,12 @@ class ImageCapture:
         for i in range(1,25):
 
             ret, img = self.cap.read()
-            
+
+        # Setting up debugmessages
+        self.dbm = DebugMessages(self)
+
+        self.dbm.info("Camera Constructed")
+        
 
     # Thread function
     def Run(self):
@@ -52,6 +58,7 @@ class ImageCapture:
                 cropped_img = img[self.y1:self.y2, self.x1:self.x2].copy()
                 fileStr = self.outputDir + "/output_{0:1d}_{1:2d}.jpg".format(self.camera, image_number)
                 cv2.imwrite(fileStr, cropped_img)
+                self.dbm.info("Image Captured")
 
                 # Wait until the triggered variable is back to false
                 while triggered:

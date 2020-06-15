@@ -1,0 +1,46 @@
+#!/usr/bin/python3
+
+import datetime
+
+class DebugMessages:
+
+    def __init__(self, classObject):
+
+        if classObject is not None:
+            
+            self.className = classObject.__name__
+            self.classID = id(classObject)
+
+        else:
+            self.className = "None"
+            self.classID = 0
+
+        # Initalizing the debug strings for easier printing
+        self.infoStr = "[INFO] [" + self.className + " ID=" + self.classID + "]"
+        self.debugStr = "[DEBUG] [" + self.className + " ID=" + self.classID + "]"
+        self.warningStr = "[WARN] [" + self.className + " ID=" + self.classID + "]"
+        self.errorStr = "[ERROR] [" + self.className + " ID=" + self.classID + "]"
+        self.fatalStr = "[FATAL] [" + self.className + " ID=" + self.classID + "]"
+
+    def info(self, message):
+
+        currentDT = datetime.datetime.now()
+        fileStr = greenDir + "/green_{0:d}{1:d}{2:d}-{3:d}{4:2d}{5:d}.jpg".format(currentDT.year, currentDT.month, currentDT.day, currentDT.hour, currentDT.minute, currentDT.second)
+
+        print(self.infoStr + "[" + message + "]")
+
+    def debug(self, message):
+
+        print(self.debugStr + "[" + message + "]")
+
+    def warning(self, message):
+
+        print(self.warningStr + "[" + message + "]")
+
+    def error(self, message):
+
+        print(self.errorStr + "[" + message + "]")
+
+    def fatal(self, message):
+
+        print(self.fatalStr + "[" + message + "]")
