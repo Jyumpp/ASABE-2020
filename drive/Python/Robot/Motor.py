@@ -4,6 +4,7 @@ from dynio import *
 class Motor:
     count = 1
     dyn = None
+
     def __init__(self, side, path):
         if Motor.dyn is None:
 
@@ -32,18 +33,18 @@ class Motor:
         self.homeAngle = 150
 
     # Toogles torque for the drive motor
-    def toggleTorque(self):
+    def toggle_Torque(self):
         if self.driveMotor.read_control_table("Torque_Enable") == 1:
             self.driveMotor.torque_disable()
         else:
             self.driveMotor.torque_enable()
 
     # Gets the current angle of the motor
-    def getAngle(self):
+    def get_angle(self):
         return self.angleMotor.get_angle()
 
     # Sets the angle of the motor
-    def setAngle(self,angle):
+    def set_angle(self, angle):
         self.angleMotor.set_angle(self.homeAngle - angle)
 
     # Sets the motor to home angle
@@ -51,11 +52,11 @@ class Motor:
         self.angleMotor.set_angle(self.homeAngle)
 
     # Sets the wheel velocity
-    def setVelocity(self,velocity):
+    def set_velocity(self, velocity):
         if self.right:
             self.driveMotor.set_velocity(-velocity)
         else:
             self.driveMotor.set_velocity(velocity)
 
-    def getVelocity(self):
+    def get_velocity(self):
         return driveMotor.read_control_table("Present_Speed")
