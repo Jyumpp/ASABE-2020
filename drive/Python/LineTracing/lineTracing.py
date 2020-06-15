@@ -1,115 +1,89 @@
 import cv2
 import math
-import numpy as np
-import sys
-import multiprocessing as mp
 
-#upload to github
 class lineTracing:
     angle = 0
     minimum = 0
     maximum = 0
     distance = 0
-    isVertical = True
     pipeAngleWrite = None
     pipeDistanceWrite = None
 
     def lineTracer(self):
         try:
-            # global angle
-            video = cv2.VideoCapture(-1)
+            #capturing video, recording center point of frame with cX and cY
+            video = cv2.VideoCapture(0)
             width = video.get(3)
             height = video.get(4)
             cX = int(width / 2)
             cY = int(height / 2)
-            center = (cX, cY)
             # video
             while True:
                 read, frame = video.read()
                 if not read:
                     continue
                 try:
+                    #preparing frame
                     frame = cv2.flip(frame, 1)
-                    frame3 = frame
-                    if not self.isVertical:
-                        Mat = cv2.getRotationMatrix2D(center, 270, 1.42)
-                        frame = cv2.warpAffine(frame, Mat, (int(width), int(height)))
-                        frame = cv2.resize(frame, (480, 640), interpolation = cv2.INTER_LINEAR)
-                    #frame = frame[0:][30:640]
+                    #greyscale conversion
                     greyVideo = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                    mask = cv2.inRange(greyVideo, 0, 160)
+                    #only looking at greys in this range
+                    mask = cv2.inRange(greyVideo, 0, 150)
                     _,contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                    #finding largest contour
                     c = max(contours, key=cv2.contourArea)
                     contours[0] = c
-                    # print(c)
-
-                    #find angle and decide how to track top right corner
-                    if self.isVertical:
-                        Mat = cv2.getRotationMatrix2D(center, 90, 1.0)
-                        frame = frame3
-                        #frame = cv2.warpAffine(frame, Mat, (int(height), int(width)))
-                        #frame = cv2.resize(frame, (640, 480), interpolation = cv2.INTER_LINEAR)
-
+                    #finding an approximate triangle to represent the line
                     contx, conty, contw, conth = cv2.boundingRect(c)
                     cv2.rectangle(frame, (contx, conty), (contx + contw, conty + conth), (0, 0, 255), 2)
+                    #finding top of tape
                     try:
                         list = []
+                        #finding y values in the tape, within the top 15 pixels of the frame
                         for var in c:
                             if var.item(1) < 15:
                                 list.append(var)
                         self.maximum = list[0].item(0)
+                        #finding the rightmost value of the collected y values
                         for vat in list:
                             if vat.item(0) > self.maximum:
                                 self.maximum = vat.item(0)
                         self.minimum = list[0].item(0)
+                        #finding leftmost value
                         for elem in list:
                             if elem.item(0) < self.minimum:
                                 self.minimum = elem.item(0)
                     except Exception as e:
-                        print(str("Line Tacing array " + e))
-                        # cv2.imshow("frame", greyVideo)
+                        print(e)
+                        # cv2.imshow("frame", frame)
                         # cv2.waitKey(1)
                         continue
 
+                    #top midpoint of tape
                     toppy = int(self.minimum + ((self.maximum - self.minimum) / 2))
-                    TRx = contw + contx
-                    BRy = conty + conth
+                    #scale based on width of tape
                     scale = 23*(contw)/32
                     centerX = int(contx + (contw / 2))
-                    centerY = int(conty + (conth / 2))
-                    #adjacent = toppy - centerX
-                    # calculating distances
-                    #hypotenuse = math.sqrt((adjacent * adjacent) + (cY * cY))
-                    if self.isVertical:
-                        self.angle = math.atan((toppy - centerX) / cY)
-                        self.distance = (centerX - cX)/scale
-                    else:
-                        #figure how to make work maybe
-                        self.angle = math.atan((toppy - centerY) / cX)
-                        self.distance = (centerY - cY) / scale
+                    # calculating distances and angles
+                    self.angle = - math.atan((toppy - centerX) / cY)
+                    self.distance = (centerX - cX)/scale
                     self.angle = math.degrees(self.angle)
-                    # # print(self.distance)
-                    self.pipeAngleWrite.value = self.angle
-                    self.pipeDistanceWrite.value = self.distance
-                    # cv2.imshow("frame", frame)
-                    # cv2.waitKey(1)
-                    #return angle, adjacent
+                    # self.pipeAngleWrite.send(self.angle)
+                    # self.pipeDistanceWrite.send(self.distance)
+                    cv2.imshow("frame", frame)
+                    cv2.waitKey(1)
                     #cv2.destroyAllWindows()
                     # video.release()
-                    # print(self.angle)
+                    print(self.angle)
                 except Exception as e:
-                    print(str("Line tracing " + e))
-                    # cv2.imshow("frame", frame)
-                    # cv2.waitKey(1)
-                    # print(toppy - centerX)
-                    # print("line: " + str(self.angle))
-                # except Exception as e:
-                #     #print(e)
-                #     #cv2.imshow("frame", frame)
-                #     #cv2.waitKey(1)
-                #     # cv2.destroyAllWindows()
-                #     #continue
-                # # time.sleep(.0000001)
+                    pass
+                    cv2.imshow("frame", frame)
+                except Exception as e:
+                    print(e)
+                    cv2.imshow("frame", frame)
+                    cv2.waitKey(1)
+                    # cv2.destroyAllWindows()
+                    #continue
         except Exception as e:
             print("Nope")
             print(e)
@@ -123,19 +97,21 @@ class lineTracing:
             if not read:
                 continue
 
-    # def getValues(self):
-    #     return self.pipeRead.recv()
-
     def getOrientation(self):
         return self.isVertical
 
     def setOrientation(self, orient):
         self.isVertical = orient
 
-    def __init__(self,commAngleW,commDistanceW):
-        #print()
-        self.pipeAngleWrite = commAngleW
-        self.pipeDistanceWrite = commDistanceW
-    #
-    # def __init__(self):
-    #     print("Start")
+    def __init__(self):
+        print("Done")
+
+    # def __init__(self,commAngleW,commDistanceW): #self,commAngleW,commDistanceW
+    #     # print()
+    #     print()
+    #     self.pipeAngleWrite = commAngleW
+    #     self.pipeDistanceWrite = commDistanceW
+
+test = lineTracing()
+
+test.test()
