@@ -37,7 +37,7 @@ class lineTracing:
                         frame = cv2.resize(frame, (480, 640), interpolation = cv2.INTER_LINEAR)
                     #frame = frame[0:][30:640]
                     greyVideo = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                    mask = cv2.inRange(greyVideo, 0, 150)
+                    mask = cv2.inRange(greyVideo, 0, 160)
                     _,contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     c = max(contours, key=cv2.contourArea)
                     contours[0] = c
@@ -66,8 +66,8 @@ class lineTracing:
                             if elem.item(0) < self.minimum:
                                 self.minimum = elem.item(0)
                     except Exception as e:
-                        print(e)
-                        # cv2.imshow("frame", frame)
+                        print(str("Line Tacing array " + e))
+                        # cv2.imshow("frame", greyVideo)
                         # cv2.waitKey(1)
                         continue
 
@@ -88,6 +88,7 @@ class lineTracing:
                         self.angle = math.atan((toppy - centerY) / cX)
                         self.distance = (centerY - cY) / scale
                     self.angle = math.degrees(self.angle)
+                    # # print(self.distance)
                     self.pipeAngleWrite.value = self.angle
                     self.pipeDistanceWrite.value = self.distance
                     # cv2.imshow("frame", frame)
@@ -97,9 +98,9 @@ class lineTracing:
                     # video.release()
                     # print(self.angle)
                 except Exception as e:
-                    pass
+                    print(str("Line tracing " + e))
                     # cv2.imshow("frame", frame)
-                    # cv2.waitkey(1)
+                    # cv2.waitKey(1)
                     # print(toppy - centerX)
                     # print("line: " + str(self.angle))
                 # except Exception as e:
@@ -135,3 +136,6 @@ class lineTracing:
         #print()
         self.pipeAngleWrite = commAngleW
         self.pipeDistanceWrite = commDistanceW
+    #
+    # def __init__(self):
+    #     print("Start")

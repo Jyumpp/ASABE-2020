@@ -26,3 +26,4 @@ if __name__ == '__main__':
     #Starts thread for Robot path correction
     threadCorrect = mp.Process(target=correction.whatMove, args=(robot,))
     threadCorrect.start()
+# r = Robot("/dev/ttyUSB0")

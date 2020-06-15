@@ -24,7 +24,7 @@ class Robot:
         try:
             for motor in self.motors:
                 motor.setVelocity(velocity)
-                
+
         except Exception as e:
             print(e)
             self.center()
@@ -39,17 +39,24 @@ class Robot:
             self.drive(0)
             self.center()
 
-    def diff(self):
+    def fourWheelTurn(self):
+        normalAngle = 8.993
         try:
-            self.motors[1].setAngle(13.101)
-            self.motors[2].setAngle(-13.101)
-            self.motors[0].setAngle(-13.101)
-            self.motors[3].setAngle(13.101)
+            self.motors[1].setAngle(normalAngle)
+            self.motors[2].setAngle(-normalAngle)
+            self.motors[0].setAngle(-normalAngle)
+            self.motors[3].setAngle(normalAngle)
 
         except Exception as e:
             print(e)
             self.drive(0)
             self.center()
+
+    def diffTurn(self):
+        self.motors[0].setVelocity(-512)
+        self.motors[1].setVelocity(-512)
+        self.motors[2].setVelocity(512)
+        self.motors[3].setVelocity(512)
 
     def crabSteering(self,angle):
         try:
@@ -75,13 +82,16 @@ class Robot:
             self.center()
 
     def ackermannTurn(self,angle):
-        length = 11.25
-        width = 36.125
+        length = 5.5
+        width = 35.125
         # timeSleep = (math.radians(angle)*5.5)/(4*((math.cos(math.radians(45))*28)/60))
         radAngle = math.radians(angle)
         numerator = 2*length *math.sin(radAngle)
         inner = (2*length*math.cos(angle)) - (width*math.sin(angle))
         outer = (2*length*math.cos(angle)) + (width*math.sin(angle))
+
+        self.motors[1].toggleTorque()
+        self.motors[2].toggleTorque()
 
         if angle > 0:
             self.motors[1].setAngle(math.degrees(math.atan(numerator/inner)))
@@ -91,14 +101,14 @@ class Robot:
             self.motors[2].setAngle(-math.degrees(math.atan(numerator/inner)))
 
 
-        self.motors[0].setVelocity(256)
-        self.motors[1].setVelocity(512)
-        self.motors[2].setVelocity(512)
-        self.motors[3].setVelocity(256)
+        # self.motors[0].setVelocity(256)
+        # self.motors[1].setVelocity(512)
+        # self.motors[2].setVelocity(512)
+        # self.motors[3].setVelocity(256)
 
-        time.sleep(5)
-
-        self.drive(0)
+        # time.sleep(5)
+        #
+        # self.drive(0)
 
         return None
 
@@ -137,26 +147,28 @@ class Robot:
 
     def centerAxis(self,angle):
         try:
-            sleepTime = ((math.radians(abs(angle)))/(math.pi))*74
+            velocity = 256
+            sleepTime = ((math.radians(abs(angle)))/(math.pi))*44.75
 
             self.center()
 
-            self.diff()
+            self.fourWheelTurn()
 
             if angle > 0:
-                self.motors[0].setVelocity(-128)
-                self.motors[3].setVelocity(128)
-                self.motors[1].setVelocity(-128)
-                self.motors[2].setVelocity(128)
+                self.motors[0].setVelocity(-velocity)
+                self.motors[3].setVelocity(velocity)
+                self.motors[1].setVelocity(-velocity)
+                self.motors[2].setVelocity(velocity)
             else:
-                self.motors[0].setVelocity(128)
-                self.motors[3].setVelocity(-128)
-                self.motors[1].setVelocity(128)
-                self.motors[2].setVelocity(-128)
+                self.motors[0].setVelocity(velocity)
+                self.motors[3].setVelocity(-velocity)
+                self.motors[1].setVelocity(velocity)
+                self.motors[2].setVelocity(-velocity)
 
             time.sleep(sleepTime)
 
             self.center()
+            self.drive(0)
 
             return None
         except Exception as e:

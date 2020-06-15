@@ -24,6 +24,13 @@ class Motor:
         self.right = side
         self.homeAngle = 150
 
+    def toggleTorque(self):
+        if self.driveMotor.read_control_table("Torque_Enable") == 1:
+            self.driveMotor.torque_disable()
+        else:
+            self.driveMotor.torque_enable()
+
+
     def getAngle(self):
         return self.angleMotor.get_angle()
 
