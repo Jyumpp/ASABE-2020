@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include/boost/boost_1_58_0",
+                "/usr/include/python3.7",
+                "/usr/include/x86_64-linux-gnu/python3.7",
+                "${workspaceFolder}",
+                "/home/michael/include/vcpkg/packages/**",
+                "/usr/local/include/python3.7m/pybind11"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/g++",
+            "cStandard": "c11",
+            "cppStandard": "c++11",
+            "intelliSenseMode": "clang-x64"
+        }
+    ],
+    "version": 4
+}
