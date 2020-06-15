@@ -3,11 +3,9 @@
 import time
 from multiprocessing import Pipe
 from dynio import *
-from ......utilities.debugmessages.debugmessages import DebugMessages
+from debugmessages.debugmessages import DebugMessages
 
 class DynaTrigger:
-
-    triggerCount = 0
 
     # init
     def __init__(self, triggerPipe):
@@ -24,9 +22,12 @@ class DynaTrigger:
         self.triggerPipe = triggerPipe
         self.triggerCount = 0
         self.ID = DynaTrigger.triggerCount
-        DynaTrigger.triggerCount += 1
 
-        print("[INFO] [DynaTrigger ID=" + str(self.ID) + "]:" + "DynaTrigger Object Constructed")
+        # Set up debug messages
+        self.dbm = DebugMessages(self)
+
+        # Say we've been constructed
+        self.dbm.info("Constructed")
 
     # Process function
     def Run(self):
@@ -56,7 +57,7 @@ class DynaTrigger:
             self.triggerCount += 1
             # Send picture capture signal over pipe
             self.triggerPipe.send(True)
-            print("[INFO] [DynaTrigger ID=" + str(self.ID) + "]:" + "Camera Triggered")
+            self.dbm.info("Dynamixel Triggered")
             
             # Wait for the motor to get back in place
             while(self.ax_12.read_control_table("Present_Load") != 0):

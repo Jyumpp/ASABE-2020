@@ -4,7 +4,7 @@ import datetime
 
 class DebugMessages:
 
-    def __init__(self, classObject):
+    def __init__(self, classObject=None):
 
         if classObject is not None:
             
