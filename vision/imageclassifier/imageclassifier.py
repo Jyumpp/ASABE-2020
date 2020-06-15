@@ -1,9 +1,7 @@
 import numpy as np
 from PIL import Image
-#import tensorflow as tf # TF2
 import tflite_runtime.interpreter as tflite
 import cv2
-#from sklearn.preprocessing import LabelEncoder
 import os  
 
 
@@ -42,9 +40,7 @@ class ImgClassifier:
         output_details = interpreter.get_output_details()
 
         self.dir = dir
-        #IMG_SIZE = 150
                
-        #print ("green\topen\tyellow")
         for img in os.listdir(self.dir):
             
             input_data = self.imgToArray(img)
@@ -54,10 +50,4 @@ class ImgClassifier:
             interpreter.invoke()
             output_data = interpreter.get_tensor(output_details[0]['index'])
             
-            #print ("green\topen\tyellow")
             self.spots.append(output_data.tolist())
-            ##list = output_data.tolist()
-            ##for i in range(len(list)):
-            ##    for j in list[i]:
-            ##        print (round((j * 100),), end =" " + "%\t")
-            ##        print (img_name)

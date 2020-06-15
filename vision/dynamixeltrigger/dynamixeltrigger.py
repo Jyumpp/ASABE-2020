@@ -10,11 +10,11 @@ class DynaTrigger:
     def __init__(self, triggerPipe):
 
         # Dynamixel motor setup
-        dxl_io = dxl.DynamixelIO('/dev/ttyUSB0', 1000000)
-        self.ax_12_1 = dxl_io.new_ax12_1(7)
+        dxl_io = dxl.DynamixelIO('/dev/ttyUSB0', 57600)
+        self.ax_12_1 = dxl_io.new_ax12(3)
         self.ax_12_1.torque_enable()
         self.ax_12_1.set_position_mode()
-        self.ax_12_1.set_angle(240)
+        self.ax_12_1.set_angle(60)
         self.ax_12_1.set_velocity(1023)
 
         # Signal/pipe setup
@@ -30,20 +30,22 @@ class DynaTrigger:
 
             self.ax_12_1.set_position_mode()
             self.ax_12_1.write_control_table("Torque_Limit", 1000)
-            self.ax_12_1.set_angle(240)
+            self.ax_12_1.set_angle(60)
 
             # Wait for the motor to get into place
             while self.ax_12_1.read_control_table("Moving") == 1:
-                print("1")
                 pass
+
+            # A small amount of delay to prevent multiple triggers
+            time.sleep(0.5)
 
             # Set to velocity mode and disable torque to act like a spring
             self.ax_12_1.set_velocity_mode()
             self.ax_12_1.torque_disable()
 
             # Wait for trigger
-            while self.ax_12_1.read_control_table("Present_Load") == 0:
-                print("2")
+            while (self.ax_12_1.get_current() > -50) & (self.ax_12_1.get_current() < 50):
+                print('Waiting: ' + str(self.ax_12_1.get_current()))
                 pass
 
             # increment trigger count
@@ -54,9 +56,7 @@ class DynaTrigger:
 
             # Wait for the motor to get back in place
             while(self.ax_12_1.read_control_table("Present_Load") != 0):
-                print(self.ax_12_1.read_control_table("Present_Load"))
-                print(self.ax_12_1.read_control_table("CW_Angle_Limit"))
-                print(self.ax_12_1.read_control_table("CCW_Angle_Limit"))
+                print(self.ax_12_1.get_current())
                 pass
 
             self.triggerPipe.send(False)
