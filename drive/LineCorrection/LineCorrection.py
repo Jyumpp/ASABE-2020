@@ -1,4 +1,5 @@
 import multiprocessing as mp
+from debugmessages import *
 import time
 import math
 
@@ -12,6 +13,8 @@ class LineCorrection:
         self.angle = commAR
         self.dist = commDR
         self.robot = robot
+        self.badMsg = DebugMessages(self)
+        self.badMsg.info("Line Correction object done")
 
     def what_move(self, robot):
         time.sleep(5)
@@ -45,6 +48,5 @@ class LineCorrection:
                 else:
                     self.robot.translate(fixAngle, fixDistance)
             except Exception as e:
-                print("Error")
-                print(e)
+                self.badMsg.error(e)
             time.sleep(.25)
