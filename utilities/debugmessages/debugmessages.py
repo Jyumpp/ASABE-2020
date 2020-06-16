@@ -8,7 +8,7 @@ class DebugMessages:
 
         if classObject is not None:
             
-            self.className = classObject.__name__
+            self.className = classObject.__class__.__name__
             self.classID = id(classObject)
 
         else:

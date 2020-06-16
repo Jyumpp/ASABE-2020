@@ -11,7 +11,7 @@ if __name__ == "__main__":
     
     # Set up pipes and objects
     triggeredRead, triggeredWrite = Pipe()
-    trigger = dyn(triggeredWrite)
+    trigger = dyn(3, triggeredWrite)
     capture = cap(triggeredRead, 1, "/home/mendel/ASABE-2020/vision/imagecapture/output")
 
     # Set up processes

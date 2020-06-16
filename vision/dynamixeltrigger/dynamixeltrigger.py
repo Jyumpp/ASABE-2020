@@ -3,16 +3,16 @@
 import time
 from multiprocessing import Pipe
 from dynio import *
-from debugmessages.debugmessages import DebugMessages
+from debugmessages import *
 
 class DynaTrigger:
 
     # init
-    def __init__(self, triggerPipe):
+    def __init__(self, motorID, triggerPipe):
 
         # Dynamixel motor setup
         dxl_io = dxl.DynamixelIO('/dev/ttyUSB0', 57600)
-        self.ax_12 = dxl_io.new_ax12(3)
+        self.ax_12 = dxl_io.new_ax12(motorID)
         self.ax_12.torque_enable()
         self.ax_12.set_position_mode()
         self.ax_12.set_angle(60)
@@ -21,7 +21,6 @@ class DynaTrigger:
         # Signal/pipe setup
         self.triggerPipe = triggerPipe
         self.triggerCount = 0
-        self.ID = DynaTrigger.triggerCount
 
         # Set up debug messages
         self.dbm = DebugMessages(self)

@@ -3,7 +3,7 @@
 import time
 from multiprocessing import Pipe
 import cv2
-from debugmessages.debugmessages import DebugMessages
+from debugmessages import *
 
 class ImageCapture:
 

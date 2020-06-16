@@ -61,7 +61,7 @@ class Robot:
                 self.motors[0].set_angle(-angle)
                 self.motors[3].set_angle(-angle)
 
-                while math.fabs(self.motors[3].get_angle() - (150-angle)) < 1:
+                while math.fabs(self.motors[3].get_angle() - (150-abs(angle))) < .25:
                     continue
 
         except Exception as e:
@@ -76,7 +76,7 @@ class Robot:
             else:
                 inverse = -1
 
-            sleepTime = (abs(distance)/(56.832*math.pi)) * 120
+            sleepTime = (abs(distance)/(.492*math.pi))
             self.crab_steering(angle)
 
             if angle == 90:
@@ -133,9 +133,9 @@ class Robot:
 
     def expandy_boi(self):
         try:
-            self.translate(0, -3)
+            self.translate(0, 5)
 
-            sleepTime = (abs(22.5)/(28.416*math.pi)) * 60
+            sleepTime = (abs(36)/(.492*math.pi))
             self.crab_steering(90)
 
             self.motors[0].set_velocity(1023)
@@ -146,8 +146,7 @@ class Robot:
             time.sleep(sleepTime)
 
             self.drive(0)
-
-            self.translate(90, 5)
+            self.translate(0,5)
 
             self.center()
 
@@ -159,7 +158,7 @@ class Robot:
         self.center()
 
     def __init__(self, path):
-        #self.badMsg = DebugMessages(self)
+        self.badMsg = DebugMessages(self)
         self.motors = []
         for i in range(0, 4):
             if i < 2:
@@ -168,4 +167,4 @@ class Robot:
                 self.motors.append(Motor(False, path))
         self.drive(0)
         self.center()
-        #self.badMsg.info("Done creating Robot object")
+        self.badMsg.info("Done creating Robot object")
