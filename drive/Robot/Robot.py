@@ -1,4 +1,5 @@
 from Robot.Motor import *
+from debugmessages import *
 import time
 import math
 
@@ -158,6 +159,7 @@ class Robot:
         self.center()
 
     def __init__(self, path):
+        self.badMsg = DebugMessages(self)
         self.motors = []
         for i in range(0, 4):
             if i < 2:
@@ -166,3 +168,4 @@ class Robot:
                 self.motors.append(Motor(False, path))
         self.drive(0)
         self.center()
+        self.badMsg.info("Done creating Robot object")
