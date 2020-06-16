@@ -61,7 +61,7 @@ class Robot:
                 self.motors[0].set_angle(-angle)
                 self.motors[3].set_angle(-angle)
 
-                while math.fabs(self.motors[3].get_Angle() - (150-angle)) < 1:
+                while math.fabs(self.motors[3].get_angle() - (150-angle)) < 1:
                     continue
 
         except Exception as e:
@@ -159,7 +159,7 @@ class Robot:
         self.center()
 
     def __init__(self, path):
-        self.badMsg = DebugMessages(self)
+        #self.badMsg = DebugMessages(self)
         self.motors = []
         for i in range(0, 4):
             if i < 2:
@@ -168,4 +168,4 @@ class Robot:
                 self.motors.append(Motor(False, path))
         self.drive(0)
         self.center()
-        self.badMsg.info("Done creating Robot object")
+        #self.badMsg.info("Done creating Robot object")
