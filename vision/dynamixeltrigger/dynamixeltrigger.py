@@ -8,19 +8,19 @@ from debugmessages import *
 class DynaTrigger:
 
     # init
-    def __init__(self, motorID, triggerPipe):
+    def __init__(self, stop, motor, triggerPipe):
 
         # Dynamixel motor setup
-        dxl_io = dxl.DynamixelIO('/dev/ttyUSB0', 57600)
-        self.ax_12 = dxl_io.new_ax12(motorID)
+        self.ax_12 = motor
         self.ax_12.torque_enable()
         self.ax_12.set_position_mode()
         self.ax_12.set_angle(60)
         self.ax_12.set_velocity(1023)
 
-        # Signal/pipe setup
+        # Pipe/Shared memory setup
         self.triggerPipe = triggerPipe
         self.triggerCount = 0
+        self.stop = stop
 
         # Set up debug messages
         self.dbm = DebugMessages(self)
@@ -64,4 +64,6 @@ class DynaTrigger:
 
             self.triggerPipe.send(False)
             self.ax_12.torque_enable()
+
+        self.stop.value += 1
         

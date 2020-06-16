@@ -87,7 +87,7 @@ class lineTracing:
                 except Exception as e:
                     print(e)
                     #print("Not working 2")
-                     self.dbg.warning("Top points and angle can't be detected")
+                    self.dbg.warning("Top points and angle can't be detected")
                     # cv2.imshow("frame", frame)
                     # cv2.waitKey(1)
                     # cv2.destroyAllWindows()

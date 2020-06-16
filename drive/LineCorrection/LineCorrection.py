@@ -14,12 +14,13 @@ class LineCorrection:
     fixDistance = 0
     fixAngle = 0
 
-    def __init__(self, commAR, commDR, robot):
+    def __init__(self, stopFlag, commAR, commDR, robot):
         self.anglePipe = commAR
         self.distancePipe = commDR
         self.robot = robot
         self.badMsg = DebugMessages(self)
         self.badMsg.info("Line Correction object done")
+        self.stopFlag = stopFlag
 
     def check_angle(self):
         while True:
@@ -32,7 +33,7 @@ class LineCorrection:
         checkThread.start()
         time.sleep(5)
         self.robot.expandy_boi()
-        while True:
+        while self.stopFlag.value is not 4:
             try:
                 print("Angle " + str(self.angle))
                 # ___________________Angle Correction_________________________#

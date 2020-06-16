@@ -131,7 +131,7 @@ class Robot:
             self.drive(0)
             self.center()
 
-    def expandy_boi(self):
+    def expandy_boi(self, dropperMotors):
         try:
             self.translate(0, 5)
 
@@ -149,6 +149,9 @@ class Robot:
             self.translate(0,5)
 
             self.center()
+
+            for motor in dropperMotors:
+                motor.set_angle()
 
             return None
         except Exception as e:
