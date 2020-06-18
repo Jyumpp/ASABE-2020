@@ -13,12 +13,12 @@ if __name__ == '__main__':
     robot = Robot("/dev/ttyUSB0")
 
     #Creates program pipes
-    angleRead, angleWrite = mp.Pipe()
-    distRead, distWrite = mp.Pipe()
+    angle = mp.Queue(1)
+    dist = mp.Queue(1)
 
     #Sets up lineTracing and LineCorrection classes
-    tracing = lineTracing(angleWrite,distWrite)
-    correction = LineCorrection(angleRead,distRead,robot)
+    tracing = lineTracing(angle,dist)
+    correction = LineCorrection(angle,dist,robot)
 
     # Makes and starts lineTracing
     threadTrace = mp.Process(target=tracing.lineTracer, args=())
@@ -27,4 +27,3 @@ if __name__ == '__main__':
     # Starts thread for Robot path correction
     threadCorrect = mp.Process(target=correction.what_move, args=())
     threadCorrect.start()
-# r = Robot("/dev/ttyUSB0")
