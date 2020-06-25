@@ -40,12 +40,6 @@ class Robot:
             self.drive(0)
             self.center()
 
-    def diff_turn(self):
-        self.motors[0].set_velocity(-512)
-        self.motors[1].set_velocity(-512)
-        self.motors[2].set_velocity(512)
-        self.motors[3].set_velocity(512)
-
     def crab_steering(self, angle):
         try:
             if angle == 0:
@@ -104,8 +98,6 @@ class Robot:
         try:
             velocity = 256
             sleepTime = ((math.radians(abs(angle)))/(math.pi))*44.75
-
-            self.center()
 
             self.four_wheel_turn()
 
@@ -171,3 +163,6 @@ class Robot:
         self.drive(0)
         self.center()
         self.badMsg.info("Done creating Robot object")
+
+    def __del__(self):
+        self.drive(0)
