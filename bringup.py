@@ -26,8 +26,8 @@ if __name__ == '__main__':
     robot.expandy_boi(motorList)
 
     # Creates pipes for drive/linecorrection
-    angleRead, angleWrite = Pipe()
-    distRead, distWrite = Pipe()
+    angleRead, angleWrite = Pipe(False)
+    distRead, distWrite = Pipe(False)
 
     # Creates pipes for vision
     triggerRead1, triggerWrite1 = Pipe()
@@ -52,7 +52,7 @@ if __name__ == '__main__':
     trigger4 = dyn(stop, motorList[3], triggerWrite4)
     capture4 = cap(triggerRead4, 4, "/home/mendel/ASABE-2020/vision/imagecapture/output")
 
-    # Set up and run vision processes 
+    # Set up and run vision processes
     trigger1Process = Process(target=trigger1.Run(), args=())
     capture1Process = Process(target=capture1.Run(), args=())
     trigger2Process = Process(target=trigger2.Run(), args=())
@@ -92,4 +92,3 @@ if __name__ == '__main__':
     time.sleep(1)
     classify = classifier("/home/mendel/ASABE-2020/vision/imagecapture/output/")
     classify.print()
-
