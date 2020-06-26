@@ -10,12 +10,12 @@ from vision.dynamixeltrigger.dynamixeltrigger import DynaTrigger as dyn
 from vision.imagecapture.imagecapture import ImageCapture as cap
 from vision.imageclassifier.imageclassifier import ImgClassifier as classifier
 
-deployAngles = [1023,671,0,0]
+deployAngles = [1023, 671, 0, 0]
 
 if __name__ == '__main__':
 
     # Sets threading type to fork for LineCorrection Instances
-    mp.set_start_method('fork',force=True)
+    mp.set_start_method('fork', force=True)
 
     # Creating Dynamixel Trigger motors
     dxl_io = dxl.DynamixelIO("/dev/ttyUSB0", 57600)
@@ -29,14 +29,14 @@ if __name__ == '__main__':
 
     # Running expandy boi
     robot.expandy_boi()
-    robot.translate(0,-8)
+    robot.translate(0, -8)
     motorList[3].set_position(deployAngles[3])
     motorList[0].set_position(deployAngles[0])
     time.sleep(.25)
-    robot.translate(0,10)
+    robot.translate(0, 10)
     motorList[1].set_position(deployAngles[1])
     motorList[2].set_position(deployAngles[2])
-    robot.translate(0,-5)
+    robot.translate(0, -5)
     for motor in motorList:
         motor.torque_disable()
 
@@ -50,8 +50,11 @@ if __name__ == '__main__':
     triggerRead3, triggerWrite3 = Pipe()
     triggerRead4, triggerWrite4 = Pipe()
 
-    # Create shared memnory for trigger and line correction
+    # Create shared memory for trigger and line correction
     stop = Value('i', 0)
+
+    # Creates array of trigger states to control line following with
+    correctEnable = {triggerRead1, triggerRead2, triggerRead3, triggerRead4}
 
     # Sets up lineTracing and LineCorrection classes
     tracing = lineTracing(angleWrite, distWrite)
@@ -106,5 +109,5 @@ if __name__ == '__main__':
     # And then classify the images we took
     time.sleep(1)
     classify = classifier("/home/mendel/ASABE-2020/vision/imagecapture/output/")
-    classify.print() #<- can this be made to return a list of values for each picture
+    classify.print()  # <- can this be made to return a list of values for each picture
     # Look at Competition_gui for what numbers to use lines 100-104
