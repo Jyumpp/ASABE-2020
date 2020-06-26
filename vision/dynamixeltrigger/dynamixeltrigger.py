@@ -14,8 +14,8 @@ class DynaTrigger:
         self.ax_12 = motor
         self.ax_12.torque_enable()
         self.ax_12.set_position_mode()
-        self.ax_12.set_angle(60)
-        self.ax_12.set_velocity(1023)
+        # self.ax_12.set_angle(60)
+        # self.ax_12.set_velocity(1023)
 
         # Pipe/Shared memory setup
         self.triggerPipe = triggerPipe
@@ -30,12 +30,13 @@ class DynaTrigger:
 
     # Process function
     def Run(self):
-        
+
         while self.triggerCount < 16:
 
             self.ax_12.set_position_mode()
+            home = self.ax_12.get_position()
             self.ax_12.write_control_table("Torque_Limit", 1000)
-            self.ax_12.set_angle(60)
+            self.ax_12.set_((home/1023)*300)
 
             # Wait for the motor to get into place
             while self.ax_12.read_control_table("Moving") == 1:
@@ -57,7 +58,7 @@ class DynaTrigger:
             # Send picture capture signal over pipe
             self.triggerPipe.send(True)
             self.dbm.info("Dynamixel Triggered")
-            
+
             # Wait for the motor to get back in place
             while(self.ax_12.read_control_table("Present_Load") != 0):
                 pass
@@ -66,4 +67,3 @@ class DynaTrigger:
             self.ax_12.torque_enable()
 
         self.stop.value += 1
-        

@@ -1,4 +1,4 @@
-from Robot.Motor import *
+from drive.Robot.Motor import *
 from debugmessages import *
 import time
 import math
@@ -133,7 +133,7 @@ class Robot:
         try:
 
             self.translate(0,-1)
-            sleepTime = (32/(.492*math.pi))
+            sleepTime = (36/(.492*math.pi))
             self.crab_steering(90)
 
             self.motors[0].set_velocity(-200)
@@ -154,14 +154,9 @@ class Robot:
             self.center()
         self.center()
 
-    def __init__(self, dyn):
+    def __init__(self, motors):
         self.badMsg = DebugMessages(self)
-        self.motors = []
-        for i in range(0, 4):
-            if i < 2:
-                self.motors.append(Motor(True, dyn))
-            else:
-                self.motors.append(Motor(False, dyn))
+        self.motors = motors
         self.drive(0)
         self.center()
         self.badMsg.info("Done creating Robot object")

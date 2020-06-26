@@ -9,7 +9,7 @@ PORT = 50007
 
 class MessageSender:
     def __init__(self):
-        self.badMsg = = DebugMessages(self)
+        self.badMsg = DebugMessages(self)
         self.badMsg.info("Message Sende initialized")
 
         def send(self,chars):
