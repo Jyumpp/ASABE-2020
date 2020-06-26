@@ -14,6 +14,7 @@ class LineCorrection:
     dist = 0
     fixDistance = 0
     fixAngle = 0
+    correctEnable = True
 
     def __init__(self, stopFlag,courseCorrect,commAR, commDR, robot):
         self.anglePipe = commAR
@@ -29,11 +30,21 @@ class LineCorrection:
             self.dist = self.distancePipe.recv()
             temp = self.anglePipe.recv()
 
+    def check_correct(self):
+        while True:
+            if all(pipe.recv() == False for pipe in self.courseCorrect):
+                self.correctEnable = False
+            else:
+                self.correctEnable = True
+
     def what_move(self):
         checkThread = threading.Thread(target=self.check_angle)
         checkThread.setdeamon = True
         checkThread.start()
-        # while self.stopFlag.value is not 4 and self.courseCorrect.value == 0:
+        checkCorrectEnable = threading.Thread(target=self.check_correct)
+        checkCorrectEnable.setDaemon = True
+        checkCorrectEnable.start()
+        # while self.stopFlag.value is not 4 and self.correctEnable:
         anglePID = PID(.82,0,0, setpoint=0)
         while True:
             trys = 0
