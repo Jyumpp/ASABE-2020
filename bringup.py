@@ -1,4 +1,5 @@
 import time
+from MessageSender import *
 from debugmessages import *
 from dynio import *
 from multiprocessing import Process, Pipe, Value
@@ -9,21 +10,35 @@ from vision.dynamixeltrigger.dynamixeltrigger import DynaTrigger as dyn
 from vision.imagecapture.imagecapture import ImageCapture as cap
 from vision.imageclassifier.imageclassifier import ImgClassifier as classifier
 
+deployAngles = [1023,671,0,0]
 
 if __name__ == '__main__':
 
     # Sets threading type to fork for LineCorrection Instances
     mp.set_start_method('fork',force=True)
 
-    # Creates Robot object
-    robot = Robot("/dev/ttyUSB0")
-
     # Creating Dynamixel Trigger motors
     dxl_io = dxl.DynamixelIO("/dev/ttyUSB0", 57600)
     motorList = [dxl_io.new_ax12(9), dxl_io.new_ax12(10), dxl_io.new_ax12(11), dxl_io.new_ax12(12)]
 
+    # Creates Robot object
+    robot = Robot(dxl_io)
+
+    # Creates Message Sender of GUI
+    sender = MessageSender()
+
     # Running expandy boi
-    robot.expandy_boi(motorList)
+    robot.expandy_boi()
+    robot.translate(0,-8)
+    motorList[3].set_position(deployAngles[3])
+    motorList[0].set_position(deployAngles[0])
+    time.sleep(.25)
+    robot.translate(0,10)
+    motorList[1].set_position(deployAngles[1])
+    motorList[2].set_position(deployAngles[2])
+    robot.translate(0,-5)
+    for motor in motorList:
+        motor.torque_disable()
 
     # Creates pipes for drive/linecorrection
     angleRead, angleWrite = Pipe(False)
@@ -39,17 +54,17 @@ if __name__ == '__main__':
     stop = Value('i', 0)
 
     # Sets up lineTracing and LineCorrection classes
-    tracing = lineTracing(angleWrite,distWrite)
-    correction = LineCorrection(stop, angleRead,distRead,robot)
+    tracing = lineTracing(angleWrite, distWrite)
+    correction = LineCorrection(stop, correctEnable, angleRead, distRead, robot)
 
     # Sets up Vision system classes
-    trigger1 = dyn(stop, motorList[0], triggerWrite1)
+    trigger1 = dyn(stop, correctEnable, motorList[0], triggerWrite1)
     capture1 = cap(triggerRead1, 2, "/home/mendel/ASABE-2020/vision/imagecapture/output")
-    trigger2 = dyn(stop, motorList[1], triggerWrite2)
+    trigger2 = dyn(stop, correctEnable, motorList[1], triggerWrite2)
     capture2 = cap(triggerRead2, 3, "/home/mendel/ASABE-2020/vision/imagecapture/output")
-    trigger3 = dyn(stop, motorList[2], triggerWrite3)
+    trigger3 = dyn(stop, correctEnable, rrmotorList[2], triggerWrite3)
     capture3 = cap(triggerRead3, 3, "/home/mendel/ASABE-2020/vision/imagecapture/output")
-    trigger4 = dyn(stop, motorList[3], triggerWrite4)
+    trigger4 = dyn(stop, correctEnable, motorList[3], triggerWrite4)
     capture4 = cap(triggerRead4, 4, "/home/mendel/ASABE-2020/vision/imagecapture/output")
 
     # Set up and run vision processes
@@ -91,4 +106,5 @@ if __name__ == '__main__':
     # And then classify the images we took
     time.sleep(1)
     classify = classifier("/home/mendel/ASABE-2020/vision/imagecapture/output/")
-    classify.print()
+    classify.print() #<- can this be made to return a list of values for each picture
+    # Look at Competition_gui for what numbers to use lines 100-104

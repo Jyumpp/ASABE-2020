@@ -46,13 +46,13 @@ class Ui_MainWindow(object):
         self.dropdown_menu.setFont(font)
         self.dropdown_menu.setGeometry(QtCore.QRect(540, 540, 240, 50))
         self.robot_index = 0
-        for name_ip in NAME_IP_LIST: 
+        for name_ip in NAME_IP_LIST:
             text = name_ip[0] + ': ' + name_ip[1]
             self.dropdown_menu.addItem(text)
         self.ip_addr = NAME_IP_LIST[0][1]
 
         self.server_running = True
-        self.server_thread = threading.Thread(target = self.server) 
+        self.server_thread = threading.Thread(target = self.server)
         self.server_thread.start()
 
         font = QtGui.QFont()
@@ -88,8 +88,8 @@ class Ui_MainWindow(object):
         self.LCD = QLCDNumber(self.centralwidget)
         self.LCD.setGeometry(QtCore.QRect(350, 480, 100, 40))
         self.LCD.display(0)
-        self.LCD.setStyleSheet('QLCDNumber {background-color: green; color: red;}')           
-        
+        self.LCD.setStyleSheet('QLCDNumber {background-color: green; color: red;}')
+
         self.clockLCD = QLCDNumber(self.centralwidget)
         self.clockLCD.setGeometry(QtCore.QRect(350, 540, 100, 40))
         self.clockLCD.display('3:00')
@@ -105,7 +105,7 @@ class Ui_MainWindow(object):
         self.blackPen = QPen(Qt.black)
         self.BrushList = [whiteBrush, yellowBrush, greenBrush, blueBrush, pinkBrush, QBrush(Qt.black)]
         self.colorNames = ['Empty', 'Stressed', 'Healthy', 'Double','Tiller','Detection']
-        
+
         self.level = 0 #standard
         self.newDetectionAvailable = False
         self.detectedFieldConfig = 5*np.ones((4,16),dtype=np.int8)
@@ -117,7 +117,7 @@ class Ui_MainWindow(object):
         self.StandardButton.clicked.connect(self.StdBtnClickedSlot)
         self.StdBtnClickedSlot()
         self.drawPlants()
-   
+
         self.drawing_timer = QTimer()
         self.drawing_timer.setInterval(50)
         self.drawing_timer.timeout.connect(self.updateDetectionResult)
@@ -131,22 +131,22 @@ class Ui_MainWindow(object):
         self.clock_timer.start()
         self.time_is_up = False
         app.aboutToQuit.connect(self.closeEvent)
-    
-    def updateClock(self):     
-        if self.clock_seconds >= 300:      
-            if self.clock_seconds%2 == 0:   
+
+    def updateClock(self):
+        if self.clock_seconds >= 300:
+            if self.clock_seconds%2 == 0:
                 self.clockLCD.setStyleSheet('QLCDNumber {background-color: yellow; color: red;}')
             else:
                 self.clockLCD.setStyleSheet('QLCDNumber {background-color: white; color: red;}')
             self.clockLCD.display('5:00')
             self.time_is_up = True
         else:
-            self.timestamp = str(self.clock_seconds//60)+':' 
+            self.timestamp = str(self.clock_seconds//60)+':'
             sec = self.clock_seconds%60
             self.timestamp += '0' + str(sec) if sec <10 else str(sec)
-            self.clockLCD.display(self.timestamp)  
+            self.clockLCD.display(self.timestamp)
         self.clock_seconds += 1
-        
+
     def updateDetectionResult(self):
        if self.newDetectionAvailable:
             self.drawPlants()
@@ -164,21 +164,21 @@ class Ui_MainWindow(object):
                 try:
                     s.settimeout(1)
                     s.listen(1)
-                    c, addr = s.accept() 
+                    c, addr = s.accept()
                     if addr[0] != self.ip_addr:
                         c.close()
                         continue
-                    with c:  
+                    with c:
                         while self.server_running:
-                            try:       
-                                c.settimeout(5)          
+                            try:
+                                c.settimeout(5)
                                 msg = c.recv(1024)
                                 if len(msg) != 64:
                                     c.close()
                                     print('invalid msg')
                                     break
                                 if not self.time_is_up:
-                                    text = msg.decode('utf-8') 
+                                    text = msg.decode('utf-8')
                                     self.detectedFieldConfig = np.reshape(np.array(list(text),dtype=np.int8), (4,16))
                                     upper_limit = 3 if self.level == 0 else 5
                                     self.detectedFieldConfig[(self.detectedFieldConfig<0)|(self.detectedFieldConfig>=upper_limit)] = 5
@@ -210,7 +210,7 @@ class Ui_MainWindow(object):
                 self.scene.addRect(r, self.blackPen, self.BrushList[plant_type])
                 detected_plant_type = self.detectedFieldConfig.item((y,x))
                 self.scene.addEllipse(x*hor_space, y*ver_space+30,size,size, self.blackPen, self.BrushList[detected_plant_type])
-   
+
         # separation line
         self.scene.addLine(QtCore.QLineF(16.4*hor_space, 0, 16.4*hor_space, 350))
         # draw a legend
@@ -236,10 +236,10 @@ class Ui_MainWindow(object):
         correct_detections = self.fieldConfig[np.equal(self.fieldConfig, self.detectedFieldConfig)]
         points_for_empty_or_stress = 3 if self.level==0 else 2
         detection_score = points_for_empty_or_stress*len(correct_detections[(correct_detections==0)|(correct_detections==1)])
-        
+
         if self.level==1:
             detection_score += 4*len(correct_detections[(correct_detections==3)|(correct_detections==4)])
-        
+
         print(detection_score,density_score.sum())
         score = detection_score + density_score.sum()
         self.LCD.display(score)
@@ -261,20 +261,20 @@ class Ui_MainWindow(object):
         self.server_thread.start()
         self.time_is_up = False
         self.clock_seconds = 0
-        self.clockLCD.setStyleSheet('QLCDNumber {background-color: yellow; color: red;}') 
-        
+        self.clockLCD.setStyleSheet('QLCDNumber {background-color: yellow; color: red;}')
+
     def StdBtnClickedSlot(self):
         self.StandardButton.setStyleSheet("background-color: red")
         self.AdvancedButton.setStyleSheet("background-color: gray")
         self.level = 0
         self.initialize()
-        
+
     def AdvBtnClickedSlot(self):
         self.AdvancedButton.setStyleSheet("background-color: red")
         self.StandardButton.setStyleSheet("background-color: gray")
         self.level = 1
         self.initialize()
-        
+
     def randFieldConfig(self):
         #reset robot detection result
         self.detectedFieldConfig = 5*np.ones((4,16),dtype=np.int8)
@@ -287,7 +287,7 @@ class Ui_MainWindow(object):
         # 0: empty, 12
         # 1: single stressed, 8
         # 2: single healthuy, 36
-        # 3: double, 4 
+        # 3: double, 4
         # 4: tiller, 4
         num_single_healthy_plants_per_row = 11 if self.level == 0 else 9
         single_healthy_block = 2*np.ones((4, num_single_healthy_plants_per_row), dtype=np.int8)
@@ -299,11 +299,11 @@ class Ui_MainWindow(object):
             abnormal_spots_array[0,24:28] = 4
         shuffle_by_row = np.vectorize(np.random.permutation, signature='(n)->(n)')
         abnormal_spots_array = shuffle_by_row(abnormal_spots_array)
-        abnormal_block = np.reshape(abnormal_spots_array,(4, -1))       
+        abnormal_block = np.reshape(abnormal_spots_array,(4, -1))
         fieldConfig = np.concatenate((single_healthy_block, abnormal_block), axis=1)
-        fieldConfig = shuffle_by_row(fieldConfig) 
+        fieldConfig = shuffle_by_row(fieldConfig)
         return fieldConfig
-            
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -313,4 +313,3 @@ if __name__ == "__main__":
     ui.randFieldConfig()
     MainWindow.show()
     sys.exit(app.exec_())
-
