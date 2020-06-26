@@ -13,6 +13,7 @@ class Motor:
 
         if Motor.dyn is None:
             Motor.dyn = dyn
+            
         self.badMsg.info(str(Motor.count))
         # creates the motor to control the wheel angle
         self.angleMotor = Motor.dyn.new_ax12(Motor.count)
