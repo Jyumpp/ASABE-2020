@@ -37,19 +37,6 @@ class LineCorrection:
         while True:
             trys = 0
             try:
-                # print("Angle " + str(self.angle))
-                # ___________________ Angle Correction_________________________#
-                while self.angle > self.errorAngle or self.angle < -self.errorAngle:
-                    print("Error Angle:" + str(self.angle))
-                    print("Trys" + str(trys))
-                    if trys > 4:
-                        print("too many trys")
-                        self.robot.center_axis(-(self.angle/abs(self.angle)*.1))
-                    else:
-                        angle = anglePID(self.angle)
-                        print(angle)
-                        self.robot.center_axis(angle)
-                    trys += 1
                 if abs(self.dist) > self.errorDistance:
                     # print("Dist " + str(self.dist))
                     # _______________ Offset Correction________________________#
@@ -64,10 +51,22 @@ class LineCorrection:
                     fixAngle = 0
                     fixDistance = 0
                 #Corrects path if needed otherwise continues forward
-                if fixAngle == 0 and fixDistance == 0:
-                    self.robot.drive(-512)
-                else:
+                if not fixAngle == 0 and not fixDistance == 0:
                     self.robot.translate(fixAngle*.9, -fixDistance*.65)
+
+                # print("Angle " + str(self.angle)) 
+                # ___________________ Angle Correction_________________________#
+                while self.angle > self.errorAngle or self.angle < -self.errorAngle:
+                    print("Error Angle:" + str(self.angle))
+                    if trys >= 4:
+                        self.badMsg.info("Too many trys "+ str(trys) + "PID override")
+                        self.robot.center_axis(-(self.angle/abs(self.angle)*.1))
+                    else:
+                        angle = anglePID(self.angle)
+                        print(angle)
+                        self.robot.center_axis(angle)
+                    trys += 1
+                self.robot.drive(-512)
             except Exception as e:
                 print(e)
                 self.badMsg.error(e)

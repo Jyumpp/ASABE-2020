@@ -53,10 +53,13 @@ if __name__ == '__main__':
     robot.translate(0,10)
     dropperMotors[1].set_position(deployAngles[1])
     dropperMotors[2].set_position(deployAngles[2])
+    robot.translate(0,5)
+    for motor in dropperMotors:
+        motor.torque_disable()
 
-    # # Starts thread for Robot path correction
-    # threadCorrect = mp.Process(target=correction.what_move, args=())
-    # threadCorrect.start()
+    # Starts thread for Robot path correction
+    threadCorrect = mp.Process(target=correction.what_move, args=())
+    threadCorrect.start()
 
     signal.signal(signal.SIGINT,exit)
 # r = Robot("/dev/ttyUSB0")

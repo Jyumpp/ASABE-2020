@@ -133,7 +133,7 @@ class Robot:
         try:
 
             self.translate(0,-1)
-            sleepTime = (abs(36)/(.492*math.pi))
+            sleepTime = (32/(.492*math.pi))
             self.crab_steering(90)
 
             self.motors[0].set_velocity(-200)
