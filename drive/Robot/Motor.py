@@ -1,16 +1,19 @@
 from dynio import *
+from debugmessages import *
 
 
 class Motor:
     count = 1
     dyn = None
+    badMsg = None
 
-    def __init__(self, side, path):
+    def __init__(self, side, dyn):
+
+        self.badMsg = DebugMessages(self)
+
         if Motor.dyn is None:
-
-            # Creates DynamixelIO object
-            Motor.dyn = dxl.DynamixelIO(device_name=path)
-
+            Motor.dyn = dyn
+        self.badMsg.info(str(Motor.count))
         # creates the motor to control the wheel angle
         self.angleMotor = Motor.dyn.new_ax12(Motor.count)
 
@@ -21,6 +24,8 @@ class Motor:
 
         # increments the motor ID
         Motor.count = Motor.count + 1
+
+        self.badMsg.info(str(Motor.count))
 
         # creates the motor that controls wheel velocity
         self.driveMotor = Motor.dyn.new_ax12(Motor.count)

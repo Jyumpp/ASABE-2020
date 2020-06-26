@@ -97,6 +97,12 @@ class Robot:
     def center_axis(self, angle):
         try:
             velocity = 256
+
+            if 0 < angle < .1:
+                angle = .1
+            if 0 > angle > -.1:
+                angle = -.1
+
             sleepTime = ((math.radians(abs(angle)))/(math.pi))*44.75
 
             self.four_wheel_turn()
@@ -112,7 +118,7 @@ class Robot:
                 self.motors[1].set_velocity(velocity)
                 self.motors[2].set_velocity(-velocity)
 
-            time.sleep(sleepTime)
+            time.sleep(sleepTime*.85)
 
             self.center()
             self.drive(0)
@@ -123,27 +129,23 @@ class Robot:
             self.drive(0)
             self.center()
 
-    def expandy_boi(self, dropperMotors):
+    def expandy_boi(self):
         try:
-            self.translate(0, 5)
 
+            self.translate(0,-1)
             sleepTime = (abs(36)/(.492*math.pi))
             self.crab_steering(90)
 
-            self.motors[0].set_velocity(1023)
-            self.motors[3].set_velocity(-200)
-            self.motors[1].set_velocity(-1023)
-            self.motors[2].set_velocity(200)
+            self.motors[0].set_velocity(-200)
+            self.motors[3].set_velocity(1023)
+            self.motors[1].set_velocity(200)
+            self.motors[2].set_velocity(-1023)
 
             time.sleep(sleepTime)
 
-            self.drive(0)
-            self.translate(0,5)
+            self.translate(0,-5)
 
             self.center()
-
-            for motor in dropperMotors:
-                motor.set_angle()
 
             return None
         except Exception as e:
@@ -152,14 +154,14 @@ class Robot:
             self.center()
         self.center()
 
-    def __init__(self, path):
+    def __init__(self, dyn):
         self.badMsg = DebugMessages(self)
         self.motors = []
         for i in range(0, 4):
             if i < 2:
-                self.motors.append(Motor(True, path))
+                self.motors.append(Motor(True, dyn))
             else:
-                self.motors.append(Motor(False, path))
+                self.motors.append(Motor(False, dyn))
         self.drive(0)
         self.center()
         self.badMsg.info("Done creating Robot object")
