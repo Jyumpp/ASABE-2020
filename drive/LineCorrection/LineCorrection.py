@@ -24,6 +24,7 @@ class LineCorrection:
     deploy_pos = [1023, 671, 0, 0]
 
     def __init__(self,commAR, commDR, trigger_pipes):
+        self.bad_msg.info("Beginning Line Correction initialization")
         self.angle_pipe = commAR
         self.distance_pipe = commDR
         self.bad_msg = DebugMessages(self)
@@ -32,15 +33,18 @@ class LineCorrection:
         dxlIO = dxl.DynamixelIO("/dev/ttyUSB0")
         self.robot = Robot(dxlIO)
 
+        self.bad_msg.info("Creating Dropper Trigger motors")
         for i in range(9,13):
             trigger_motors.append(dxlIO.new_ax12(i))
             trigger_motors[i].torque_disable()
 
+        self.bad_msg.info("Creating Trigger classes")
         trigger1 = dyn(trigger_motors[0], trigger_pipes[0])
         trigger2 = dyn(trigger_motors[1], trigger_pipes[1])
         trigger3 = dyn(trigger_motors[2], trigger_pipes[2])
         trigger4 = dyn(trigger_motors[3], trigger_pipes[3])
 
+        self.bad_msg.info("Creating Trigger Threads")
         trigger1Thread = thread.Thread(target=trigger1.Run, args=())
         trigger1Thread.setDaemon = True
         trigger2Thread = thread.Thread(target=trigger2.Run, args=())
@@ -50,6 +54,7 @@ class LineCorrection:
         trigger4Thread = thread.Thread(target=trigger4.Run, args=())
         trigger4Thread.setDaemon = True
 
+        self.bad_msg.info("Starting expandy_boi and Trigger Dropper deployment")
         # # Running expandy boi
         # robot.expandy_boi()
         # robot.translate(0, -8)
@@ -63,7 +68,9 @@ class LineCorrection:
         # trigger_motors[2].set_position(deploy_pos[2])
         # for motor in trigger_motors:
         #     motor.torque_disable()
+        self.bad_msg.info("Finished expandy_boi and trigger dropper deployment")
 
+        self.bad_msg.info("Beginning Trigger threads.")
         trigger1Thread.start()
         trigger2Thread.start()
         trigger3Thread.start()
@@ -77,14 +84,11 @@ class LineCorrection:
             self.dist = self.distance_pipe.recv()
             temp = self.angle_pipe.recv()
 
-    def check_correct(self):
-            return all(pipe.recv() == False for pipe in self.trigger_pipes):
-
     def what_move(self):
         checkThread = threading.Thread(target=self.check_angle)
         checkThread.setdeamon = True
         checkThread.start()
-        # while self.stop is not 4 and self.check_correct():
+        # while self.stop is not 4 and all(pipe.recv() == False for pipe in self.trigger_pipes):
         angle_PID = PID(.82,0,0, setpoint=0)
         while True:
             trys = 0
@@ -118,7 +122,10 @@ class LineCorrection:
                         print(angle)
                         self.robot.center_axis(angle)
                     trys += 1
+
                 self.robot.drive(-512)
             except Exception as e:
                 self.bad_msg.error(e)
+                
+            # if all rows done return
             self.robot.drive(-512)

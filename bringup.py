@@ -31,10 +31,16 @@ if __name__ == '__main__':
     triggerRead4, triggerWrite4 = Pipe()
 
     # Creates array of trigger states to control line following with
-    correct_enable = {triggerWrite1, triggerWrite2, triggerWrite3, triggerWrite4}
+    correct_enable = [triggerWrite1, triggerWrite2, triggerWrite3, triggerWrite4]
 
-    # Sets up lineTracing and LineCorrection classes
+    # Sets up lineTracing classes
     tracing = lineTracing(angle_write, dist_write)
+
+    # Starts Line Tracing Process
+    traceProcess = Process(target=tracing.lineTracer, args=())
+    traceProcess.start()
+
+    #Sets up LineCorrection classes
     correction = LineCorrection(angle_read, dist_read, correct_enable)
 
     # Sets up Vision system classes
@@ -54,10 +60,8 @@ if __name__ == '__main__':
     capture3Process.start()
     capture4Process.start()
 
-    # Makes and starts lineTracing/Correction
-    traceProcess = Process(target=tracing.lineTracer, args=())
+    # Makes and starts Correction
     correctProcess = Process(target=correction.what_move, args=())
-    traceProcess.start()
     correctProcess.start()
 
     # Wait for the Processes to end
@@ -65,7 +69,6 @@ if __name__ == '__main__':
     capture2Process.join()
     capture3Process.join()
     capture4Process.join()
-    traceProcess.join()
     correctProcess.join()
 
     # # And then classify the images we took
