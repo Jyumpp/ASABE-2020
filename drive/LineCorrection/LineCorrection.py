@@ -10,30 +10,36 @@ from vision.dynamixeltrigger.dynamixeltrigger import DynaTrigger as dyn
 
 
 class LineCorrection:
-    errorAngle = .3
-    errorDistance = .5
+    error_angle = .3
+    error_distance = .3
     robot = None
     angle = 0
     dist = 0
-    fixDistance = 0
-    correctEnable = True
+    fix_distance = 0
+    correct_enable = True
     home = []
-    triggerMotors = []
-    triggerCount = 0
+    trigger_motors = []
+    trigger_count = 0
     stop = 0
+    deploy_pos = [1023, 671, 0, 0]
 
-    def __init__(self,courseCorrect,commAR, commDR, robot, triggerWrite1, triggerWrite2, triggerWrite3, triggerWrite4):
-        self.anglePipe = commAR
-        self.distancePipe = commDR
-        self.badMsg = DebugMessages(self)
+    def __init__(self,commAR, commDR, trigger_pipes):
+        self.angle_pipe = commAR
+        self.distance_pipe = commDR
+        self.bad_msg = DebugMessages(self)
+        self.trigger_pipes = trigger_pipes
 
         dxlIO = dxl.DynamixelIO("/dev/ttyUSB0")
         self.robot = Robot(dxlIO)
 
-        trigger1 = dyn(triggerMotors[0], triggerWrite1)
-        trigger2 = dyn(triggerMotors[1], triggerWrite2)
-        trigger3 = dyn(triggerMotors[2], triggerWrite3)
-        trigger4 = dyn(triggerMotors[3], triggerWrite4)
+        for i in range(9,13):
+            trigger_motors.append(dxlIO.new_ax12(i))
+            trigger_motors[i].torque_disable()
+
+        trigger1 = dyn(trigger_motors[0], trigger_pipes[0])
+        trigger2 = dyn(trigger_motors[1], trigger_pipes[1])
+        trigger3 = dyn(trigger_motors[2], trigger_pipes[2])
+        trigger4 = dyn(trigger_motors[3], trigger_pipes[3])
 
         trigger1Thread = thread.Thread(target=trigger1.Run, args=())
         trigger1Thread.setDaemon = True
@@ -47,15 +53,15 @@ class LineCorrection:
         # # Running expandy boi
         # robot.expandy_boi()
         # robot.translate(0, -8)
-        # for motor in motorList:
+        # for motor in trigger_motors:
         #     motor.torque_enable()
-        # motorList[3].set_position(deployAngles[3])
-        # motorList[0].set_position(deployAngles[0])
+        # trigger_motors[3].set_position(deploy_pos[3])
+        # trigger_motors[0].set_position(deploy_pos[0])
         # time.sleep(.25)
         # robot.translate(0, 10)
-        # motorList[1].set_position(deployAngles[1])
-        # motorList[2].set_position(deployAngles[2])
-        # for motor in motorList:
+        # trigger_motors[1].set_position(deploy_pos[1])
+        # trigger_motors[2].set_position(deploy_pos[2])
+        # for motor in trigger_motors:
         #     motor.torque_disable()
 
         trigger1Thread.start()
@@ -63,65 +69,56 @@ class LineCorrection:
         trigger3Thread.start()
         trigger4Thread.start()
 
-        self.badMsg.info("Line Correction object done")
-
-
+        self.bad_msg.info("Line Correction object done")
 
 
     def check_angle(self):
         while True:
-            self.dist = self.distancePipe.recv()
-            temp = self.anglePipe.recv()
+            self.dist = self.distance_pipe.recv()
+            temp = self.angle_pipe.recv()
 
     def check_correct(self):
-        while True:
-            if all(pipe.recv() == False for pipe in self.courseCorrect):
-                self.correctEnable = False
-            else:
-                self.correctEnable = True
+            return all(pipe.recv() == False for pipe in self.trigger_pipes):
 
     def what_move(self):
         checkThread = threading.Thread(target=self.check_angle)
         checkThread.setdeamon = True
         checkThread.start()
-        checkCorrectEnable = threading.Thread(target=self.check_correct)
-        checkCorrectEnable.setDaemon = True
-        checkCorrectEnable.start()
-        # while self.stop is not 4 and self.correctEnable:
-        anglePID = PID(.82,0,0, setpoint=0)
+        # while self.stop is not 4 and self.check_correct():
+        angle_PID = PID(.82,0,0, setpoint=0)
         while True:
             trys = 0
             try:
-                if abs(self.dist) > self.errorDistance:
+                if abs(self.dist) > self.error_distance:
                     # print("Dist " + str(self.dist))
                     # _______________ Offset Correction________________________#
                     # Detirmines if correction is needed
-                    if self.dist > self.errorDistance:
+                    if self.dist > self.error_distance:
                         fixAngle = -math.degrees(math.atan(self.dist/2))
-                        fixDistance = ((self.dist ** 2) + 4) ** .5
+                        fix_distance = ((self.dist ** 2) + 4) ** .5
                     else:
                         fixAngle = -math.degrees(math.atan(self.dist))
-                        fixDistance = ((self.dist ** 2) + 4) ** .5
+                        fix_distance = ((self.dist ** 2) + 4) ** .5
                 else:
                     fixAngle = 0
-                    fixDistance = 0
+                    fix_distance = 0
                 #Corrects path if needed otherwise continues forward
-                if not fixAngle == 0 and not fixDistance == 0:
-                    self.robot.translate(fixAngle*.9, -fixDistance*.65)
+                if not fixAngle == 0 and not fix_distance == 0:
+                    self.robot.translate(fixAngle*.9, -fix_distance*.65)
 
                 # print("Angle " + str(self.angle))
                 # ___________________ Angle Correction_________________________#
-                while self.angle > self.errorAngle or self.angle < -self.errorAngle:
-                    self.badMsg.infor("Error Angle:" + str(self.angle))
+                while self.angle > self.error_angle or self.angle < -self.error_angle:
+                    self.bad_msg.infor("Error Angle:" + str(self.angle))
                     if trys >= 4:
-                        self.badMsg.info("Too many trys "+ str(trys) + "PID override")
+                        self.bad_msg.info("Too many trys "+ str(trys) + "PID override")
                         self.robot.center_axis(-(self.angle/abs(self.angle)*.1))
                     else:
-                        angle = anglePID(self.angle)
+                        angle = angle_PID(self.angle)
                         print(angle)
                         self.robot.center_axis(angle)
                     trys += 1
                 self.robot.drive(-512)
             except Exception as e:
-                self.badMsg.error(e)
+                self.bad_msg.error(e)
             self.robot.drive(-512)

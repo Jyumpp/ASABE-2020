@@ -154,12 +154,17 @@ class Robot:
             self.center()
         self.center()
 
-    def __init__(self, motors):
-        self.badMsg = DebugMessages(self)
-        self.motors = motors
+    def __init__(self, dxl_io):
+        self.bad_msg = DebugMessages(self)
+        # Creats Motor Objects
+        for i in range(0, 4):
+            if i < 2:
+                motors.append(Motor(True, dxl_io))
+            else:
+                motors.append(Motor(False, dxl_io))
         self.drive(0)
         self.center()
-        self.badMsg.info("Done creating Robot object")
+        self.bad_msg.info("Done creating Robot object")
 
     def __del__(self):
         self.drive(0)

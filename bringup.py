@@ -10,35 +10,19 @@ from drive.Robot.Robot import *
 from vision.imagecapture.imagecapture import ImageCapture as cap
 from vision.imageclassifier.imageclassifier import ImgClassifier as classifier
 
-deployAngles = [1023, 671, 0, 0]
 motors = []
 
 if __name__ == '__main__':
 
     # Sets threading type to fork for LineCorrection Instances
-    mp.set_start_method('spawn', force=True)
-
-    # Creating Dynamixel Trigger motors
-    dxl_io = dxl.DynamixelIO("/dev/ttyUSB0", 57600)
-    motorList = [dxl_io.new_ax12(9), dxl_io.new_ax12(10), dxl_io.new_ax12(11), dxl_io.new_ax12(12)]
-    for motor in motorList:
-        motor.torque_disable()
-    # Creats Motor Objects
-    for i in range(0, 4):
-        if i < 2:
-            motors.append(Motor(True, dxl_io))
-        else:
-            motors.append(Motor(False, dxl_io))
-
-    # Creates Robot object
-    robot = Robot(motors)
+    mp.set_start_method('fork', force=True)
 
     # # Creates Message Sender of GUI
     # sender = MessageSender()
 
     # Creates pipes for drive/linecorrection
-    angleRead, angleWrite = Pipe(False)
-    distRead, distWrite = Pipe(False)
+    angle_read, angle_write = Pipe(False)
+    dist_read, distWrite = Pipe(False)
 
     # Creates pipes for vision
     triggerRead1, triggerWrite1 = Pipe()
@@ -46,15 +30,12 @@ if __name__ == '__main__':
     triggerRead3, triggerWrite3 = Pipe()
     triggerRead4, triggerWrite4 = Pipe()
 
-    # Create shared memory for trigger and line correction
-    stop = Value('i', 0)
-
     # Creates array of trigger states to control line following with
-    correctEnable = {triggerRead1, triggerRead2, triggerRead3, triggerRead4}
+    correct_enable = {triggerWrite1, triggerWrite2, triggerWrite3, triggerWrite4}
 
     # Sets up lineTracing and LineCorrection classes
-    tracing = lineTracing(angleWrite, distWrite)
-    correction = LineCorrection(stop, correctEnable, angleRead, distRead, robot)
+    tracing = lineTracing(angle_write, dist_write)
+    correction = LineCorrection(angle_read, dist_read, correct_enable)
 
     # Sets up Vision system classes
     capture1 = cap(triggerRead1, 2, "/home/mendel/ASABE-2020/vision/imagecapture/output")
