@@ -8,19 +8,19 @@ from debugmessages import *
 class DynaTrigger:
 
     # init
-    def __init__(self, stop, motor, triggerPipe):
+    def __init__(self, motor, home_pos, triggerPipe = None):
 
         # Dynamixel motor setup
         self.ax_12 = motor
-        self.ax_12.torque_enable()
+        self.ax_12.torque_disable()
         self.ax_12.set_position_mode()
+        self.home_pos = home_pos
         # self.ax_12.set_angle(60)
         # self.ax_12.set_velocity(1023)
 
         # Pipe/Shared memory setup
         self.triggerPipe = triggerPipe
         self.triggerCount = 0
-        self.stop = stop
 
         # Set up debug messages
         self.dbm = DebugMessages(self)
@@ -34,9 +34,8 @@ class DynaTrigger:
         while self.triggerCount < 16:
 
             self.ax_12.set_position_mode()
-            home = self.ax_12.get_position()
             self.ax_12.write_control_table("Torque_Limit", 1000)
-            self.ax_12.set_((home/1023)*300)
+            self.ax_12.set_position(self.home_pos)
 
             # Wait for the motor to get into place
             while self.ax_12.read_control_table("Moving") == 1:
@@ -56,14 +55,16 @@ class DynaTrigger:
             # increment trigger count
             self.triggerCount += 1
             # Send picture capture signal over pipe
-            self.triggerPipe.send(True)
+            if self.triggerPipe is not None:
+                self.triggerPipe.send(True)
             self.dbm.info("Dynamixel Triggered")
 
             # Wait for the motor to get back in place
             while(self.ax_12.read_control_table("Present_Load") != 0):
                 pass
 
-            self.triggerPipe.send(False)
+            if self.triggerPipe is not None:
+                self.triggerPipe.send(False)
             self.ax_12.torque_enable()
 
         self.stop.value += 1
