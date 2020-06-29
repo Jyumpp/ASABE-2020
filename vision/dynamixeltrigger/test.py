@@ -11,14 +11,14 @@ trigger3 = dyn(dxl_io.new_ax12(11), 9, None)
 trigger4 = dyn(dxl_io.new_ax12(12), 9, None)
 print("Still Running")
 
-thread1 = threading.Thread(target=trigger1.Run(),args=())
-thread1.daemon = True
 thread2 = threading.Thread(target=trigger2.Run(),args=())
 thread2.daemon = True
 thread3 = threading.Thread(target=trigger3.Run(),args=())
 thread3.daemon = True
 thread4 = threading.Thread(target=trigger4.Run(),args=())
 thread4.daemon = True
+thread1 = threading.Thread(target=trigger1.Run(),args=())
+thread1.daemon = True
 
 thread2.start()
 thread1.start()

@@ -12,7 +12,7 @@ class DynaTrigger:
 
         # Dynamixel motor setup
         self.ax_12 = motor
-        self.ax_12.torque_disable()
+        self.ax_12.torque_enable()
         self.ax_12.set_position_mode()
         self.home_pos = home_pos
         # self.ax_12.set_angle(60)
