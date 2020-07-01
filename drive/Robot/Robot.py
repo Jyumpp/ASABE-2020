@@ -2,6 +2,7 @@ from drive.Robot.Motor import *
 from debugmessages import *
 import time
 import math
+import threading
 
 
 class Robot:
@@ -55,8 +56,7 @@ class Robot:
                 self.motors[0].set_angle(-angle)
                 self.motors[3].set_angle(-angle)
 
-                while math.fabs(self.motors[3].get_angle() - (150-abs(angle))) < .25:
-                    continue
+                time.sleep(.15)
 
         except Exception as e:
             print(e)
@@ -156,12 +156,13 @@ class Robot:
 
     def __init__(self, dxl_io):
         self.bad_msg = DebugMessages(self)
+        self.bad_msg.info("Creating Robot object")
         # Creats Motor Objects
         for i in range(0, 4):
             if i < 2:
-                motors.append(Motor(True, dxl_io))
+                self.motors.append(Motor(True, dxl_io))
             else:
-                motors.append(Motor(False, dxl_io))
+                self.motors.append(Motor(False, dxl_io))
         self.drive(0)
         self.center()
         self.bad_msg.info("Done creating Robot object")

@@ -14,24 +14,24 @@ class Motor:
         if Motor.dxl_io is None:
             Motor.dxl_io = dxl_io
 
-        self.bad_msg.info(str(Motor.count))
+        self.bad_msg.info("Angle " + str(Motor.count) + " created.")
         # creates the motor to control the wheel angle
         self.angle_motor = Motor.dxl_io.new_ax12(Motor.count)
 
         # sets the motor torque limit and position mode
-        self.angle_motor.set_position_mode(goal_current=512)
-        self.angle_motor.torque_enable()
+        self.angle_motor.manual_write_lock().set_position_mode(goal_current=512)
+        self.angle_motor.manual_write_lock().torque_enable()
         self.torque = True
 
         # increments the motor ID
         Motor.count = Motor.count + 1
 
-        self.bad_msg.info(str(Motor.count))
+        self.bad_msg.info("Drivr " + str(Motor.count) + " created.")
 
         # creates the motor that controls wheel velocity
         self.drive_motor = Motor.dxl_io.new_ax12(Motor.count)
-        self.drive_motor.set_velocity_mode()
-        self.drive_motor.torque_enable()
+        self.drive_motor.manual_write_lock().set_velocity_mode()
+        self.drive_motor.manual_write_lock().torque_enable()
         Motor.count = Motor.count + 1
 
         # Tracks the side of the Robot the Motor is on
@@ -40,29 +40,29 @@ class Motor:
 
     # Toogles torque for the drive motor
     def toggle_Torque(self):
-        if self.drive_motor.read_control_table("Torque_Enable") == 1:
-            self.drive_motor.torque_disable()
+        if self.drive_motor.manual_read_lock().read_control_table("Torque_Enable") == 1:
+            self.drive_motor.manual_write_lock().torque_disable()
         else:
-            self.drive_motor.torque_enable()
+            self.drive_motor.manual_write_lock().torque_enable()
 
     # Gets the current angle of the motor
     def get_angle(self):
-        return self.angle_motor.get_angle()
+        return self.angle_motor.manual_read_lock().get_angle()
 
     # Sets the angle of the motor
     def set_angle(self, angle):
-        self.angle_motor.set_angle(self.home_angle - angle)
+        self.angle_motor.manual_write_lock().set_angle(self.home_angle - angle)
 
     # Sets the motor to home angle
     def center(self):
-        self.angle_motor.set_angle(self.home_angle)
+        self.set_angle(0)
 
     # Sets the wheel velocity
     def set_velocity(self, velocity):
         if self.right:
-            self.drive_motor.set_velocity(-velocity)
+            self.drive_motor.manual_write_lock().set_velocity(-velocity)
         else:
-            self.drive_motor.set_velocity(velocity)
+            self.drive_motor.manual_write_lock().set_velocity(velocity)
 
     def get_velocity(self):
-        return drive_motor.read_control_table("Present_Speed")
+        return drive_motor.manual_read_lock().read_control_table("Present_Speed")

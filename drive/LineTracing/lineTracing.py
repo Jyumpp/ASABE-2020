@@ -32,7 +32,7 @@ class lineTracing:
                     greyVideo = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                     # self.dbg.info("Video captured and is greyscaled")
                     #only looking at greys in this range
-                    mask = cv2.inRange(greyVideo, 0, 150)
+                    mask = cv2.inRange(greyVideo, 0, 100)
                     _,contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     #finding largest contour
                     c = max(contours, key=cv2.contourArea)
