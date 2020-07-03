@@ -9,9 +9,12 @@ class ImageCapture:
 
     def __init__(self, triggerPipe, cameraIn, outputIn):
 
-        # setting the output directory for our cropped images 
+        # setting up identifier
+        self.ID = cameraIn
+
+        # setting the output directory for our cropped images
         self.outputDir = outputIn
-    
+
         # setting up openCV
         self.camera = cameraIn
         self.cap = cv2.VideoCapture(self.camera)
@@ -36,7 +39,7 @@ class ImageCapture:
         self.dbm = DebugMessages(self)
 
         self.dbm.info("Camera Constructed")
-        
+
 
     # Thread function
     def Run(self):
@@ -53,12 +56,12 @@ class ImageCapture:
 
                 # Capture the latest image
                 ret, img = self.cap.read()
-                
+
                 # Crop and save the image in the output directory
                 cropped_img = img[self.y1:self.y2, self.x1:self.x2].copy()
                 fileStr = self.outputDir + "/output_{0:1d}_{1:2d}.jpg".format(self.camera, image_number)
                 cv2.imwrite(fileStr, cropped_img)
-                self.dbm.info("Image Captured")
+                self.dbm.info("Image Captured" + str(self.ID))
 
                 # Wait until the triggered variable is back to false
                 while triggered:

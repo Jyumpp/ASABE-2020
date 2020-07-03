@@ -44,42 +44,36 @@ if __name__ == '__main__':
     #Sets up LineCorrection classes
     correction = LineCorrection(angle_read, dist_read, correct_enable)
 
-    # # Sets up Vision system classes
-    # capture1 = cap(triggerRead1, 2, "/home/mendel/ASABE-2020/vision/imagecapture/output")
-    # capture2 = cap(triggerRead2, 3, "/home/mendel/ASABE-2020/vision/imagecapture/output")
-    # capture3 = cap(triggerRead3, 4, "/home/mendel/ASABE-2020/vision/imagecapture/output")
-    # capture4 = cap(triggerRead4, 5, "/home/mendel/ASABE-2020/vision/imagecapture/output")
-    #
-    # # Set up and run vision processes
-    # capture1Process = Process(target=capture1.Run, args=())
-    # capture2Process = Process(target=capture2.Run, args=())
-    # capture3Process = Process(target=capture3.Run, args=())
-    # capture4Process = Process(target=capture4.Run, args=())
-    #
-    # capture1Process.start()
-    # capture2Process.start()
-    # capture3Process.start()
-    # capture4Process.start()
-    #
+    # Sets up Vision system classes
+    capture1 = cap(triggerRead1, 2, "/home/mendel/ASABE-2020/vision/imagecapture/output")
+    capture2 = cap(triggerRead2, 3, "/home/mendel/ASABE-2020/vision/imagecapture/output")
+    capture3 = cap(triggerRead3, 4, "/home/mendel/ASABE-2020/vision/imagecapture/output")
+    capture4 = cap(triggerRead4, 5, "/home/mendel/ASABE-2020/vision/imagecapture/output")
+
+    # Set up and run vision processes
+    capture1Process = Process(target=capture1.Run, args=())
+    capture2Process = Process(target=capture2.Run, args=())
+    capture3Process = Process(target=capture3.Run, args=())
+    capture4Process = Process(target=capture4.Run, args=())
+
+    capture1Process.start()
+    capture2Process.start()
+    capture3Process.start()
+    capture4Process.start()
+
     # Makes and starts Correction
-    print(1)
     correctProcess = Process(target=correction.what_move, args=())
-    sleep(5)
-    print(2)
     correctProcess.start()
-    print(3)
-    sleep(5)
-    print(4)
 
     # # Wait for the Processes to end
-    # capture1Process.join()
-    # capture2Process.join()
-    # capture3Process.join()
-    # capture4Process.join()
-    # correctProcess.join()
-    #
+    capture1Process.join()
+    capture2Process.join()
+    capture3Process.join()
+    capture4Process.join()
+    correctProcess.join()
+
     # # # And then classify the images we took
-    # # time.sleep(1)
-    # # classify = classifier("/home/mendel/ASABE-2020/vision/imagecapture/output/")
-    # # classify.print()  # <- can this be made to return a list of values for each picture
-    # # # Look at Competition_gui for what numbers to use lines 100-104
+    # time.sleep(1)
+    # classify = classifier("/home/mendel/ASABE-2020/vision/imagecapture/output/")
+    # classify.print()  # <- can this be made to return a list of values for each picture
+    # # # # Look at Competition_gui for what numbers to use lines 100-104

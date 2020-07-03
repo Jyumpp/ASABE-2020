@@ -1,4 +1,5 @@
 from drive.Robot.Motor import *
+# from Robot.Motor import *
 from debugmessages import *
 import time
 import math
@@ -8,6 +9,22 @@ import threading
 class Robot:
     motors = []
     velocity = 0
+
+    def __init__(self, dxl_io):
+        self.bad_msg = DebugMessages(self)
+        self.bad_msg.info("Creating Robot object")
+        # Creats Motor Objects
+        for i in range(0, 4):
+            if i < 2:
+                self.motors.append(Motor(True, dxl_io))
+            else:
+                self.motors.append(Motor(False, dxl_io))
+        self.drive(0)
+        self.center()
+        self.bad_msg.info("Done creating Robot object")
+
+    def __del__(self):
+        self.drive(0)
 
     def drive(self, velocity):
         try:
@@ -133,7 +150,7 @@ class Robot:
         try:
 
             self.translate(0,-1)
-            sleepTime = (36/(.492*math.pi))
+            sleepTime = (35/(.492*math.pi))
             self.crab_steering(90)
 
             self.motors[0].set_velocity(-200)
@@ -143,8 +160,6 @@ class Robot:
 
             time.sleep(sleepTime)
 
-            self.translate(0,-5)
-
             self.center()
 
             return None
@@ -153,19 +168,3 @@ class Robot:
             self.drive(0)
             self.center()
         self.center()
-
-    def __init__(self, dxl_io):
-        self.bad_msg = DebugMessages(self)
-        self.bad_msg.info("Creating Robot object")
-        # Creats Motor Objects
-        for i in range(0, 4):
-            if i < 2:
-                self.motors.append(Motor(True, dxl_io))
-            else:
-                self.motors.append(Motor(False, dxl_io))
-        self.drive(0)
-        self.center()
-        self.bad_msg.info("Done creating Robot object")
-
-    def __del__(self):
-        self.drive(0)

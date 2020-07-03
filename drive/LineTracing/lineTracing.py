@@ -30,14 +30,14 @@ class lineTracing:
                     frame = cv2.flip(frame, 1)
                     #greyscale conversion
                     greyVideo = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                    # self.dbg.info("Video captured and is greyscaled")
+                    self.dbg.info("Video captured and is greyscaled")
                     #only looking at greys in this range
-                    mask = cv2.inRange(greyVideo, 0, 100)
+                    mask = cv2.inRange(greyVideo, 0, 150)
                     _,contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     #finding largest contour
                     c = max(contours, key=cv2.contourArea)
                     contours[0] = c
-                    # self.dbg.info("Max contour found")
+                    self.dbg.info("Max contour found")
                     #finding an approximate triangle to represent the line
                     contx, conty, contw, conth = cv2.boundingRect(c)
                     cv2.rectangle(frame, (contx, conty), (contx + contw, conty + conth), (0, 0, 255), 2)
@@ -71,14 +71,14 @@ class lineTracing:
                     scale = 23*(contw)/32
                     centerX = int(contx + (contw / 2))
                     # calculating distances and angles
-                    # self.dbg.info("All info is collected for angle and distance")
+                    self.dbg.info("All info is collected for angle and distance")
                     self.angle = math.atan((toppy - centerX) / cY)
-                    self.distance = (centerX - cX)/scale
+                    self.distance = ((centerX - cX)/scale) - (23/128)
                     self.angle = math.degrees(self.angle)
                     # print(self.angle)
                     # print(self.distance)
                     self.pipeAngleWrite.send(self.angle)
-                    self.pipeDistanceWrite.send(-self.distance)
+                    self.pipeDistanceWrite.send(self.distance)
                     # cv2.imshow("frame", frame)
                     # cv2.waitKey(1)
                     #cv2.destroyAllWindows()
@@ -121,7 +121,7 @@ class lineTracing:
         self.pipeAngleWrite = commAngleW
         self.pipeDistanceWrite = commDistanceW
         self.dbg.info("Done initializing Line Tracing")
-
+#
 # test = lineTracing()
 #
 # test.lineTracer()

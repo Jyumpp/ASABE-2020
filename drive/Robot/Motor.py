@@ -14,7 +14,7 @@ class Motor:
         if Motor.dxl_io is None:
             Motor.dxl_io = dxl_io
 
-        self.bad_msg.info("Angle " + str(Motor.count) + " created.")
+        # self.bad_msg.info("Angle " + str(Motor.count) + " created.")
         # creates the motor to control the wheel angle
         self.angle_motor = Motor.dxl_io.new_ax12(Motor.count)
 
@@ -26,7 +26,7 @@ class Motor:
         # increments the motor ID
         Motor.count = Motor.count + 1
 
-        self.bad_msg.info("Drivr " + str(Motor.count) + " created.")
+        # self.bad_msg.info("Drive " + str(Motor.count) + " created.")
 
         # creates the motor that controls wheel velocity
         self.drive_motor = Motor.dxl_io.new_ax12(Motor.count)

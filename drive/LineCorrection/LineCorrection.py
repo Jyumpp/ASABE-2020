@@ -1,3 +1,4 @@
+import copy
 import time
 import math
 import queue
@@ -10,12 +11,11 @@ from drive.Robot.Motor import *
 from drive.Robot.Robot import *
 from drive.LineTracing.lineTracing import *
 from vision.dynamixeltrigger.dynamixeltrigger import DynaTrigger as dyn
-import copy
 
 
 class LineCorrection:
     error_angle = .3
-    error_distance = .3
+    error_distance = .1
     robot = None
     angle = 0
     dist = 0
@@ -25,8 +25,7 @@ class LineCorrection:
     trigger_count = 0
     stop = 0
 
-
-    def __init__(self,commAR, commDR, trigger_pipes):
+    def __init__(self, commAR, commDR, trigger_pipes):
 
         self.bad_msg = DebugMessages(self)
         self.bad_msg.info("Beginning Line Correction initialization")
@@ -34,7 +33,7 @@ class LineCorrection:
         self.distance_pipe = commDR
         self.trigger_pipes = trigger_pipes
         self.trigger_motors = []
-        self.deploy_pos = [1003, 637, 9, 9]
+        self.deploy_pos = [1003, 637, 9, 212]
 
         self.dxlIO = dxl.DynamixelIO("/dev/ttyUSB0")
         self.lock = self.dxlIO.lock
@@ -43,11 +42,13 @@ class LineCorrection:
 
         self.bad_msg.info("Line Correction object done")
 
-
     def check_angle(self):
         while True:
             self.dist = self.distance_pipe.recv()
             self.angle = self.angle_pipe.recv()
+
+    def weird_division(self,n, d):
+        return n / d if d else 0
 
     def what_move(self):
         self.bad_msg.info("What Move started")
@@ -57,22 +58,21 @@ class LineCorrection:
 
         self.bad_msg.info("Creating Dropper Trigger motors")
 
-        for i in range(9,13):
+        for i in range(9, 13):
             self.trigger_motors.append(self.dxlIO.new_ax12(i))
-            self.trigger_motors[i-9].torque_disable()
+            self.trigger_motors[i - 9].torque_disable()
 
         self.bad_msg.info("Starting expandy_boi and Trigger Dropper deployment")
-        # # Running expandy boi
-        # robot.expandy_boi()
-        # self.robot.translate(0, -8)
+        # running expandy boi
+        self.robot.expandy_boi()
+        self.robot.translate(0, -11)
         self.trigger_motors[3].set_position(self.deploy_pos[3])
         self.trigger_motors[0].set_position(self.deploy_pos[0])
-        # time.sleep(.25)
-        # self.robot.translate(0, 8)
+        self.robot.translate(0, 9)
         self.trigger_motors[1].set_position(self.deploy_pos[1])
         self.trigger_motors[2].set_position(self.deploy_pos[2])
-        # for motor in trigger_motors:
-        #     motor.torque_disable()
+        time.sleep(.3)
+        self.robot.translate(0,-3)
         self.bad_msg.info("Finished expandy_boi and trigger dropper deployment")
 
         self.bad_msg.info("Creating Trigger classes")
@@ -82,13 +82,13 @@ class LineCorrection:
         trigger4 = dyn(self.trigger_motors[3], self.deploy_pos[3], self.trigger_pipes[3])
 
         self.bad_msg.info("Creating Trigger Threads")
-        trigger1Thread = threading.Thread(target=trigger1.Run, args=())
+        trigger1Thread = threading.Thread(target=trigger1.run, args=())
         trigger1Thread.daemon = True
-        trigger2Thread = threading.Thread(target=trigger2.Run, args=())
+        trigger2Thread = threading.Thread(target=trigger2.run, args=())
         trigger2Thread.daemon = True
-        trigger3Thread = threading.Thread(target=trigger3.Run, args=())
+        trigger3Thread = threading.Thread(target=trigger3.run, args=())
         trigger3Thread.daemon = True
-        trigger4Thread = threading.Thread(target=trigger4.Run, args=())
+        trigger4Thread = threading.Thread(target=trigger4.run, args=())
         trigger4Thread.daemon = True
 
         self.bad_msg.info("Beginning Trigger threads.")
@@ -98,53 +98,51 @@ class LineCorrection:
         trigger3Thread.start()
         trigger4Thread.start()
 
-        # Position Cameras
-
-
         time.sleep(.7)
-        # while self.stop is not 4 and all(pipe.recv() == False for pipe in self.trigger_pipes):
-        angle_PID = PID(.82,0,0, setpoint=0)
-        # self.dxlIO2.manual_threading[1]=True
+        angle_PID = PID(.82, 0, 0, setpoint=0)
         while True:
+            # while DynaTrigger.stop != 4:
+            # print("here")
             time.sleep(.3)
             trys = 0
             try:
+
                 # print("Angle " + str(self.angle))
                 # ___________________ Angle Correction_________________________#
                 while self.angle > self.error_angle or self.angle < -self.error_angle:
-                    self.bad_msg.info("Error Angle:" + str(self.angle))
-                    if trys >= 4:
-                        self.bad_msg.info("Too many trys "+ str(trys) + " PID override")
+                    # self.bad_msg.info("Error Angle:" + str(self.angle))
+                    if trys >= 2:
+                        self.bad_msg.info("Too many trys " + str(trys) + " PID override")
                         with self.lock:
-                            self.robot.center_axis(-(self.angle/abs(self.angle)*.1))
+                            self.robot.center_axis(-self.weird_division(self.angle, abs(self.angle)) * .2)
                         break
                     else:
                         angle = angle_PID(self.angle)
-                        print(angle)
+                        # print(angle)
                         with self.lock:
                             self.robot.center_axis(angle)
                     trys += 1
 
-                if abs(self.dist) > self.error_distance:
+                # print("Dist " + str(self.dist))
+                while abs(self.dist) > self.error_distance:
                     # print("Dist " + str(self.dist))
                     # _______________ Offset Correction________________________#
                     # Detirmines if correction is needed
                     if self.dist > self.error_distance:
-                        fixAngle = -math.degrees(math.atan(self.dist/2))
+                        fixAngle = -math.degrees(math.atan(self.dist / 2))
                         fix_distance = ((self.dist ** 2) + 4) ** .5
-                    else:
+                    elif self.dist < -self.error_distance:
                         fixAngle = -math.degrees(math.atan(self.dist))
                         fix_distance = ((self.dist ** 2) + 4) ** .5
-                else:
-                    fixAngle = 0
-                    fix_distance = 0
-                #Corrects path if needed otherwise continues forward
-                if not fixAngle == 0 and not fix_distance == 0:
+                    else:
+                        fixAngle = 0
+                        fix_distance = 0
+
                     with self.lock:
-                        self.robot.translate(fixAngle*.9, -fix_distance*.65)
-                else:
-                    with self.lock:
-                        self.robot.drive(-256)
+                        self.robot.translate(fixAngle * .9, -fix_distance * .65)
+                        self.robot.drive(-400)
+                with self.lock:
+                    self.robot.drive(-400)
 
             except Exception as e:
                 self.bad_msg.error(e)
