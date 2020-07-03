@@ -73,7 +73,7 @@ class lineTracing:
                     # calculating distances and angles
                     self.dbg.info("All info is collected for angle and distance")
                     self.angle = math.atan((toppy - centerX) / cY)
-                    self.distance = (centerX - cX)/scale
+                    self.distance = ((centerX - cX)/scale) - (23/128)
                     self.angle = math.degrees(self.angle)
                     # print(self.angle)
                     # print(self.distance)
