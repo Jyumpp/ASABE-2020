@@ -64,15 +64,15 @@ class LineCorrection:
 
         self.bad_msg.info("Starting expandy_boi and Trigger Dropper deployment")
         # running expandy boi
-        self.robot.expandy_boi()
-        self.robot.translate(0, -11)
+       # self.robot.expandy_boi()
+       # self.robot.translate(0, -11.5)
         self.trigger_motors[3].set_position(self.deploy_pos[3])
         self.trigger_motors[0].set_position(self.deploy_pos[0])
-        self.robot.translate(0, 9)
+       # self.robot.translate(0, 9.5)
         self.trigger_motors[1].set_position(self.deploy_pos[1])
         self.trigger_motors[2].set_position(self.deploy_pos[2])
-        time.sleep(.3)
-        self.robot.translate(0,-3)
+       # time.sleep(.3)
+       # self.robot.translate(0,-3.5)
         self.bad_msg.info("Finished expandy_boi and trigger dropper deployment")
 
         self.bad_msg.info("Creating Trigger classes")
@@ -132,7 +132,7 @@ class LineCorrection:
                         fixAngle = -math.degrees(math.atan(self.dist / 2))
                         fix_distance = ((self.dist ** 2) + 4) ** .5
                     elif self.dist < -self.error_distance:
-                        fixAngle = -math.degrees(math.atan(self.dist))
+                        fixAngle = -math.degrees(math.atan(self.dist / 2))
                         fix_distance = ((self.dist ** 2) + 4) ** .5
                     else:
                         fixAngle = 0
