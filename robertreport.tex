@@ -26,12 +26,9 @@
 \texttt{\textcolor{blue}{#1}}%
 }
 
-\title{An Overview of the RobERT Platform for the Purpose of \\
-Autonomous Agricultural Data Acquisition and Actuation \\ 
-in a Miniaturized Mock Cornfield Environment\\ \bigskip \bigskip
-RobERT: Robotic Environmental Rating Tool \\ \bigskip \bigskip
+\title{An Overview of the RobERT (Robotic Environmental Rating Tool) Platform for the Purpose of Autonomous Agricultural Data Acquisition and Actuation in a Miniaturized Mock Cornfield Environment \\ \bigskip \bigskip
 \Large 2020 ASABE Student Robotics Challenge: Standard Group}
-\author{Hunter Halloran, William Snapp, Kevin Koffroth, Michael Starks, \\Caroline Lassiter, Cole Sterck, Jake Alford, Tommy Anton, John Bare\thanks {Mentored by Changying ``Charlie" Li, Ph.D. and Jawad Iqbal}\textsuperscript{,}\thanks{Sponsored by the University of Georgia College of Engineering, Fred Beyette Jr., Ph.D., the Bio-Sensing and Instrumentation Lab, AGCO, and IGUS}} 
+\author{Hunter Halloran, William Snapp, Kevin Koffroth, Michael Starks, \\Caroline Lassiter, Cole Sterck, Jake Alford, Tommy Anton, John Bare\thanks {Mentored by Changying ``Charlie" Li, Ph.D. and Jawad Iqbal}\textsuperscript{,}\thanks{Sponsored by the University of Georgia College of Engineering, Fred Beyette Jr., Ph.D., the Bio-Sensing and Instrumentation Lab, AGCO, and IGUS} \\ \\ The University of Georgia}
 \date{5 July, 2020}
 
 
@@ -40,6 +37,7 @@ RobERT: Robotic Environmental Rating Tool \\ \bigskip \bigskip
 \maketitle
 \end{titlepage}
 
+\addtocontents{toc}{\vspace{-4ex}}
 \newpage
 \setcounter{tocdepth}{3}
 \raggedbottom
@@ -83,7 +81,7 @@ The first iteration of the {360\textdegree} steering had bulkier motor mounts th
 After the design of the first phase of our chassis, we decided that in order to increase the speed of each run, we should move to an expanding design that could scan all four rows at once.  To accomplish this, our chassis is constructed of three main portions.  An inner portion houses the main electronic components, holds the droppers and cameras for the two inside rows.  This section is held up by two outer sections that hold the driving mechanism and the outside droppers and cameras.  The driving mechanism is used to expand the robot without the need for extra actuation.  The robot begins in the corner, and the two outer sections drive to their expanded location, while holding up the central section with drawer slides.  The closest outer section navigates to between the first and second row, and the other outer section navigates to between the third and fourth row, while suspending the center section over the area between the second and third rows.  The cameras are not able to be rigidly mounted in place due to the size constraints of the robot.  Instead of using panels, we decided to have the cameras mounted on mounts that deploy via smaller servos at a {45\textdegree} angle to the angle of the ground.  
 
 \subsection{Computational Hardware}
-The team made careful considerations on how to spend the computational points for the purposes of this challenge. To compete for the Standard Group competition, it was a requirement to spend 6 points or less to avoid penalty. Knowing that we would need at least one microcontroller of an Arduino or similar, we allocated one point to those and gave a 5 point limit for the main computer of the robot. Having used Raspberry Pis prior, they seemed a safe option, counting exactly 5 points for a 4th generation device of the 1 gigabyte of RAM version. More effort was made beyond this to try to find a device which would have more power for the same point value, especially in vision applications. Research led to the Coral Dev Board\footnote{The Dev Board is a single-board computer that's ideal when you need to perform fast machine learning (ML) inferencing in a small form factor. (\url{https://coral.ai/products/dev-board/})}, a device designed for machine learning, which was the process the team intended on using for the plant health classification task. Having 4 primary processing cores and 1 gigabyte of RAM, it met the internal team requirements for decision as well as having an integrated Edge TPU capable of quickly processing neural networks for the cornstalk health determination. Rather than ultimately using an Arduino as a microcontroller, an ArbotiX-M Robocontroller\footnote{The ArbotiX-M Robocontroller is an Arduino compatible board designed specifically for use with Dynamixel and standard servo motors for a more integrated control environment. (\url{https://www.trossenrobotics.com/p/arbotix-robot-controller.aspx})} was chosen as it provides specific headers for both standard servos as well as Dynamixel motors, allowing for easier power delivery and data transmission to the devices. 
+The team made careful considerations on how to spend the computational points for the purposes of this challenge. To compete for the Standard Group competition, it was a requirement to spend 6 points or less to avoid penalty. Knowing that we would need at least one microcontroller of an Arduino or similar, we allocated one point to those and gave a 5 point limit for the main computer of the robot. Having used Raspberry Pis prior, they seemed a safe option, counting exactly 5 points for a 4th generation device of the 1 gigabyte of RAM version. More effort was made beyond this to try to find a device which would have more power for the same point value, especially in vision applications. Research led to the Coral Dev Board\footnote{The Dev Board is a single-board computer that's ideal when you need to perform fast machine learning (ML) inferencing in a small form factor. (\url{https://coral.ai/products/dev-board/})}, a device designed for machine learning, which was the process the team intended on using for the plant health classification task. Having 4 primary processing cores and 1 gigabyte of RAM, it met the internal team requirements for decision as well as having an integrated Edge TPU capable of quickly processing neural networks for the cornstalk health determination. Rather than ultimately using an Arduino as a microcontroller, an ArbotiX-M Robocontroller\footnote{The ArbotiX-M Robocontroller is an Arduino compatible board designed specifically for use with Dynamixel and standard servo motors for a more integrated control environment. (\url{https://www.trossenrobotics.com/p/arbotix-robot-controller.aspx})} was chosen as it provides specific headers for both standard servos as well as Dynamixel motors, allowing for easier power delivery and data transmission to the devices. The final circuit diagram of the system can be viewed in the appendix\refapp{app:circuit}.
 
 \section{Software Overview}
 Graphics and supplementary information are available in the appendix\refapp{app:nav}\refapp{app:vision}\refapp{app:system}. Source code for the project is also available\refapp{app:github}.
@@ -213,6 +211,11 @@ Should world events have happened differently to allow for more efficient work t
 \subsubsection{Final Dropper Design} \label{app:Dropper}
 	\begin{center}
 	    \includegraphics[scale=.4]{Dropper.png}
+	\end{center}
+	
+\subsubsection{Circuit Diagram} \label{app:circuit}
+    \begin{center}
+	    \includegraphics[scale=.45]{circuit.png}
 	\end{center}
 
 \subsection{General Software} \label{app:software}
