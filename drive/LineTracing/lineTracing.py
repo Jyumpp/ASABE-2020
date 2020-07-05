@@ -23,21 +23,21 @@ class lineTracing:
             while True:
                 read, frame = video.read()
                 if not read:
-                    self.dbg.warning("Camera can't be read")
+                    #self.dbg.warning("Camera can't be read")
                     continue
                 try:
                     #preparing frame
                     frame = cv2.flip(frame, 1)
                     #greyscale conversion
                     greyVideo = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                    self.dbg.info("Video captured and is greyscaled")
+                    # self.dbg.info("Video captured and is greyscaled")
                     #only looking at greys in this range
-                    mask = cv2.inRange(greyVideo, 0, 150)
+                    mask = cv2.inRange(greyVideo, 0, 75)
                     _,contours,_ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
                     #finding largest contour
                     c = max(contours, key=cv2.contourArea)
                     contours[0] = c
-                    self.dbg.info("Max contour found")
+                    #self.dbg.info("Max contour found")
                     #finding an approximate triangle to represent the line
                     contx, conty, contw, conth = cv2.boundingRect(c)
                     cv2.rectangle(frame, (contx, conty), (contx + contw, conty + conth), (0, 0, 255), 2)
@@ -60,7 +60,7 @@ class lineTracing:
                                 self.minimum = elem.item(0)
                     except Exception as e:
                         #print("Not working 1")
-                        self.dbg.warning("Contour points aren't detected")
+                        #self.dbg.warning("Contour points aren't detected")
                         # cv2.imshow("frame", frame)
                         # cv2.waitKey(1)
                         continue
@@ -73,7 +73,7 @@ class lineTracing:
                     # calculating distances and angles
                     self.dbg.info("All info is collected for angle and distance")
                     self.angle = math.atan((toppy - centerX) / cY)
-                    self.distance = ((centerX - cX)/scale) - (23/128)
+                    self.distance = -((centerX - cX)/scale) - (23/64)
                     self.angle = math.degrees(self.angle)
                     # print(self.angle)
                     # print(self.distance)
@@ -87,14 +87,14 @@ class lineTracing:
                 except Exception as e:
                     print(e)
                     #print("Not working 2")
-                    self.dbg.warning("Top points and angle can't be detected")
+                    #self.dbg.warning("Top points and angle can't be detected")
                     # cv2.imshow("frame", frame)
                     # cv2.waitKey(1)
                     # cv2.destroyAllWindows()
                     #continue
         except Exception as e:
             print("Nope")
-            self.dbg.warning("Camera isn't reading frames")
+            #self.dbg.warning("Camera isn't reading frames")
             print(e)
 
     def test(self):
